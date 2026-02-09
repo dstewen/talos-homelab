@@ -19,10 +19,10 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: "./kubernetes/apps/selfhosted/n8n/app"
   prune: true
   sourceRef:
