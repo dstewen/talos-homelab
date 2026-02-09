@@ -6,6 +6,7 @@ namespace: home
 components:
   - ../../components/sops
 resources:
+  - ./namespace.yaml
   # Flux-Kustomizations
 #  - ./audiobookshelf/ks.yaml
 #  - ./esphome/ks.yaml
