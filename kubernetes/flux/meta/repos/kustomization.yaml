@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./1password-charts.yaml
+  - ./aqua.yaml
+  - ./authentik.yaml
+  - ./backube.yaml
+#  - ./bjw-s.yaml
+  - ./cloudnative-pg.yaml
+  - ./external-dns.yaml
+  - ./grafana.yaml
+  - ./intel.yaml
+  - ./itzg.yaml
+  - ./kubernetes-sigs-nfd.yaml
+#  - ./prometheus-community.yaml
+  - ./openebs.yaml
+  - ./pihole-charts.yaml
+  - ./piraeus.yaml
+  - ./rook-ceph.yaml
