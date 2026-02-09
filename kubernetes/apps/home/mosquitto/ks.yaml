@@ -15,10 +15,10 @@ spec:
   dependsOn:
     - name: node-feature-discovery-rules
       namespace: kube-system
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: ./kubernetes/apps/home/mosquitto/app
   postBuild:
     substitute:
