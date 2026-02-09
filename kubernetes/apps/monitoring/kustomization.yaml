@@ -11,7 +11,7 @@ resources:
   - ./alloy/ks.yaml
 #  - ./cloudflare-exporter/ks.yaml
   - ./frigate-exporter/ks.yaml
-  - ./grafana/ks.yaml
+#  - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
 #  - ./kubernetes-dashboard/ks.yaml
   - ./loki/ks.yaml
