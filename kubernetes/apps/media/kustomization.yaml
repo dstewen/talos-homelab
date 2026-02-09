@@ -6,6 +6,7 @@ namespace: media
 components:
   - ../../components/sops
 resources:
+  - ./namespace.yaml
   # Flux-Kustomizations
 #  - _pvc
 #  - ./arr-misc/ks.yaml
