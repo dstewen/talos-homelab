@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 clusterName: kubernetes
 
@@ -23,167 +22,62 @@ nodes:
     ipAddress: "10.200.15.51"
     installDiskSelector:
       serial: "1925E20E2038"
-    userVolumes:
-      - name: local-hostpath-2tb
-        provisioning:
-          diskSelector:
-            match: "disk.model.startsWith('WD_BLACK')"
-          minSize: 1TB
-          maxSize: 1TB
-#        filesystem:
-#          type: xfs
-    patches:
-      - "@./patches/ms1/openebs-local.yaml"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "58:47:ca:77:cf:38"
-        ignore: true
-        # Intel VPRO
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:77:cf:39"
-        ignore: true
-        #bond0
-      - interface: bond0
-        bond:
-#          mode: 802.3ad
-          mode: active-backup
-          deviceSelectors:
-            - hardwareAddr: "58:47:ca:77:cf:36"
-              driver: i40e
-#          xmitHashPolicy: layer3+4
-#          lacpRate: fast
-#          miimon: 1000
+          hardwareAddr: "58:47:ca:77:cf:36"
         dhcp: false
         addresses:
           - "10.200.15.51/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
         vip:
           ip: "10.200.15.254"
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
   - hostname: "ms2"
     ipAddress: "10.200.15.52"
     installDiskSelector:
       serial: "220628801124"
-    userVolumes:
-      - name: local-hostpath-2tb
-        provisioning:
-          diskSelector:
-            match: "disk.model.startsWith('WD_BLACK')"
-          minSize: 1TB
-          maxSize: 1TB
-#        filesystem:
-#          type: xfs
-    patches:
-      - "@./patches/ms2/openebs-local.yaml"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "58:47:ca:78:f1:34"
-        ignore: true
-        # Intel VPRO
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:78:f1:35"
-        ignore: true
-        #bond0
-      - interface: bond0
-        bond:
-#          mode: 802.3ad
-          mode: active-backup
-          deviceSelectors:
-            -  hardwareAddr: "58:47:ca:78:f1:32"
-               driver: i40e
-#          xmitHashPolicy: layer3+4
-#          lacpRate: fast
-#          miimon: 1000
+          hardwareAddr: "58:47:ca:78:f1:32"
         dhcp: false
         addresses:
           - "10.200.15.52/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
         vip:
           ip: "10.200.15.254"
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
   - hostname: "ms3"
     ipAddress: "10.200.15.53"
     installDiskSelector:
       serial: "22061X806789"
-    userVolumes:
-      - name: local-hostpath-2tb
-        provisioning:
-          diskSelector:
-            match: "disk.model.startsWith('WD_BLACK')"
-          minSize: 1TB
-          maxSize: 1TB
-#        filesystem:
-#          type: xfs
-    patches:
-      - "@./patches/ms3/openebs-local.yaml"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "58:47:ca:78:f8:4c"
-        ignore: true
-        # Intel VPRO
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:78:f8:4d"
-        ignore: true
-        #bond0
-      - interface: bond0
-        bond:
-#          mode: 802.3ad
-          mode: active-backup
-          deviceSelectors:
-            -  hardwareAddr: "58:47:ca:78:f8:4a"
-               driver: i40e
-#          xmitHashPolicy: layer3+4
-#          lacpRate: fast
-#          miimon: 1000
+          hardwareAddr: "58:47:ca:78:f8:4a"
         dhcp: false
         addresses:
           - "10.200.15.53/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
         vip:
           ip: "10.200.15.254"
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
   - hostname: "blade5"
     ipAddress: "10.200.15.35"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800811"
@@ -192,27 +86,15 @@ nodes:
     talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
     controlPlane: false
     networkInterfaces:
-        #bond0
-      - interface: bond0
-        bond:
-          mode: active-backup
-          deviceSelectors:
-            - hardwareAddr: "e4:5f:01:ec:16:b4"
+      - deviceSelector:
+          hardwareAddr: "e4:5f:01:ec:16:b4"
         dhcp: false
         addresses:
           - "10.200.15.35/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
   - hostname: "blade6"
     ipAddress: "10.200.15.36"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800731"
@@ -221,27 +103,15 @@ nodes:
     talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
     controlPlane: false
     networkInterfaces:
-        #bond0
-      - interface: bond0
-        bond:
-          mode: active-backup
-          deviceSelectors:
-            - hardwareAddr: "e4:5f:01:ec:16:a5"
+      - deviceSelector:
+          hardwareAddr: "e4:5f:01:ec:16:a5"
         dhcp: false
         addresses:
           - "10.200.15.36/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
   - hostname: "blade7"
     ipAddress: "10.200.15.37"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800801"
@@ -250,27 +120,15 @@ nodes:
     talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
     controlPlane: false
     networkInterfaces:
-        #bond0
-      - interface: bond0
-        bond:
-          mode: active-backup
-          deviceSelectors:
-            - hardwareAddr: "e4:5f:01:ec:16:9c"
+      - deviceSelector:
+          hardwareAddr: "e4:5f:01:ec:16:9c"
         dhcp: false
         addresses:
           - "10.200.15.37/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
   - hostname: "blade8"
     ipAddress: "10.200.15.38"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
@@ -279,209 +137,26 @@ nodes:
     talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
     controlPlane: false
     networkInterfaces:
-        #bond0
-      - interface: bond0
-        bond:
-          mode: active-backup
-          deviceSelectors:
-            - hardwareAddr: "e4:5f:01:ec:16:5a"
+      - deviceSelector:
+          hardwareAddr: "e4:5f:01:ec:16:5a"
         dhcp: false
         addresses:
           - "10.200.15.38/24"
         routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          - gateway: "10.200.15.1"
+            network: 0.0.0.0/0
         mtu: 1500
-    extensionServices:
-      - name: nut-client
-        configFiles:
-          - content: |-
-              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
-              SHUTDOWNCMD "/sbin/poweroff"
-            mountPath: /usr/local/etc/nut/upsmon.conf
+
 # Global patches
 patches:
-#  - "@./patches/global/machine-files.yaml"
-#  - "@./patches/global/machine-files-nfs.yaml"
-#  - "@./patches/global/machine-hostdns.yaml"
-#  - "@./patches/global/machine-kubelet.yaml"
-#  - "@./patches/global/machine-network.yaml"
-#  - "@./patches/global/machine-sysctls.yaml"
-#  - "@./patches/global/machine-time.yaml"
-#  - "@./patches/global/openebs-local.yaml"
-
-
-
-# Configure NFS mount options
-  - |-
-    machine:
-      features:
-        hostDNS:
-          enabled: true
-          resolveMemberNames: true
-          forwardKubeDNSToHost: false
-
-
-
-      files:
-        # Configure nfs mount options
-        - op: overwrite
-          path: /etc/nfsmount.conf
-          permissions: 0o644
-          content: |
-            [ NFSMount_Global_Options ]
-            nfsvers=4.1
-            hard=True
-            nconnect=16
-            noatime=True
-
-        # configure containerd for spegel
-        - content: |
-            [plugins."io.containerd.cri.v1.images"]
-              discard_unpacked_layers = false
-          path: /etc/cri/conf.d/20-customization.part
-          permissions: 0o644
-          op: create
-
-
-      kubelet:
-        extraConfig:
-          serializeImagePulls: false
-        nodeIP:
-          validSubnets:
-            - 10.200.15.0/24
-
-      network:
-        disableSearchDomain: true
-        nameservers:
-          - 192.168.10.195
-          - 1.1.1.1
-
-      sysctls:
-        fs.inotify.max_user_watches: "1048576" # Watchdog
-        fs.inotify.max_user_instances: "8192"  # Watchdog
-        net.core.rmem_max: "7500000" # Cloudflared | QUIC
-        net.core.wmem_max: "7500000" # Cloudflared | QUIC
-
-      time:
-        disabled: false
-        servers:
-          - 162.159.200.1
-          - 162.159.200.123
-
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
 
 # Controller patches
 controlPlane:
-
-  schematic:
-    customization:
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/gasket-driver    # Google Coral M.2
-          - siderolabs/i915             # MS-01 CPU iGraphics
-          - siderolabs/intel-ucode      # Intel ucode
-          - siderolabs/mei
-          - siderolabs/thunderbolt      # Thunderbolt networking
-      extraKernelArgs:
-        - -selinux # apparently needed for talos 1.10.x
-        - -init_on_alloc # Less security, more speed
-        - -init_on_free # Less security, more speed
-        - apparmor=0 # Less security, more speed
-        - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
-        - init_on_alloc=0                     # Less security, faster puter
-        - init_on_free=0                      # Less security, faster puter
-        - intel_iommu=on # PCI Passthrough
-        - iommu=pt # PCI Passthrough
-        - mitigations=off # Less security, more speed
-        - security=none # Less security, more speed
-        - talos.auditd.disabled=1 # Less security, more speed
-  #      - net.ifnames=1 # Enable predictable NIC naming
   patches:
-#    - "@./patches/controller/admission-controller-patch.yaml"
-#    - "@./patches/controller/cluster.yaml"
-#    - "@./patches/controller/enable-talos-api.yaml"
-#    - "@./patches/controller/machine-install.yaml"
+    - "@./patches/controller/cluster.yaml"
 
-    # Enable K8s Talos API Access
-    - |-
-      machine:
-        features:
-          kubernetesTalosAPIAccess:
-            enabled: true
-            allowedRoles:
-              - os:admin
-            allowedKubernetesNamespaces:
-              - actions-runner-system
-              - system-upgrade
-
-    # Cluster Configuration
-    - |-
-      cluster:
-        allowSchedulingOnControlPlanes: true
-        apiServer:
-          # disable default API server admission plugins
-          admissionControl:
-            $$patch: delete
-        controllerManager:
-          extraArgs:
-            bind-address: 0.0.0.0
-        coreDNS:
-          disabled: true
-        etcd:
-          extraArgs:
-            listen-metrics-urls: http://0.0.0.0:2381
-          advertisedSubnets:
-            - 10.200.15.0/24
-        proxy:
-          disabled: true
-        scheduler:
-          extraArgs:
-            bind-address: 0.0.0.0
-
-    # Custom sysfs settings
-    - |-
-      machine:
-        sysfs:
-          devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
-          devices.system.cpu.cpu0.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu1.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu2.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu3.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu4.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu5.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu6.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu7.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu8.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu9.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu10.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu11.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu12.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu13.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu14.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu15.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu16.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu17.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu18.cpufreq.energy_performance_preference: balance_performance
-          devices.system.cpu.cpu19.cpufreq.energy_performance_preference: balance_performance
-
-    # Enable thunderbolt + net
-    - |-
-      machine:
-        kernel:
-          modules:
-            - name: nbd
-            - name: thunderbolt
-            - name: thunderbolt_net
-
-    # Various udev rules
-    - |-
-      machine:
-        udev:
-          rules:
-            # Thunderbolt
-            - ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
-            # Intel GPU
-            - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
-            # Coral Edge TPU
-            - SUBSYSTEM=="apex", KERNEL=="apex*", GROUP="44", MODE="0660"
