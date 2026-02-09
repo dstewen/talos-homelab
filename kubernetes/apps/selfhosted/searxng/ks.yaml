@@ -18,10 +18,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: ./kubernetes/apps/selfhosted/searxng/app
   postBuild:
     substituteFrom:
