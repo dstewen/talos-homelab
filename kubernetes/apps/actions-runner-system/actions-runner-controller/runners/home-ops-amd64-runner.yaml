@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name talos-homecluster-amd64-runner
+  name: &name talos-homelab-amd64-runner
 spec:
   interval: 30m
   chartRef:
