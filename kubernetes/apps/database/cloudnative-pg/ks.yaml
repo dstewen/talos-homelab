@@ -47,10 +47,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
   path: ./kubernetes/apps/database/cloudnative-pg/cluster17
   postBuild:
     substituteFrom:
