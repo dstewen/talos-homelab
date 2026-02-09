@@ -18,7 +18,7 @@ spec:
       namespace: openebs-system
   values:
 #    runnerScaleSetName: &name talos-homecluster-amd64-runner
-    githubConfigUrl: https://github.com/dstewen/talos-homecluster
+    githubConfigUrl: https://github.com/dstewen/talos-homelab
     githubConfigSecret: pre-defined-secret
     minRunners: 1
     maxRunners: 2
