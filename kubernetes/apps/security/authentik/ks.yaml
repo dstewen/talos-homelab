@@ -26,10 +26,10 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: *namespace
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: ./kubernetes/apps/security/authentik/app
   postBuild:
     substituteFrom:
