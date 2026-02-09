@@ -1,0 +1,45 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: media
+  name: arr-list-sync
+  annotations:
+    botkube.io/disable: "true"
+spec:
+  schedule: "*/45 * * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        metadata:
+          annotations:
+            botkube.io/disable: "true"
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: arr-list-sync-sonarr
+              image: curlimages/curl
+              args:
+                - "/bin/sh"
+                - "-ec"
+                - |
+                  curl --fail -d '{"name": "ImportListSync"}' -H "Content-Type: application/json" -X POST http://sonarr:8989/api/v3/command/?apikey=${SECRET_SONARR_API_KEY}
+            - name: arr-list-sync-radarr
+              image: curlimages/curl
+              args:
+                - "/bin/sh"
+                - "-ec"
+                - |
+                  curl --fail -d '{"name": "ImportListSync"}' -H "Content-Type: application/json" -X POST http://radarr:7878/api/v3/command/?apikey=${SECRET_RADARR_API_KEY}
+            - name: arr-list-sync-readarr
+              image: curlimages/curl
+              args:
+                - "/bin/sh"
+                - "-ec"
+                - |
+                  curl --fail -d '{"name": "ImportListSync"}' -H "Content-Type: application/json" -X POST http://readarr:8787/api/v1/command/?apikey=${SECRET_READARR_API_KEY}
+                  curl --fail -d '{"name": "ImportListSync"}' -H "Content-Type: application/json" -X POST http://readarr-audiobooks:8787/api/v1/command/?apikey=${SECRET_READARR_AUDIOBOOKS_API_KEY}

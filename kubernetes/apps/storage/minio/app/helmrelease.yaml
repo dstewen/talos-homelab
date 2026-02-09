@@ -1,0 +1,170 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app minio
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - arm64
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: In
+                values:
+                - worker
+    controllers:
+      minio:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: quay.io/minio/minio
+              tag: RELEASE.2024-09-22T00-33-43Z@sha256:7d80fd232a2f7108aa6f133fcfe5fade3f1626d92d31ae1318076e7aa61928a2
+            env:
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.davidstewen.com,https://s3.davidstewen.com
+              MINIO_BROWSER_REDIRECT_URL: https://minio.davidstewen.com
+              MINIO_PROMETHEUS_JOB_ID: minio
+              MINIO_PROMETHEUS_URL: https://prometheus.davidstewen.com
+              MINIO_PROMETHEUS_AUTH_TYPE: public
+              MINIO_SERVER_URL: https://s3.davidstewen.com
+              MINIO_UPDATE: "off"
+            envFrom:
+              - secretRef:
+                  name: minio-secret
+              - secretRef:
+                  name: cluster-secrets
+            args:
+              - server
+              - /data
+              - --console-address
+              - :9001
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /minio/health/live
+                    port: 9000
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 6
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              fsGroup: 568
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups: [100]
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 100m
+              limits:
+                memory: 2Gi
+    service:
+      app:
+        controller: minio
+        ports:
+          http:
+            primary: true
+            port: &consolePort 9001
+          s3:
+            port: &apiPort 9000
+    serviceMonitor:
+      app:
+        serviceName: minio
+        endpoints:
+          - port: s3
+            scheme: http
+            path: /minio/v2/metrics/cluster
+            interval: 1m
+            scrapeTimeout: 10s
+#    ingress:
+#      app:
+#        enabled: true
+#        className: internal
+#        annotations:
+#          external-dns.alpha.kubernetes.io/target: internal.davidstewen.com
+#        hosts:
+#          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#          - host: &s3Host s3.${SECRET_DOMAIN}
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: s3
+#        tls:
+#          - hosts:
+#              - *host
+#              - *s3Host
+
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Storage
+          gethomepage.dev/name: Minio
+          gethomepage.dev/icon: sh-minio
+          gethomepage.dev/description: "Minio on Talos"
+        hostnames: ["minio.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *consolePort
+      s3:
+        hostnames: ["s3.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *apiPort
+
+
+    persistence:
+      data:
+        enabled: true
+        type: nfs
+        server: 192.168.10.15
+        path: /volume2/piNFS01/flux-cluster/minio/
+        globalMounts:
+          - path: /data

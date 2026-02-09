@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+components:
+  - ../../components/common
+resources:
+  # Flux-Kustomizations
+  - ./actual-budget-exporter/ks.yaml
+  - ./alloy/ks.yaml
+#  - ./cloudflare-exporter/ks.yaml
+  - ./frigate-exporter/ks.yaml
+  - ./grafana/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+#  - ./kubernetes-dashboard/ks.yaml
+  - ./loki/ks.yaml
+#  - ./netdata/ks.yaml
+#  - ./node-problem-detector/ks.yaml
+  - ./nut-exporter/ks.yaml
+  - ./opnsense-exporter/ks.yaml
+  - ./pihole-exporter/ks.yaml
+#  - ./promtail/ks.yaml
+#  - ./qbittorrent-exporter/ks.yaml
+  - ./rsyslog/ks.yaml
+  - ./smartctl-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
+#  - ./snmp-exporter-aggregate/ks.yaml
+#  - ./snmp-exporter-pdu/ks.yaml
+#  - ./snmp-exporter-s3400-48t6sp/ks.yaml
+#  - ./snmp-exporter-s3700-24t4f/ks.yaml
+#  - ./snmp-exporter-synology-nas/ks.yaml
+#  - ./snmp-exporter-t1500g-10mps/ks.yaml
+#  - ./snmp-generator/ks.yaml
+  - ./speedtest-exporter/ks.yaml
+  - ./unpoller/ks.yaml

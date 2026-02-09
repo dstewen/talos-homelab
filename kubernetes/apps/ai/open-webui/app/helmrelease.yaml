@@ -1,0 +1,135 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app open-webui
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      open-webui:
+        type: statefulset
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6.0
+            envFrom:
+              - secretRef:
+                  name: open-webui-secret
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/open-webui/open-webui
+              tag: 0.7.2
+
+            env:
+              GLOBAL_LOG_LEVEL: DEBUG
+              OLLAMA_BASE_URL: http://ollama.ai.svc.cluster.local:11434
+              ENABLE_RAG_WEB_SEARCH: true
+              RAG_WEB_SEARCH_ENGINE: searxng
+              SEARXNG_QUERY_URL: http://searxng.selfhosted.svc.cluster.local:8080/search?q=<query>
+              ENABLE_REALTIME_CHAT_SAVE: true
+              # Redis
+              # https://docs.openwebui.com/getting-started/advanced-topics/env-configuration/#redis
+              ENABLE_WEBSOCKET_SUPPORT: true
+              WEBSOCKET_MANAGER: "redis"
+              WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
+              # Vector DB
+              VECTOR_DB: qdrant
+              QDRANT_URI: http://qdrant.ai.svc.cluster.local:6333
+#              AUDIO_OPENAI_API_BASE_URL: https://piper.${SECRET_DOMAIN}/v1
+              AUDIO_OPENAI_API_KEY: sk-111111111111 # fake key needed to make ui happy
+              ENABLE_OPENAI_API: true
+              OPENAI_API_BASE_URL: http://open-webui-pipelines.ai.svc.cluster.local:9099
+              OPENAI_API_KEY: "0p3n-w3bu!"
+              ENABLE_OAUTH_SIGNUP: true
+              ENABLE_OAUTH_GROUP_MANAGEMENT: true
+              ENABLE_OAUTH_GROUP_CREATION: true
+              OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
+              OAUTH_PROVIDER_NAME: Authentik
+              OAUTH_SCOPES: "openid email profile"
+              TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: open-webui-secret
+              - secretRef:
+                  name: cluster-secrets
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+
+    service:
+      app:
+        controller: open-webui
+        ports:
+          http:
+            port: 8080
+
+#    ingress:
+#      app:
+#        enabled: true
+#        className: internal
+#        annotations:
+#          hajimari.io/appName: "Open Web UI"
+#          hajimari.io/enable: "true"
+#          hajimari.io/instance: "admin"
+#          hajimari.io/group: "AI"
+#
+##          nginx.ingress.kubernetes.io/affinity: "cookie"
+##          nginx.ingress.kubernetes.io/session-cookie-name: "route"
+##          nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+##          nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+#          nginx.ingress.kubernetes.io/proxy-body-size: "4096m"
+#        hosts:
+#          - host: &host "open-webui.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - hosts:
+#              - *host
+
+    route:
+      app:
+        annotations:
+          hajimari.io/appName: "Open Web UI"
+          hajimari.io/enable: "true"
+          hajimari.io/group: "AI"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: AI
+          gethomepage.dev/name: Open WebUI
+          gethomepage.dev/icon: open-webui.png
+        enabled: true
+        hostnames: ["open-webui.davidstewen.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+
+    persistence:
+      config:
+        existingClaim: open-webui-data
+        globalMounts:
+          - path: /app/backend/data

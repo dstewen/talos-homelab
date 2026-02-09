@@ -1,0 +1,152 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authentik
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: authentik
+  values:
+    global:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: &secret authentik-secret
+      deploymentStrategy:
+        type: RollingUpdate
+      envFrom:
+        - secretRef:
+            name: *secret
+      addPrometheusAnnotations: false
+#      nodeSelector:
+#        node-role.kubernetes.io/worker: worker
+#      affinity:
+#        nodeAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#            nodeSelectorTerms:
+#            - matchExpressions:
+#              - key: node-role.kubernetes.io/worker
+#                operator: In
+#                values:
+#                - worker
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#          - weight: 50
+#            preference:
+#              matchExpressions:
+#              - key: kubernetes.io/arch
+#                operator: In
+#                values:
+#                - arm64
+
+    authentik:
+      log_level: info
+      avatars: "gravatar,initials"
+      email:
+        host: smtp-relay.home.svc.cluster.local
+        port: 2525
+        from: "Access <dstewen@internode.on.net>"
+      error_reporting:
+        enable: false
+        send_pii: false
+      redis:
+        host: dragonfly.database.svc.cluster.local
+        db: 4
+    prometheus:
+      rules:
+        enabled: true
+    server:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+      autoscaling:
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 3
+#        targetCPUUtilizationPercentage: 50
+      pdb:
+        enabled: true
+        minAvailable: 1
+        maxUnavailable: 1
+      initContainers:
+        - name: init-db
+          image: ghcr.io/home-operations/postgres-init:17.6.0
+          envFrom:
+            - secretRef:
+                name: *secret
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      startupProbe:
+        initialDelaySeconds: 60
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          cpu: 2000m
+          memory: 2Gi
+      ingress:
+        enabled: false
+#      ingress:
+#        enabled: true
+#        ingressClassName: internal
+#        annotations:
+#          hajimari.io/enable: "true"
+#          hajimari.io/icon: simple-icons:webauthn
+#          hajimari.io/group: Security
+#          hajimari.io/appName: Authentik
+#          hajimari.io/url: "https://id.${SECRET_DOMAIN}"
+#          gethomepage.dev/enabled: "true"
+#          gethomepage.dev/icon: authentik.png
+#          gethomepage.dev/name: Authentik
+#          gethomepage.dev/group: Infrastructure
+#          gethomepage.dev/description: OIDC User Management
+##          gethomepage.dev/widget.type: authentik
+##          gethomepage.dev/widget.url: http://authentik-server.security.svc.cluster.local:9000
+##          gethomepage.dev/widget.key: "{{AUTHENTIK_HOMEPAGE_TOKEN}}"
+#          gethomepage.dev/pod-selector: app.kubernetes.io/name=authentik
+#          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
+#        hosts:
+#          - "id.${SECRET_DOMAIN}"
+#        https: false
+
+    worker:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+      autoscaling:
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 3
+#        targetCPUUtilizationPercentage: 50
+      pdb:
+        enabled: true
+        minAvailable: 1
+        maxUnavailable: 1
+      startupProbe:
+        initialDelaySeconds: 60
+      resources:
+        requests:
+          cpu: 500m
+          memory: 300M
+        limits:
+          cpu: 2000m
+          memory: 2Gi
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true

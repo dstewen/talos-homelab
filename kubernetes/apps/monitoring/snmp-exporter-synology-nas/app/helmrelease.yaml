@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app snmp-exporter-synology-nas
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: snmp-exporter
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: monitoring
+  values:
+    fullnameOverride: *app
+    image:
+      repository: quay.io/prometheus/snmp-exporter
+#    extraArgs:
+#      - "--config.file=/config/snmp.yaml"
+#      - "--config.file=/run/secrets/snmp-exporter/auth.yaml"
+#    extraConfigmapMounts:
+#      - name: *app
+#        mountPath: /config/snmp.yaml
+#        subPath: snmp.yaml
+#        configMap: *app
+#        readOnly: true
+#        defaultMode: 420
+#    extraSecretMounts:
+#      - name: *app
+#        mountPath: /run/secrets/snmp-exporter
+#        secretName: secret-synology-auth
+#        readOnly: true
+#        defaultMode: 420
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: *app
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        memory: 32Mi
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      params:
+        - name: synology-nas-0
+          module:
+            - synology
+          target: 192.168.10.15
+        - name: s3400-48t6sp-0
+          target: 192.168.10.3
+          module:
+            - if_mib
+          auth: [public_v2]
+      path: /snmp
+      scrapeTimeout: 30s
+#      scrapeInterval: 60s
+      relabelings:
+#        - source_labels: [__address__]
+#          target_label: __param_target
+        - sourceLabels: [__param_target]
+          targetLabel: instance
+#        - target_label: __address__
+#          replacement: synology-nas-snmp-exporter:9116
+#    nodeSelector:
+#      node-role.kubernetes.io/worker: worker
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: node-role.kubernetes.io/worker
+              operator: In
+              values:
+              - worker
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 50
+          preference:
+            matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - arm64

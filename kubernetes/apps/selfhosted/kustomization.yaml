@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: selfhosted
+components:
+  - ../../components/common
+resources:
+  # Flux-Kustomizations
+#  - ./atuin/ks.yaml
+  - ./it-tools/ks.yaml
+  - ./n8n/ks.yaml
+  - ./searxng/ks.yaml
+  - ./wiki/ks.yaml

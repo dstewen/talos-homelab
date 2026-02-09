@@ -1,0 +1,130 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ollama
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+    timeout: 15m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+
+  values:
+    controllers:
+      ollama:
+        replicas: 1 # 1 per node
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ollama/ollama
+              tag: 0.15.6
+            securityContext:
+              privileged: true
+            env:
+              TZ: Australia/Melbourne
+              #LIBVA_DRIVER_NAME: i965
+#              no_proxy: localhost,127.0.0.1
+#              OLLAMA_HOST: 0.0.0.0
+#              DEVICE: Arc
+#              OLLAMA_INTEL_GPU: true
+#              OLLAMA_NUM_GPU: 999
+#              ZES_ENABLE_SYSMAN: 1
+#              OLLAMA_ORIGINS: "*"
+#              OLLAMA_LOG_LEVEL: debug
+#              OLLAMA_MODELS: /models
+#              OLLAMA_NUM_CTX: 16384
+#              OLLAMA_NUM_PARALLEL: 1
+#              ONEAPI_DEVICE_SELECTOR: level_zero:0
+#              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
+            resources:
+              requests:
+                cpu: 2000m
+              limits:
+                memory: 16G
+                gpu.intel.com/i915: "1"
+
+        pod:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: intel.feature.node.kubernetes.io/gpu
+                        operator: In
+                        values:
+                          - "true"
+
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
+
+    service:
+      app:
+        controller: ollama
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_OLLAMA_ADDR}
+        ports:
+          http:
+            port: &port 11434
+
+#    ingress:
+#      app:
+#        className: internal
+#        hosts:
+#          - host: &host ollama.${SECRET_DOMAIN}
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: *port
+
+    route:
+      app:
+        hostnames: ["ollama.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+
+    persistence:
+      data:
+        existingClaim: ollama-data-pvc
+        advancedMounts:
+          ollama:
+            main:
+              - path: /.ollama
+
+      tmp:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        globalMounts:
+          - path: /tmp
+
+      models:
+        type: nfs
+        server: ${NAS_IP}
+        path: /volume2/piNFS01/flux-cluster/ollama/models
+        globalMounts:
+          - path: /models
+
+      dri:
+        type: hostPath
+        hostPath: /dev/dri

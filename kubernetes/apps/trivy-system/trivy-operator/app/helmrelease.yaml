@@ -1,0 +1,120 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: trivy-operator
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: trivy-operator
+      version: 0.31.0
+      sourceRef:
+        kind: HelmRepository
+        name: aqua
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    excludeNamespaces: "{{ .Release.Namespace }}"
+    operator:
+      replicas: 1
+      scanJobsConcurrentLimit: 3
+      scanJobTimeout: 15m
+      scanJobTTL: 10s
+      scanJobCompressLogs: false
+      builtInTrivyServer: true
+      metricsVulnIdEnabled: true
+      vulnerabilityScannerScanOnlyCurrentRevisions: true
+      configAuditScannerScanOnlyCurrentRevisions: true
+    trivy:
+      ignoreUnfixed: true
+      mode: ClientServer
+      storageClassName: openebs-hostpath
+
+      slow: true
+      # -- resources resource requests and limits for scan job containers
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100M
+      # Defaults to 500m CPU and 500M memory limit
+        limits:
+          cpu: 500m
+          memory: 1000M
+
+    nodeCollector:
+      # -- node-collector pod volume mounts definition for collecting config files information
+      volumeMounts:
+        - name: var-lib-etcd
+          mountPath: /var/lib/etcd
+          readOnly: true
+        - name: var-lib-kubelet
+          mountPath: /var/lib/kubelet
+          readOnly: true
+        - name: var-lib-kube-scheduler
+          mountPath: /var/lib/kube-scheduler
+          readOnly: true
+        - name: var-lib-kube-controller-manager
+          mountPath: /var/lib/kube-controller-manager
+          readOnly: true
+#        - name: etc-systemd
+#          mountPath: /etc/systemd
+#          readOnly: true
+#        - name: lib-systemd
+#          mountPath: /lib/systemd/
+#          readOnly: true
+        - name: etc-kubernetes
+          mountPath: /etc/kubernetes
+          readOnly: true
+        - name: etc-cni-netd
+          mountPath: /etc/cni/net.d/
+          readOnly: true
+
+      # -- node-collector pod volumes definition for collecting config files information
+      volumes:
+        - name: var-lib-etcd
+          hostPath:
+            path: /var/lib/etcd
+        - name: var-lib-kubelet
+          hostPath:
+            path: /var/lib/kubelet
+        - name: var-lib-kube-scheduler
+          hostPath:
+            path: /var/lib/kube-scheduler
+        - name: var-lib-kube-controller-manager
+          hostPath:
+            path: /var/lib/kube-controller-manager
+#        - name: etc-systemd
+#          hostPath:
+#            path: /etc/systemd
+#        - name: lib-systemd
+#          hostPath:
+#            path: /lib/systemd
+        - name: etc-kubernetes
+          hostPath:
+            path: /etc/kubernetes
+        - name: etc-cni-netd
+          hostPath:
+            path: /etc/cni/net.d/
+
+    serviceMonitor:
+      enabled: true
+      namespace: trivy-system
+#    trivyOperator:
+#      scanJobNodeSelector:
+#        node-role.kubernetes.io/worker: worker
+#    nodeSelector:
+#      node-role.kubernetes.io/worker: worker

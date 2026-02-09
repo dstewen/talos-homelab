@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app tdarr-node-arm64
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: tdarr
+      namespace: media
+  values:
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: In
+                values:
+                - worker
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - arm64
+      securityContext:
+#        runAsUser: 0
+#        runAsGroup: 0
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+#          - 44 # video
+#          - 125 # render
+#          - 105 # render
+          - 568
+    controllers:
+      tdarr-node-arm64:
+        replicas: 2 # Set to 2 arm64 nodes. Tdarr free license limits nodes to 5 maximum
+        strategy: RollingUpdate
+        containers:
+          node:
+            image:
+              repository: haveagitgat/tdarr_node
+              tag: 2.58.02@sha256:62e14509bc19dea9b6f5dc85d0942163b6fa240d780a53eb590d894d46c9e1f2
+            env:
+            - name: nodeID
+              value: kube-node-arm64
+            - name: serverIP
+              value: 10.200.15.242
+            - name: serverPort
+              value: 8266
+            resources:
+              requests:
+                cpu: 100m
+                memory: 64Mi
+              limits:
+#                cpu: 1000m
+                memory: 512Mi
+    service:
+      app:
+        controller: *app
+        enabled: false
+    persistence:
+      cache:
+        type: nfs
+        server: ${NAS_IP:=temp}
+        path: "/volume2/piNFS01/flux-cluster/tdarr/cache"
+        globalMounts:
+          - path: /cache
+
+      movies:
+        type: nfs
+        server: ${NAS_IP:=temp}
+        path: /volume2/piNFS01/flux-cluster/media_new/media/Movies
+        globalMounts:
+          - path: /mnt/movies
+
+      output:
+        type: nfs
+        server: ${NAS_IP:=temp}
+        path: /volume2/piNFS01/flux-cluster/tdarr/output
+        globalMounts:
+          - path: /output
+
+      tv:
+        type: nfs
+        server: ${NAS_IP:=temp}
+        path: "/volume2/piNFS01/flux-cluster/media_new/media/Recorded TV Shows"
+        globalMounts:
+          - path: /mnt/recorded-tv
+
+      other-videos:
+        type: nfs
+        server: ${NAS_IP:=temp}
+        path: "/volume2/piNFS01/flux-cluster/media_new/media/Other Videos"
+        globalMounts:
+          - path: /mnt/other-videos

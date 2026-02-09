@@ -1,0 +1,118 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app it-tools
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: it-tools
+
+  values:
+
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - arm64
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: In
+                values:
+                - worker
+
+    controllers:
+      it-tools:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/bjw-s-labs/it-tools
+              tag: 2024.10.22@sha256:4dfe650a4be1e13d59e37f2b2aa6b8faf915c8afb53a379ea5eaaba679a0a456
+            env:
+              TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: cluster-secrets
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+
+    service:
+      app:
+        controller: it-tools
+        ports:
+          http:
+            port: &port 8080
+
+#    ingress:
+#      app:
+#        className: "internal"
+#        annotations:
+#          external-dns.alpha.kubernetes.io/target: internal.davidstewen.com
+#          gethomepage.dev/enabled: "true"
+#          gethomepage.dev/icon: it-tools.png
+#          gethomepage.dev/name: IT Tools
+#          gethomepage.dev/group: Selfhosted
+#          gethomepage.dev/href: https://it-tools.${SECRET_DOMAIN}
+#          hajimari.io/enable: "true"
+#          hajimari.io/icon: mdi:it-tools
+#          hajimari.io/group: Selfhosted
+#          hajimari.io/url: https://it-tools.${SECRET_DOMAIN}
+#        hosts:
+#          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - hosts:
+#              - *host
+
+    route:
+      app:
+        hostnames: ["it-tools.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      tmp:
+        type: emptyDir
