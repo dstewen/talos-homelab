@@ -17,10 +17,10 @@ spec:
       namespace: volsync
   components:
     - ../../../../components/volsync
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: "./kubernetes/apps/media/tdarr/app"
   prune: true
   sourceRef:
@@ -56,10 +56,10 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: "./kubernetes/apps/media/tdarr/node-amd64"
   prune: true
   sourceRef:
@@ -91,10 +91,10 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: "./kubernetes/apps/media/tdarr/node-arm64"
   prune: true
   sourceRef:
