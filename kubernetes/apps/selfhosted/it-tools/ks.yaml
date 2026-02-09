@@ -10,10 +10,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: "./kubernetes/apps/selfhosted/it-tools/app"
   prune: true
   sourceRef:
