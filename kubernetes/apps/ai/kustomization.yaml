@@ -5,14 +5,14 @@ kind: Kustomization
 namespace: ai
 components:
   - ../../components/sops
-resources: []
+resources:
   # Flux-Kustomizations
 #  - ./boinc-amd64/ks.yaml
 #  - ./boinc-arm64/ks.yaml
 #  - ./localai/ks.yaml
 #  - ./k8sgpt/ks.yaml
-#  - ./ollama/ks.yaml
-#  - ./open-webui/ks.yaml
+  - ./ollama/ks.yaml
+  - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
-#  - ./qdrant/ks.yaml
+  - ./qdrant/ks.yaml
 #  - ./stable-diffusion/ks.yaml
