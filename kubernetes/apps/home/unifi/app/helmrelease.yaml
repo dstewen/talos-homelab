@@ -168,8 +168,8 @@ spec:
 #          gethomepage.dev/widget.url: http://unifitalos:8080
         hostnames: ["unifitalos.${SECRET_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

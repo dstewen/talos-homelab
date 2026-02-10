@@ -141,8 +141,8 @@ spec:
           gethomepage.dev/description: "Minio on Talos"
         hostnames: ["minio.${SECRET_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -151,8 +151,8 @@ spec:
       s3:
         hostnames: ["s3.${SECRET_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

@@ -84,8 +84,8 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.davidstewen.com"
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     persistence:
       config-file:

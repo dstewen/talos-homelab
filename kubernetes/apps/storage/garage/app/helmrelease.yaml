@@ -53,8 +53,8 @@ spec:
       app:
         hostnames: ["s3-garage.davidstewen.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
