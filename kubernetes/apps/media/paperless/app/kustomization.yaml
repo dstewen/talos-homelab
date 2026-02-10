@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
 #  - ./pvc.yaml
 #  - ./volsync_backblazeb2.yaml
 #  - ./volsync_backblazeb2_openebs_local.yaml

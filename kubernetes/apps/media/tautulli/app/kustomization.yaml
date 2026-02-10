@@ -6,4 +6,5 @@ resources:
   - ./helmrelease.yaml
 #  - ./volsync.yaml
 #  - ./gatus.yaml
+  - ./ocirepository.yaml
   - ./pvc.yaml
