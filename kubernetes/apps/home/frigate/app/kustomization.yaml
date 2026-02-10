@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecrets.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
 #  - ../../../../templates/volsync
 #  - ./volume.yaml
 configMapGenerator:

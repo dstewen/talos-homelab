@@ -4,6 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
 #  - ./volsync_backblazeb2.yaml
 #  - ./volsync_backblazeb2_openebs_local.yaml
 #  - ./volsync_nas.yaml
