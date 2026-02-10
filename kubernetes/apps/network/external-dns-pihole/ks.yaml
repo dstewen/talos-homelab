@@ -8,10 +8,10 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+#  decryption:
+#    provider: sops
+#    secretRef:
+#      name: sops-age
   path: ./kubernetes/apps/network/external-dns-pihole
   postBuild:
     substituteFrom:
