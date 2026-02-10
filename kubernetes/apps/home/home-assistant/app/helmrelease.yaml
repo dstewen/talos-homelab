@@ -156,8 +156,8 @@ spec:
       app:
         hostnames: ["home-assistant.davidstewen.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -167,8 +167,8 @@ spec:
       codeserver:
         hostnames: ["hass-code.davidstewen.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
