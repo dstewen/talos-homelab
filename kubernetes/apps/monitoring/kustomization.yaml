@@ -10,14 +10,14 @@ resources:
   - ./actual-budget-exporter/ks.yaml
   - ./alloy/ks.yaml
 #  - ./cloudflare-exporter/ks.yaml
-  - ./frigate-exporter/ks.yaml
+#  - ./frigate-exporter/ks.yaml
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
 #  - ./kubernetes-dashboard/ks.yaml
   - ./loki/ks.yaml
 #  - ./netdata/ks.yaml
 #  - ./node-problem-detector/ks.yaml
-  - ./nut-exporter/ks.yaml
+#  - ./nut-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
 #  - ./pihole-exporter/ks.yaml
 #  - ./promtail/ks.yaml
