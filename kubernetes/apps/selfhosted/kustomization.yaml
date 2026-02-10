@@ -5,10 +5,10 @@ kind: Kustomization
 namespace: selfhosted
 components:
   - ../../components/sops
-resources: []
+resources:
   # Flux-Kustomizations
 #  - ./atuin/ks.yaml
-#  - ./it-tools/ks.yaml
-#  - ./n8n/ks.yaml
-#  - ./searxng/ks.yaml
-#  - ./wiki/ks.yaml
+  - ./it-tools/ks.yaml
+  - ./n8n/ks.yaml
+  - ./searxng/ks.yaml
+  - ./wiki/ks.yaml
