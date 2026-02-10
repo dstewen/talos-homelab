@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./servicemonitor.yaml
 configMapGenerator:
   - name: actual-budget-exporter
