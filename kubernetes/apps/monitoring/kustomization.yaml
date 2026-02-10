@@ -32,5 +32,5 @@ resources:
 #  - ./snmp-exporter-synology-nas/ks.yaml
 #  - ./snmp-exporter-t1500g-10mps/ks.yaml
 #  - ./snmp-generator/ks.yaml
-#  - ./speedtest-exporter/ks.yaml
+  - ./speedtest-exporter/ks.yaml
   - ./unpoller/ks.yaml
