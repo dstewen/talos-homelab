@@ -14,7 +14,7 @@ resources:
 #  - ./calibre/ks.yaml
 #  - ./calibre-web/ks.yaml
 #  - ./immich/ks.yaml
-  - ./lidarr/ks.yaml
+#  - ./lidarr/ks.yaml
 #  - ./maintainerr/ks.yaml
   - ./overseerr/ks.yaml
 #  - ./paperless/ks.yaml
@@ -22,10 +22,10 @@ resources:
 #  - ./plex/ks.yaml
   - ./prowlarr/ks.yaml
 #  - ./qbittorrent/ks.yaml
-  - ./radarr/ks.yaml
-  - ./radarr-uhd/ks.yaml
+#  - ./radarr/ks.yaml
+#  - ./radarr-uhd/ks.yaml
 #  - ./sabnzbd/ks.yaml
-  - ./sonarr/ks.yaml
+#  - ./sonarr/ks.yaml
   - ./tautulli/ks.yaml
 #  - ./tdarr/ks.yaml
   - ./whisparr/ks.yaml
