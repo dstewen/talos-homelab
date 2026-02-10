@@ -20,7 +20,7 @@ resources:
 #  - ./paperless/ks.yaml
 #  - ./paperless-scan/ks.yaml
 #  - ./plex/ks.yaml
-#  - ./prowlarr/ks.yaml
+  - ./prowlarr/ks.yaml
 #  - ./qbittorrent/ks.yaml
 #  - ./radarr/ks.yaml
 #  - ./radarr-uhd/ks.yaml
