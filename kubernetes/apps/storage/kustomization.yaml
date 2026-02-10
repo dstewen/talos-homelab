@@ -8,8 +8,8 @@ components:
 resources:
   # Flux-Kustomizations
 #  - ./democratic-csi-iscsi-synology/ks.yaml
-  - ./garage/ks.yaml
+#  - ./garage/ks.yaml
 #  - ./local-path-provisioner/ks.yaml
-  - ./minio/ks.yaml
+#  - ./minio/ks.yaml
 #  - ./synology-csi/ks.yaml
   - ./snapshot-controller/ks.yaml
