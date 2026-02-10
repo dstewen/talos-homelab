@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
 #  - ./networkpolicy.yaml
+  - ./ocirepository.yaml
   - ./pvc.yaml
 configMapGenerator:
   - name: openwebui-pipelines-requirements-configmap
