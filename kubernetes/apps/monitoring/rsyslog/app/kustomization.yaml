@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 #  - ./pvc.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
 configMapGenerator:
   - name: rsyslog-configmap
     files:
