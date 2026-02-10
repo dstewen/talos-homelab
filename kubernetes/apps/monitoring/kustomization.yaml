@@ -7,7 +7,7 @@ components:
   - ../../components/sops
 resources:
   # Flux-Kustomizations
-#  - ./actual-budget-exporter/ks.yaml
+  - ./actual-budget-exporter/ks.yaml
   - ./alloy/ks.yaml
 #  - ./cloudflare-exporter/ks.yaml
   - ./frigate-exporter/ks.yaml
@@ -18,7 +18,7 @@ resources:
 #  - ./netdata/ks.yaml
 #  - ./node-problem-detector/ks.yaml
   - ./nut-exporter/ks.yaml
-#  - ./opnsense-exporter/ks.yaml
+  - ./opnsense-exporter/ks.yaml
   - ./pihole-exporter/ks.yaml
 #  - ./promtail/ks.yaml
 #  - ./qbittorrent-exporter/ks.yaml
