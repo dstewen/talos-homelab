@@ -36,8 +36,11 @@ spec:
       APP: *app
       APP_UID: "1000"
       APP_GID: "1000"
-      VOLSYNC_CLAIM: esphome-config
+      VOLSYNC_CLAIM: esphome
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
