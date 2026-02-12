@@ -20,10 +20,10 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
-        fsGroup: 2000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 2000
-        runAsUser: 2000
+        runAsGroup: 1000
+        runAsUser: 0
     controllers:
       esphome:
         annotations:
