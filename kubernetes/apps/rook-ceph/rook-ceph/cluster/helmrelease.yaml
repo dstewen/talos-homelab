@@ -78,7 +78,7 @@ spec:
         provider: host
         connections:
           compression:
-            # TODO: Test out enabling this on next cluster rebuild
+            # TODO: Disable compression and enable cephClusterSpec.network.connections.requireMsgr2
             enabled: true
       crashCollector:
         disable: false
