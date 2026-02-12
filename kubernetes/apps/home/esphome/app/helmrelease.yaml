@@ -18,16 +18,29 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 1000
-        runAsUser: 0
     controllers:
       esphome:
         annotations:
           secret.reloader.stakater.com/reload: esphome-secrets,esphome-deploykey
+
+        pod:
+          # annotations:
+          #   # DO NOT ENABLE
+          #   # Enabling this adds an extra default route to the container. My IoT network is locked down tight and results in failed external DNS lookups
+          #   # k8s.v1.cni.cncf.io/networks: home-automation-iot-dhcp
+          #   k8s.v1.cni.cncf.io/networks: |
+          #     [{
+          #       "name":"multus-iot",
+          #       "namespace": "network",
+          #       "ips": ["10.10.100.12/24"],
+          #       "mac": "aa:e9:02:a4:7e:78"
+          #     }]
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
         containers:
           app:
             image:
@@ -35,17 +48,20 @@ spec:
               tag: 2026.1.5@sha256:a65c74832cde93bd12685529ff837649386bb34a6cba8b99f1ad16dd8286c5aa
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             resources:
               requests:
                 cpu: 5m
                 memory: 512Mi
               limits:
-                memory: 3072Mi
+                memory: 8Gi
 #            securityContext:
 #              allowPrivilegeEscalation: false
 #              readOnlyRootFilesystem: true
