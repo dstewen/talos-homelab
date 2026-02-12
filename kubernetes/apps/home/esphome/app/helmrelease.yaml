@@ -46,12 +46,12 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 3072Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+#            securityContext:
+#              allowPrivilegeEscalation: false
+#              readOnlyRootFilesystem: true
+#              capabilities:
+#                drop:
+#                  - ALL
           code-server:
             image:
               repository: ghcr.io/coder/code-server
