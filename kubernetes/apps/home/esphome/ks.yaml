@@ -15,8 +15,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../../components/volsync
+  components:
+    - ../../../../components/volsync
 #  decryption:
 #    provider: sops
 #    secretRef:
@@ -34,13 +34,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      APP_UID: "1000"
-      APP_GID: "1000"
-      VOLSYNC_CLAIM: esphome
+      VOLSYNC_CLAIM: esphome-config
       VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_ACCESSMODES: ReadWriteMany
-      VOLSYNC_STORAGECLASS: ceph-filesystem
-      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
