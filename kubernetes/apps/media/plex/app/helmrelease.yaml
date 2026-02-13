@@ -43,7 +43,7 @@ spec:
               - secretRef:
                   name: cluster-secrets
               - secretRef:
-                  name: plex-secrets
+                  name: plex-secret
             probes:
               liveness: &probes
                 enabled: true
