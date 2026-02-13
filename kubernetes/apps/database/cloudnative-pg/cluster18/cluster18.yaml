@@ -20,13 +20,14 @@ spec:
       source: &previousCluster postgres18-v1
       recoveryTarget:
         targetTime: "2026-01-18T00:00:00+11:00"
-#    initdb:
-#      import:
-#        type: monolith
-#        databases: ["*"]
-#        roles: ["*"]
-#        source:
-#          externalCluster: postgres17
+# Enable below to import from pg17
+    initdb:
+      import:
+        type: monolith
+        databases: ["*"]
+        roles: ["*"]
+        source:
+          externalCluster: postgres17
   postgresql:
     parameters:
       max_connections: "600"
@@ -86,14 +87,14 @@ spec:
 #          secretAccessKey:
 #            name: cloudnative-pg-secret
 #            key: aws-secret-access-key
-#    - name: postgres17
-#      connectionParameters:
-#        host: postgres17-rw.database.svc.cluster.local
-#        user: postgres
-#        dbname: postgres
-#      password:
-#        name: cloudnative-pg-secret
-#        key: password
+    - name: postgres17
+      connectionParameters:
+        host: postgres17-rw.database.svc.cluster.local
+        user: postgres
+        dbname: postgres
+      password:
+        name: cloudnative-pg-secret
+        key: password
 #  affinity:
 #    nodeAffinity:
 #      requiredDuringSchedulingIgnoredDuringExecution:
