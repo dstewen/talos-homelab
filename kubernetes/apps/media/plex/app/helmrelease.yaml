@@ -42,6 +42,8 @@ spec:
             envFrom:
               - secretRef:
                   name: cluster-secrets
+              - secretRef:
+                  name: plex-secrets
             probes:
               liveness: &probes
                 enabled: true
