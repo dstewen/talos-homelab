@@ -45,7 +45,7 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters: &parameters
-        barmanObjectName: minio
+        barmanObjectName: minio-pg18
         serverName: postgres18-v2
 
 #  backup:
