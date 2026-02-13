@@ -16,10 +16,11 @@ spec:
   enableSuperuserAccess: true
 # Note: Bootstrap is needed when recovering from an existing cnpg cluster
   bootstrap:
-    recovery:
-      source: &previousCluster postgres18-v1
-      recoveryTarget:
-        targetTime: "2026-01-18T00:00:00+11:00"
+# Enable blow when restoring from minio backups
+#    recovery:
+#      source: &previousCluster postgres18-v1
+#      recoveryTarget:
+#        targetTime: "2026-01-18T00:00:00+11:00"
 # Enable below to import from pg17
     initdb:
       import:
