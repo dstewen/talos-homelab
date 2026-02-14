@@ -13,7 +13,7 @@ resources:
 #  - ./bazarr/ks.yaml
 #  - ./calibre/ks.yaml
 #  - ./calibre-web/ks.yaml
-#  - ./immich/ks.yaml
+  - ./immich/ks.yaml
   - ./lidarr/ks.yaml
 #  - ./maintainerr/ks.yaml
   - ./overseerr/ks.yaml
