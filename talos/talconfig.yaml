@@ -67,6 +67,32 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.200.15.254"
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.51"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
@@ -122,6 +148,32 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.200.15.254"
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.52"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
@@ -177,6 +229,32 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.200.15.254"
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.53"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
@@ -206,6 +284,32 @@ nodes:
             gateway: "10.200.15.1"
             metric: 1
         mtu: 1500
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.35"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
@@ -235,6 +339,32 @@ nodes:
             gateway: "10.200.15.1"
             metric: 1
         mtu: 1500
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.36"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
@@ -264,6 +394,32 @@ nodes:
             gateway: "10.200.15.1"
             metric: 1
         mtu: 1500
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.37"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
@@ -293,6 +449,32 @@ nodes:
             gateway: "10.200.15.1"
             metric: 1
         mtu: 1500
+        vlans:
+          # DO NOT ADD vlan15 to the host
+          # As the ports are native to vlan15 while passing traffic for others
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+#          # IOT VLAN
+#          - vlanId: 100
+#            dhcp: false
+#            mtu: 1500
+#            addresses:
+#              - "172.16.20.38"
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: "172.16.20.1"
+#            dhcpOptions:
+#              routeMetric: 4096
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
     extensionServices:
       - name: nut-client
         configFiles:
