@@ -100,7 +100,7 @@ spec:
 
     service:
       app:
-        controller: main
+        controller: *app
         ports:
           http:
             port: &httpPort 2283
