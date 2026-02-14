@@ -3,13 +3,13 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: postgres18
+  name: postgres-vector
 spec:
   schedule: "0 0 2 * * *"   # Daily, 2:00 UTC
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: postgres18
+    name: postgres-vector
   method: plugin
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io

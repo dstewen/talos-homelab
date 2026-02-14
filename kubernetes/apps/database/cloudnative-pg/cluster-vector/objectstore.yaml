@@ -3,12 +3,12 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: minio-pg18
+  name: minio-pg18-vector
 spec:
   configuration:
     data:
       compression: bzip2
-    destinationPath: s3://cnpg-v18-backups/
+    destinationPath: s3://cnpg-v18-vector-backups/
     endpointURL: http://192.168.10.198:9000
     s3Credentials:
       accessKeyId:

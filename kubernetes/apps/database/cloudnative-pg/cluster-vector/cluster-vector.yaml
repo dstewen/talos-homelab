@@ -19,7 +19,8 @@ spec:
   enableSuperuserAccess: true
   postgresql:
     parameters:
-      max_connections: "400"
+      max_connections: "600"
+      max_slot_wal_keep_size: 10GB
       shared_buffers: 512MB
     extensions:
       - name: vchord
@@ -34,16 +35,15 @@ spec:
     requests:
       cpu: 500m
     limits:
-      hugepages-2Mi: 2Gi
       memory: 4Gi
   monitoring:
-    enablePodMonitor: true
+    enablePodMonitor: false
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters: &parameters
-        barmanObjectName: garage-vector
-        serverName: postgres-vector
+        barmanObjectName: minio-pg18-vector
+        serverName: postgres-vector-v1
 #  bootstrap:
 #    recovery:
 #      source: source
