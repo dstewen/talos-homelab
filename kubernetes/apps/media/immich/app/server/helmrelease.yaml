@@ -37,7 +37,7 @@ spec:
 #                values:
 #                - worker
     controllers:
-      main:
+      immich:
         replicas: 1
         strategy: RollingUpdate
         annotations:
@@ -56,9 +56,10 @@ spec:
                   name: *configMap
               - secretRef:
                   name: *secret
-
+              - secretRef:
+                  name: cluster-secrets
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v2.5.6@sha256:aa163d2e1cc2b16a9515dd1fef901e6f5231befad7024f093d7be1f2da14341a
@@ -68,57 +69,92 @@ spec:
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
 
             envFrom: *envFrom
-
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /server-info/ping
+                    port: &port 2283
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server/ping
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
             resources:
               requests:
                 cpu: 100m
                 memory: 250Mi
 
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
-
     service:
-      main:
+      app:
         controller: main
         ports:
           http:
             port: &httpPort 2283
 
-    ingress:
-      main:
-        className: internal
+#    ingress:
+#      main:
+#        className: internal
+#        annotations:
+##          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+#          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
+#          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+#          hajimari.io/appName: Photos
+#          hajimari.io/icon: heroicons:photo
+#          hajimari.io/instance: "admin"
+#          gethomepage.dev/enabled: "true"
+#          gethomepage.dev/group: Media
+#          gethomepage.dev/name: Immich
+#          gethomepage.dev/icon: immich.png
+#          gethomepage.dev/description: Self-hosted photo and video management solution
+##          gethomepage.dev/widget.type: immich
+##          gethomepage.dev/widget.url: http://immich-server.media.svc.cluster.local:3001
+##          gethomepage.dev/widget.key: "f8J3C8v9xUBrxTixovnoGeOoKUCdgFKj7DVtubfwY"
+#        hosts:
+#          - host: &host "photos.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: main
+#                  port: *httpPort
+#        tls:
+#          - hosts:
+#              - *host
+
+    route:
+      app:
         annotations:
-#          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          hajimari.io/appName: Photos
-          hajimari.io/icon: heroicons:photo
-          hajimari.io/instance: "admin"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
           gethomepage.dev/name: Immich
           gethomepage.dev/icon: immich.png
           gethomepage.dev/description: Self-hosted photo and video management solution
-#          gethomepage.dev/widget.type: immich
-#          gethomepage.dev/widget.url: http://immich-server.media.svc.cluster.local:3001
-#          gethomepage.dev/widget.key: "f8J3C8v9xUBrxTixovnoGeOoKUCdgFKj7DVtubfwY"
-        hosts:
-          - host: &host "photos.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: *httpPort
-        tls:
-          - hosts:
-              - *host
+          gethomepage.dev/widget.type: immich
+          gethomepage.dev/widget.url: http://lidarr.media:8686
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_LIDARR_TOKEN}}`}}"
+        hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *httpPort
 
     persistence:
       config:
