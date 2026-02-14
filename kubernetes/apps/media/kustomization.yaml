@@ -28,4 +28,4 @@ resources:
   - ./sonarr/ks.yaml
   - ./tautulli/ks.yaml
 #  - ./tdarr/ks.yaml
-  - ./whisparr/ks.yaml
+#  - ./whisparr/ks.yaml
