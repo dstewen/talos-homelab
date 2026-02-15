@@ -8,7 +8,7 @@ components:
 resources:
   - ./namespace.yaml
   # Flux-Kustomizations
-#  - ./boinc-amd64/ks.yaml
+  - ./boinc-amd64/ks.yaml
 #  - ./boinc-arm64/ks.yaml
 #  - ./localai/ks.yaml
 #  - ./k8sgpt/ks.yaml
