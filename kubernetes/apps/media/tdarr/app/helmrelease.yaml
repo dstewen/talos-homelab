@@ -81,7 +81,7 @@ spec:
           gethomepage.dev/icon: tdarr.png
           gethomepage.dev/description: Distributed transcode automation
           gethomepage.dev/widget.type: tdarr
-          gethomepage.dev/widget.url: http://10.200.15.242
+          gethomepage.dev/widget.url: http://10.200.15.242:8265
 #          gethomepage.dev/widget.key:
         hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
         parentRefs:
