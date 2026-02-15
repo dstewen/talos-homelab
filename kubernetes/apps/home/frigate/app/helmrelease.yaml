@@ -19,6 +19,10 @@ spec:
   values:
     controllers:
       frigate:
+        pod:
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: frigate-gpu
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
