@@ -21,6 +21,9 @@ spec:
       namespace: media
   values:
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: tdarr-node-amd64-gpu
       # affinity:
       #   nodeAffinity:
       #     preferredDuringSchedulingIgnoredDuringExecution:
@@ -74,12 +77,12 @@ spec:
             - name: serverPort
               value: 8266
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 100m
-                gpu.intel.com/i915: 1
               limits:
                 cpu: 2
-                gpu.intel.com/i915: 1
     service:
       app:
         controller: *app

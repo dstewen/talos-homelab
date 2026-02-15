@@ -16,6 +16,7 @@ spec:
     - name: volsync
       namespace: volsync
   components:
+    - ../../../../components/gpu
     - ../../../../components/volsync
 #  decryption:
 #    provider: sops
@@ -53,9 +54,13 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gpu
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: intel-gpu-resource-driver
+      namespace: kube-system
 #  decryption:
 #    provider: sops
 #    secretRef:
