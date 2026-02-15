@@ -43,6 +43,7 @@ spec:
               tag: 2.58.02
             env:
               TZ: ${TIMEZONE}
+              auth: true
             envFrom:
               - secretRef:
                   name: cluster-secrets
@@ -79,6 +80,9 @@ spec:
           gethomepage.dev/name: Tdarr
           gethomepage.dev/icon: tdarr.png
           gethomepage.dev/description: Distributed transcode automation
+          gethomepage.dev/widget.type: tdarr
+          gethomepage.dev/widget.url: http://10.200.15.242
+#          gethomepage.dev/widget.key:
         hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
