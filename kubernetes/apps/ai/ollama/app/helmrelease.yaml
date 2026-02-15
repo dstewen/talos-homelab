@@ -60,7 +60,7 @@ spec:
     defaultPodOptions:
       resourceClaims:
         - name: gpu
-          resourceClaimTemplateName: ollama
+          resourceClaimTemplateName: ollama-gpu
 
     service:
       app:
