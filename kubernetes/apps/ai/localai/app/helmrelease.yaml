@@ -1,116 +1,158 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app localai
+  name: local-ai-load-balancer
 spec:
-  interval: 30m
-  chart:
-    spec:
-      # renovate: registryUrl=https://go-skynet.github.io/helm-charts/
-      chart: local-ai
-      version: 3.4.2
-      sourceRef:
-        kind: HelmRepository
-        name: go-skynet
-        namespace: flux-system
-
-  maxHistory: 3
-
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-
-  uninstall:
-    keepHistory: false
-
+  chartRef:
+    kind: OCIRepository
+    name: local-ai
+  dependsOn: []
+  interval: 15m
   values:
-    replicaCount: 1
-
-    deployment:
-      image:
-        repository: quay.io/go-skynet/local-ai
-        tag: v2.28.0-sycl-f32-ffmpeg-core
-
-#      runtimeClassName: nvidia
-
-      env:
-        #threads: 8
-        #context_size: 512
-        #BUILD_GRPC_FOR_BACKEND_LLAMA: "true"
-        #VARIANT: "llama-cuda"
-        #GRPC_BACKENDS: "backend-assets/grpc/llama-cpp-cuda"
-        #REBUILD: "true"
-        #BUILD_TYPE: "cublas"
-        debug: true
-        OPENAI_API_KEY: "sk-XXXXXXXXXXXXXXXXXXXX"
-#        NVIDIA_VISIBLE_DEVICES: all
-#        NVIDIA_DRIVER_CAPABILITIES: all
-        #preload_models: '[{ "id": "huggingface@thebloke__open-llama-13b-open-instruct-ggml__open-llama-13b-open-instruct.ggmlv3.q3_k_m.bin", "name": "gpt-3.5-turbo", "overrides": { "f16": true, "mmap": true }}]'
-        galleries: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"url": "github:go-skynet/model-gallery/huggingface.yaml","name":"huggingface"}]'
-        preload_models: '[{ "id": "huggingface@thebloke__open-llama-13b-open-instruct-ggml__open-llama-13b-open-instruct.ggmlv3.q3_k_m.bin", "name": "gpt-3.5-turbo", "overrides": { "f16": true, "mmap": true }}]'
-
-
-    resources:
-      requests:
-#        cpu: 200m
-#        memory: 10G
-        gpu.intel.com/i915: 1
-      limits:
-#        memory: 10G
-        gpu.intel.com/i915: 1
-
-#    models:
-#      forceDownload: false
-#      list:
-#        - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin" #working
-      #  - url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF/resolve/main/mistral-7b-instruct-v0.1.Q4_K_M.gguf"
-      #  - url: "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q4_0.bin"
-      #  - url: "https://huggingface.co/TheBloke/Luna-AI-Llama2-Uncensored-GGUF/resolve/main/luna-ai-llama2-uncensored.Q4_0.gguf"
-      #  - url: "https://huggingface.co/chitanda/llama2.7b.chat.reclor.gpt35turbo1106.dpo-sft.H100.w4.v2.0"
-
-    persistence:
-      models:
-        enabled: true
-        annotations: {}
-        storageClass: ceph-block
-        accessModes: ReadWriteOnce
-        globalMount: /models
-
-      output:
-        enabled: true
-        annotations: {}
-        storageClass: ceph-block
-        accessModes: ReadWriteOnce
-        globalMount: /tmp/generated
-
+    controllers:
+      local-ai:
+        containers:
+          app:
+            image:
+              repository: quay.io/go-skynet/local-ai
+              tag: v3.11.0
+            args:
+              [
+                "federated",
+              ]
+            env:
+              LOCALAI_CONFIG_DIR: &config /configuration
+            envFrom:
+              - secretRef:
+                  name: local-ai
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+              limits:
+                cpu: 500m
+                memory: 500Mi
+        pod:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: "kubernetes.io/hostname"
+                  labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - "{{ .Release.Name }}"
     service:
-      annotations:
-        lbipam.cilium.io/ips: ${SVC_LOCALAI_ADDR}
-      type: LoadBalancer
-      ports:
-        http:
-          port: 8080
-
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      annotations:
-        nginx.ingress.kubernetes.io/whitelist-source-range: |
-          10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-        hajimari.io/appName: "LocalAI"
-        hajimari.io/enable: "true"
-#        hajimari.io/instance: "admin"
-        hajimari.io/group: "AI"
-      hosts:
-        - host: &host localai.${SECRET_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
+      app:
+        ports:
+          http:
+            port: 8080
+    route:
+      app:
+        hostnames: ["local-ai.jory.dev"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      local-ai-backends:
+        existingClaim: "local-ai-backends"
+        globalMounts:
+          - path: *config
+            subPath: flux-configs
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: local-ai
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: local-ai
+  dependsOn: []
+  interval: 15m
+  values:
+    controllers:
+      local-ai:
+        replicas: 3
+        strategy: RollingUpdate
+        rollingUpdate:
+          surge: 0
+          unavailable: 1
+        containers:
+          app:
+            image:
+              repository: quay.io/go-skynet/local-ai
+              tag: v3.11.0-gpu-intel
+            args:
+              [
+                "run",
+                "--p2p",
+                "--federated",
+              ]
+            securityContext:
+              privileged: true
+            env:
+              LOCALAI_MODELS_PATH: /models
+              LOCALAI_FORCE_META_BACKEND_CAPABILITY: default
+              LOCALAI_CONFIG_DIR: &config /configuration
+              DEBUG: "true"
+            envFrom:
+              - secretRef:
+                  name: local-ai
+            resources:
+              claims:
+                - name: gpu
+              requests:
+                cpu: 4
+                memory: 32Gi
+              limits:
+                cpu: 10
+                memory: 64Gi
+        pod:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: "kubernetes.io/hostname"
+                  labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - ollama
+                          - ollama-cpu
+                          - "{{ .Release.Name }}"
+    defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: local-ai-gpu
+    service:
+      app:
+        ports:
+          http:
+            port: 8080
+    # route:
+    #   app:
+    #     hostnames: ["{{ .Release.Name }}-worker.jory.dev"]
+    #     parentRefs:
+    #       - name: envoy-internal
+    #         namespace: network
+    persistence:
+      local-ai-models:
+        existingClaim: "{{ .Release.Name }}-models"
+        globalMounts:
+          - path: /models
+            subPath: flux-models
+      local-ai-backends:
+        existingClaim: "{{ .Release.Name }}-backends"
+        globalMounts:
+          - path: /backends
+            subPath: flux-backends
+          - path: *config
+            subPath: flux-configs
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
