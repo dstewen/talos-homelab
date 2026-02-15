@@ -50,25 +50,17 @@ spec:
 #              ONEAPI_DEVICE_SELECTOR: level_zero:0
 #              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 2000m
               limits:
                 memory: 16G
-                gpu.intel.com/i915: "1"
 
-        pod:
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: intel.feature.node.kubernetes.io/gpu
-                        operator: In
-                        values:
-                          - "true"
-
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
+    defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: ollama
 
     service:
       app:

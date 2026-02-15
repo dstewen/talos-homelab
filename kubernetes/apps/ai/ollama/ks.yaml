@@ -25,6 +25,8 @@ spec:
 #      name: sops-age
   path: ./kubernetes/apps/ai/ollama/app
   postBuild:
+    substitute:
+      APP: *app
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
