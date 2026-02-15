@@ -59,6 +59,8 @@ spec:
           - 568
     controllers:
       tdarr-node-amd64:
+        annotations:
+          reloader.stakater.com/auto: "true"
         replicas: 3
         strategy: RollingUpdate
         containers:
