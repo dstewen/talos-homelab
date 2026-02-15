@@ -16,11 +16,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-#  dependsOn:
-#    - name: intel-device-plugin-gpu
-#      namespace: kube-system
-#    - name: volsync
-#      namespace: volsync
   values:
     controllers:
       frigate:
@@ -53,10 +48,11 @@ spec:
             securityContext:
               privileged: true
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 100m
               limits:
-                gpu.intel.com/i915: "1"
                 memory: 4Gi
     defaultPodOptions:
 #      affinity:
