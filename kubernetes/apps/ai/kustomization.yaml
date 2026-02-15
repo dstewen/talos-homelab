@@ -11,7 +11,7 @@ resources:
 #  - ./boinc-arm64/ks.yaml
 #  - ./localai/ks.yaml
 #  - ./k8sgpt/ks.yaml
-#  - ./ollama/ks.yaml
+  - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
   - ./qdrant/ks.yaml
