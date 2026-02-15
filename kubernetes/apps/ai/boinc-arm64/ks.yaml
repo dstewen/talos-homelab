@@ -11,8 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: openebs
-      namespace: openebs-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/ai/boinc-arm64/app
   prune: true
   sourceRef:
