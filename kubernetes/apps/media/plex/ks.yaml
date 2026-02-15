@@ -11,11 +11,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/gpu
     - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: intel-device-plugin-gpu
+    - name: intel-gpu-resource-driver
       namespace: kube-system
     - name: rook-ceph-cluster
       namespace: rook-ceph
