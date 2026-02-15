@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gpu
   dependsOn:
     - name: cloudnative-pg-cluster18-vector
       namespace: database
@@ -17,7 +19,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: intel-device-plugin-gpu
+    - name: intel-gpu-resource-driver
       namespace: kube-system
   path: ./kubernetes/apps/media/immich/app
   prune: true

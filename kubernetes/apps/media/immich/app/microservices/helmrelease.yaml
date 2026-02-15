@@ -24,6 +24,22 @@ spec:
   values:
     controllers:
       immich-microservices:
+        pod:
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: immich-microservices-gpu
+          enableServiceLinks: false
+
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
+
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -44,26 +60,13 @@ spec:
                   name: *configMap
 
             resources:
+              claims:
+                - name: gpu
               requests:
-                gpu.intel.com/i915: 1
-                cpu: 100m
-                memory: 6000Mi
+                cpu: 10m
+                memory: 512Mi
               limits:
-                gpu.intel.com/i915: 1
-
-        pod:
-          enableServiceLinks: false
-
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
-
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
+                memory: 8000Mi
 
     persistence:
       library:

@@ -23,6 +23,10 @@ spec:
   values:
     controllers:
       immich-machine-learning:
+        pod:
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: immich-machine-learning-gpu
         replicas: 1
         strategy: RollingUpdate
         annotations:
@@ -60,12 +64,13 @@ spec:
               startup:
                 enabled: false
             resources:
+              claims:
+                - gpu
               requests:
-                gpu.intel.com/i915: 1
-                cpu: 100m
-                memory: 6000Mi
+                cpu: 10m
+                memory: 250Mi
               limits:
-                gpu.intel.com/i915: 1
+                memory: 4000Mi
 
     service:
       app:
