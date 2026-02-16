@@ -94,10 +94,17 @@ spec:
         existingClaim: immich-upload-pvc
         globalMounts:
           - path: /usr/src/app/upload
-      cache:
-        existingClaim: immich-machine-learning-cache
-        globalMounts:
-          - path: /cache
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          immich-machine-learning:
+            app:
+              - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
+              - path: /tmp
+                subPath: tmp
       geocoding-dump:
         type: emptyDir
         globalMounts:
