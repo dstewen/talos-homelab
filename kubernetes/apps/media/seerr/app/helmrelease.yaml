@@ -23,6 +23,8 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: seerr-secret
+              - secretRef:
+                  name: cluster-secrets
         containers:
           app:
             image:
