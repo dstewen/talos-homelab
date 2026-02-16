@@ -151,7 +151,7 @@ spec:
           gethomepage.dev/icon: immich.png
           gethomepage.dev/description: Self-hosted photo and video management solution
           gethomepage.dev/widget.type: immich
-          gethomepage.dev/widget.url: http://immich-server.media.svc.cluster.local:2283
+          gethomepage.dev/widget.url: https://photos.davidstewen.com
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_LIDARR_TOKEN}}`}}"
           gethomepage.dev/widget.version: "2"
         hostnames: ["photos.${SECRET_DOMAIN}"]
