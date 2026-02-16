@@ -62,13 +62,26 @@ spec:
                 enabled: false
             resources:
               claims:
-                - gpu
+                - name: gpu
               requests:
                 cpu: 10m
                 memory: 250Mi
               limits:
                 memory: 4000Mi
-
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: immich-machine-learning-gpu
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
