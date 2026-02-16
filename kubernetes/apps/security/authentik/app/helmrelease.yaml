@@ -76,7 +76,7 @@ spec:
         maxUnavailable: 1
       initContainers:
         - name: init-db
-          image: ghcr.io/home-operations/postgres-init:17.6.0
+          image: ghcr.io/home-operations/postgres-init:18.1.0@sha256:3c54d39f19fdb82ed5b3f286450e4071133cc6025bd0e25856bc2c522f8fc030
           envFrom:
             - secretRef:
                 name: *secret
