@@ -82,7 +82,7 @@ spec:
           gethomepage.dev/description: Distributed transcode automation
           gethomepage.dev/widget.type: tdarr
           gethomepage.dev/widget.url: https://tdarr.davidstewen.com/
-#          gethomepage.dev/widget.key:
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_TDARR_TOKEN}}`}}"
         hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
