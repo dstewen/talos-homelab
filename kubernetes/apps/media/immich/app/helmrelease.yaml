@@ -153,6 +153,7 @@ spec:
           gethomepage.dev/widget.type: immich
           gethomepage.dev/widget.url: http://lidarr.media:8686
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_LIDARR_TOKEN}}`}}"
+          gethomepage.dev/widget.version: "2"
         hostnames: ["photos.${SECRET_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
