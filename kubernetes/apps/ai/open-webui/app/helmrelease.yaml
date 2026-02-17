@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.8.1
+              tag: v0.8.2
 
             env:
               GLOBAL_LOG_LEVEL: DEBUG
