@@ -139,6 +139,7 @@ spec:
           gethomepage.dev/name: Minio
           gethomepage.dev/icon: sh-minio
           gethomepage.dev/description: "Minio on Talos"
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=minio
         hostnames: ["minio.${SECRET_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
