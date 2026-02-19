@@ -62,12 +62,16 @@ spec:
             ),
             'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
           ); ?>
+        ingress.config.php: |-
+          <?php
+          $CONFIG = array (
+            'overwrite.cli.url' => 'https://cloud.davidstewen.com',
+          );
         misc.config.php: |-
           <?php
           $CONFIG = array (
             'default_phone_region' => 'AU',
             'maintenance_window_start' => 2,
-            'overwrite.cli.url' => 'https://cloud.davidstewen.com',
           ); ?>
     internalDatabase:
       enabled: false
