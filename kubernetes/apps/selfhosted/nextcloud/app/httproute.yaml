@@ -10,7 +10,7 @@ spec:
       namespace: network
       sectionName: https
   hostnames:
-    - cloud.${SECRET_DOMAIN}
+    - cloud.davidstewen.com
   rules:
     - backendRefs: &backendRef
         - name: nextcloud

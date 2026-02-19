@@ -33,13 +33,13 @@ spec:
       existingSecret:
         enabled: true
         secretName: nextcloud-secret
-      host: &host cloud.${SECRET_DOMAIN}
+      host: &host cloud.davidstewen.com
       mail:
         enabled: false
         fromAddress: admin
-        domain: ${SECRET_DOMAIN}
+        domain: davidstewen.com
         smtp:
-          host: smtp.${SECRET_DOMAIN}
+          host: smtp.davidstewen.com
           port: 25
           authtype: NONE
           name: ""
