@@ -22,6 +22,8 @@ spec:
           envFrom:
             - secretRef:
                 name: nextcloud-secret
+            - secretRef:
+                name: cluster-secrets
       datadir: /var/www/data
       extraEnv:
         - name: REDIS_HOST
@@ -31,13 +33,13 @@ spec:
       existingSecret:
         enabled: true
         secretName: nextcloud-secret
-      host: &host cloud.davidstewen.com
+      host: &host cloud.${SECRET_DOMAIN}
       mail:
         enabled: false
         fromAddress: admin
-        domain: davidstewen.com
+        domain: ${SECRET_DOMAIN}
         smtp:
-          host: smtp.davidstewen.com
+          host: smtp.${SECRET_DOMAIN}
           port: 25
           authtype: NONE
           name: ""
