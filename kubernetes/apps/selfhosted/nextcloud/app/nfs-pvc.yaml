@@ -11,7 +11,7 @@ spec:
   storageClassName: nextcloud-nfs
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: "${SECRET_MEDIA_SERVER}"
+    server: "192.168.10.15"
     path: /volume2/piNFS01/flux-cluster/nextcloud
   mountOptions:
     - nfsvers=4.1
