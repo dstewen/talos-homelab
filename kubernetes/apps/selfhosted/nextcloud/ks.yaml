@@ -28,8 +28,8 @@ spec:
       APP: nextcloud
       VOLSYNC_CAPACITY: 100Gi
       VOLSYNC_CLAIM: nextcloud-config-v2
-      VOLSYNC_GID: "1022"
-      VOLSYNC_UID: "1022"
+      VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
   prune: true
   sourceRef:
     kind: GitRepository
