@@ -20,7 +20,7 @@ spec:
           Strict-Transport-Security: "max-age=15552000; includeSubDomains; preload;"
       securityContext:
         runAsUser: 82
-        runAsGroup: 33
+        runAsGroup: 82
         runAsNonRoot: true
     nextcloud:
       extraInitContainers:
