@@ -18,6 +18,10 @@ spec:
       config:
         headers:
           Strict-Transport-Security: "max-age=15552000; includeSubDomains; preload;"
+      securityContext:
+        runAsUser: 82
+        runAsGroup: 33
+        runAsNonRoot: true
     nextcloud:
       extraInitContainers:
         - name: init-db
