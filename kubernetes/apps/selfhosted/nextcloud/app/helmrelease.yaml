@@ -52,7 +52,7 @@ spec:
         runAsGroup: 1022
         runAsNonRoot: true
       configs:
-        local.config.php: |-
+        config.php: |-
           <?php
           $CONFIG = array (
             'trusted_proxies' =>
