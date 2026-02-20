@@ -49,30 +49,78 @@ spec:
         runAsGroup: 1022
         runAsNonRoot: true
       configs:
-        proxy.config.php: |-
+        local.config.php: |-
           <?php
           $CONFIG = array (
-            'trusted_proxies' => array(
+            'trusted_proxies' =>
+            array (
               0 => '127.0.0.1',
               1 => '10.42.0.0/16',
               2 => '10.43.0.0/16',
               3 => '10.200.15.0/24',
               4 => '101.119.138.187',
               5 => '192.168.10.0/24',
+              6 => '103.21.244.0/22',
+              7 => '103.22.200.0/22',
+              8 => '103.31.4.0/22',
+              9 => '104.16.0.0/13',
+              10 => '104.24.0.0/14',
+              11 => '108.162.192.0/18',
+              12 => '131.0.72.0/22',
+              13 => '141.101.64.0/18',
+              14 => '162.158.0.0/15',
+              15 => '172.64.0.0/13',
+              16 => '173.245.48.0/20',
+              17 => '188.114.96.0/20',
+              18 => '190.93.240.0/20',
+              19 => '197.234.240.0/22',
+              20 => '198.41.128.0/17',
+            ),
+            'trusted_domains' =>
+            array (
+              0 => 'cloud.davidstewen.com',
             ),
             'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
-          ); ?>
-        ingress.config.php: |-
-          <?php
-          $CONFIG = array (
             'overwrite.cli.url' => 'https://cloud.davidstewen.com',
-          );
-        misc.config.php: |-
-          <?php
-          $CONFIG = array (
+            'overwriteprotocol' => 'https',
             'default_phone_region' => 'AU',
-            'maintenance_window_start' => 2,
-          ); ?>
+            'maintenance_window_start' => 20,
+          );
+#        oidc.config.php: |-
+#          <?php
+#          $CONFIG = array (
+#            'allow_user_to_change_display_name' => false,
+#            'lost_password_link' => 'disabled',
+#            'oidc_login_provider_url' => 'https://id.davidstewen.com',
+#            'oidc_login_client_id' => 'nextcloud',
+#            'oidc_login_client_secret' => getenv('OIDC_CLIENT_SECRET'),
+#            'oidc_login_auto_redirect' => false,
+#            'oidc_login_button_text' => 'Log in with Authentik',
+#            'oidc_login_hide_password_form' => false,
+#            'oidc_login_use_id_token' => false,
+#            'oidc_login_attributes' => array(
+#              'id' => 'preferred_username',
+#              'name' => 'name',
+#              'mail' => 'email',
+#              'groups' => 'groups',
+#              'is_admin' => 'is_nextcloud_admin',
+#            ),
+#            'oidc_login_default_group' => 'oidc',
+#            'oidc_login_use_external_storage' => false,
+#            'oidc_login_scope' => 'openid profile email groups nextcloud_userinfo',
+#            'oidc_login_proxy_ldap' => false,
+#            'oidc_login_disable_registration' => true,
+#            'oidc_login_redir_fallback' => false,
+#            'oidc_login_tls_verify' => true,
+#            'oidc_create_groups' => false,
+#            'oidc_login_webdav_enabled' => false,
+#            'oidc_login_password_authentication' => false,
+#            'oidc_login_public_key_caching_time' => 86400,
+#            'oidc_login_min_time_between_jwks_requests' => 10,
+#            'oidc_login_well_known_caching_time' => 86400,
+#            'oidc_login_update_avatar' => false,
+#            'oidc_login_code_challenge_method' => 'S256',
+#          );
     internalDatabase:
       enabled: false
     externalDatabase:
