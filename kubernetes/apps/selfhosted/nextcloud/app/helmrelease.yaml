@@ -15,6 +15,9 @@ spec:
       flavor: fpm-alpine
     nginx:
       enabled: true
+      config:
+        headers:
+          Strict-Transport-Security: "max-age=15552000; includeSubDomains; preload;"
     nextcloud:
       extraInitContainers:
         - name: init-db
