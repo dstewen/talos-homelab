@@ -16,7 +16,7 @@ spec:
       namespace: external-secrets
     - name: ollama
       namespace: ai
-    - name: cloudnative-pg-cluster17
+    - name: cloudnative-pg-cluster18
       namespace: database
 #    - name: dragonfly-cluster
 #      namespace: database
