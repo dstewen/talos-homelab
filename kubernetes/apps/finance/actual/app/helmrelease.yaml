@@ -42,8 +42,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/actualbudget/actual-server
-              tag: 26.2.0
+              repository: ghcr.io/actualbudget/actual
+              tag: 26.2.0@sha256:c34346f87725b9cce5dca5af1a2a9b989127d592cc4c6af5cf4652d4a86def90
             env:
               GENERIC_TIMEZONE: Australia/Victoria
               ACTUAL_PORT: &port 5006
@@ -111,6 +111,7 @@ spec:
           gethomepage.dev/group: Finance
           gethomepage.dev/name: Actual
           gethomepage.dev/icon: sh-actual-budget
+          gethomepage.dev/description: Budget Management Software
         hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
