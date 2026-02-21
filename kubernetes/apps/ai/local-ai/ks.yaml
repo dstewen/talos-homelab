@@ -3,14 +3,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app localai
+  name: &app local-ai
   namespace: ai
 spec:
   targetNamespace: ai
+  components:
+    - ../../../../components/gpu
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/ai/localai/app
+  path: ./kubernetes/apps/ai/local-ai/app
   prune: true
   sourceRef:
     kind: GitRepository
