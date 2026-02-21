@@ -28,6 +28,7 @@ resources:
 #  - ./sabnzbd/ks.yaml
 #  - ./seerr/ks.yaml
   - ./sonarr/ks.yaml
+  - ./sonarr-uhd/ks.yaml
   - ./tautulli/ks.yaml
   - ./tdarr/ks.yaml
   - ./whisparr/ks.yaml
