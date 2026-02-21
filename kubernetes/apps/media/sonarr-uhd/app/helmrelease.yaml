@@ -145,7 +145,7 @@ spec:
       tmpfs:
         type: emptyDir
         advancedMounts:
-          sonarr:
+          sonarr-uhd:
             app:
               - path: /config/logs
                 subPath: logs
