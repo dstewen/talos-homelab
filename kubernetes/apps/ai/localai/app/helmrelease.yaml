@@ -52,7 +52,7 @@ spec:
             port: 8080
     route:
       app:
-        hostnames: ["local-ai.jory.dev"]
+        hostnames: ["local-ai.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
