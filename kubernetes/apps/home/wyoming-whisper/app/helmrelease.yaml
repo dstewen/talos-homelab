@@ -39,7 +39,7 @@ spec:
                 cpu: 500m
                 memory: 250Mi
               limits:
-                memory: 1Gi
+                memory: 2Gi
 
         strategy: Recreate
     service:
