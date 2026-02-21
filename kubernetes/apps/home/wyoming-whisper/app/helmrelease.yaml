@@ -38,6 +38,8 @@ spec:
               requests:
                 cpu: 500m
                 memory: 250Mi
+              limits:
+                memory: 1Gi
 
         strategy: Recreate
     service:
