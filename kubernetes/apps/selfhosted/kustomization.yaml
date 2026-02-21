@@ -7,7 +7,7 @@ components:
   - ../../components/sops
 resources:
   # Flux-Kustomizations
-#  - ./atuin/ks.yaml
+  - ./atuin/ks.yaml
   - ./it-tools/ks.yaml
   - ./n8n/ks.yaml
 #  - ./nextcloud/ks.yaml
