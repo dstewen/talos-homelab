@@ -41,7 +41,8 @@ spec:
                   name: atuin-secret
               - secretRef:
                   name: cluster-secrets
-            args: ["server", "start"]
+            args:
+              - start
             probes:
               liveness: &probes
                 enabled: true
