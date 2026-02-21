@@ -20,13 +20,13 @@ resources:
   - ./paperless/ks.yaml
 #  - ./paperless-scan/ks.yaml
   - ./plex/ks.yaml
-  - ./prowlarr/ks.yaml
+#  - ./prowlarr/ks.yaml
 #  - ./qbittorrent/ks.yaml
-  - ./radarr/ks.yaml
-  - ./radarr-uhd/ks.yaml
+#  - ./radarr/ks.yaml
+#  - ./radarr-uhd/ks.yaml
 #  - ./sabnzbd/ks.yaml
 #  - ./seerr/ks.yaml
-  - ./sonarr/ks.yaml
+#  - ./sonarr/ks.yaml
   - ./tautulli/ks.yaml
   - ./tdarr/ks.yaml
 #  - ./whisparr/ks.yaml
