@@ -14,6 +14,7 @@ resources:
 #  - ./k8sgpt/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
+#  - ./openclaw/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
   - ./qdrant/ks.yaml
 #  - ./stable-diffusion/ks.yaml
