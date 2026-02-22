@@ -34,17 +34,17 @@ spec:
               limits:
                 cpu: 500m
                 memory: 500Mi
-        pod:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - topologyKey: "kubernetes.io/hostname"
-                  labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values:
-                          - "{{ .Release.Name }}"
+#        pod:
+#          affinity:
+#            podAntiAffinity:
+#              requiredDuringSchedulingIgnoredDuringExecution:
+#                - topologyKey: "kubernetes.io/hostname"
+#                  labelSelector:
+#                    matchExpressions:
+#                      - key: app.kubernetes.io/name
+#                        operator: In
+#                        values:
+#                          - "{{ .Release.Name }}"
     service:
       app:
         ports:
@@ -112,19 +112,19 @@ spec:
               limits:
                 cpu: 6
                 memory: 32Gi
-        pod:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - topologyKey: "kubernetes.io/hostname"
-                  labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values:
-                          - ollama
-                          - ollama-cpu
-                          - "{{ .Release.Name }}"
+#        pod:
+#          affinity:
+#            podAntiAffinity:
+#              requiredDuringSchedulingIgnoredDuringExecution:
+#                - topologyKey: "kubernetes.io/hostname"
+#                  labelSelector:
+#                    matchExpressions:
+#                      - key: app.kubernetes.io/name
+#                        operator: In
+#                        values:
+#                          - ollama
+#                          - ollama-cpu
+#                          - "{{ .Release.Name }}"
     defaultPodOptions:
       resourceClaims:
         - name: gpu
