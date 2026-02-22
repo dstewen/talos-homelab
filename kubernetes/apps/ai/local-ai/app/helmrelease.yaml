@@ -107,11 +107,11 @@ spec:
               claims:
                 - name: gpu
               requests:
-                cpu: 4
-                memory: 32Gi
+                cpu: 2
+                memory: 16Gi
               limits:
-                cpu: 10
-                memory: 64Gi
+                cpu: 6
+                memory: 32Gi
         pod:
           affinity:
             podAntiAffinity:
