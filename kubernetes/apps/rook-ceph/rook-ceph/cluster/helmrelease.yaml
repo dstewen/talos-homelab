@@ -77,9 +77,7 @@ spec:
       network:
         provider: host
         connections:
-          compression:
-            # TODO: Disable compression and enable cephClusterSpec.network.connections.requireMsgr2
-            enabled: true
+          requireMsgr2: true
       crashCollector:
         disable: false
       dashboard:

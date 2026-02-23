@@ -34,7 +34,7 @@ spec:
       csiAddons:
         enabled: false
       # Set when encryption/compression is enabled
-#      cephFSKernelMountOptions: ms_mode=prefer-crc
+      cephFSKernelMountOptions: ms_mode=prefer-crc
       enableLiveness: true
       serviceMonitor:
         enabled: true
