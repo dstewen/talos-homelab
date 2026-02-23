@@ -77,7 +77,7 @@ spec:
   values:
     controllers:
       local-ai:
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
         rollingUpdate:
           surge: 0
@@ -107,10 +107,10 @@ spec:
               claims:
                 - name: gpu
               requests:
-                cpu: 2
-                memory: 16Gi
+                cpu: 800m
+                memory: 8Gi
               limits:
-                cpu: 6
+                cpu: 4000m
                 memory: 32Gi
 #        pod:
 #          affinity:
@@ -134,12 +134,12 @@ spec:
         ports:
           http:
             port: 8080
-    # route:
-    #   app:
-    #     hostnames: ["{{ .Release.Name }}-worker.jory.dev"]
-    #     parentRefs:
-    #       - name: envoy-internal
-    #         namespace: network
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}-worker.davidstewen.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     persistence:
       local-ai-models:
         existingClaim: "{{ .Release.Name }}-models"
