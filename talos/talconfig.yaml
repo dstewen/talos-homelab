@@ -68,18 +68,18 @@ nodes:
         vip:
           ip: "10.200.15.254"
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.51/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+#            vip:
+#              ip: 10.200.15.254
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -152,18 +152,18 @@ nodes:
         vip:
           ip: "10.200.15.254"
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.52/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+#            vip:
+#              ip: 10.200.15.254
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -236,18 +236,18 @@ nodes:
         vip:
           ip: "10.200.15.254"
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.53/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+#            vip:
+#              ip: 10.200.15.254
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -294,18 +294,16 @@ nodes:
             metric: 1
         mtu: 1500
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.35/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -352,18 +350,16 @@ nodes:
             metric: 1
         mtu: 1500
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.36/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -410,18 +406,16 @@ nodes:
             metric: 1
         mtu: 1500
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.37/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -468,18 +462,16 @@ nodes:
             metric: 1
         mtu: 1500
         vlans:
-          # HomeLABServers VLAN
-          - vlanId: 15
-            dhcp: false
-            addresses:
-              - 10.200.15.51/24
-            mtu: 1500
-            routes:
-              - network: 0.0.0.0/0
-                gateway: 10.200.15.1
-                metric: 1
-            vip:
-              ip: 10.200.15.254
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
