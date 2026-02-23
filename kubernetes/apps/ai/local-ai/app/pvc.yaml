@@ -4,7 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: local-ai-models
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes:
+  - ReadWriteMany
   storageClassName: ceph-filesystem
   resources:
     requests:
@@ -15,7 +16,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: local-ai-backends
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes:
+  - ReadWriteMany
   storageClassName: ceph-filesystem
   resources:
     requests:
