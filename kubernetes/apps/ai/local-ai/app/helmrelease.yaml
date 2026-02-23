@@ -8,7 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: local-ai
-  dependsOn: []
+#  dependsOn: []
   interval: 15m
   values:
     controllers:
@@ -72,7 +72,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: local-ai
-  dependsOn: []
+#  dependsOn: []
   interval: 15m
   values:
     controllers:
