@@ -19,8 +19,8 @@ spec:
 # Enable blow when restoring from minio backups
     recovery:
       source: source
-#      recoveryTarget:
-#        targetTime: "2026-01-18T00:00:00+11:00"
+      recoveryTarget:
+        backupID: "20260222T085923"
 # Enable below to import from pg17
 #    initdb:
 #      import:
