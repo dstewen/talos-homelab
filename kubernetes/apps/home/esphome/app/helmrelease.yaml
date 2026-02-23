@@ -30,7 +30,7 @@ spec:
           #   # k8s.v1.cni.cncf.io/networks: home-automation-iot-dhcp
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"multus-iot",
+                "name":"iot",
                 "namespace": "network",
                 "ips": ["172.16.20.105/24"],
                 "mac": "aa:e9:02:a4:7e:78"
