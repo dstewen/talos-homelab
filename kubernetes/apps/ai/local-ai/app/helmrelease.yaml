@@ -19,9 +19,7 @@ spec:
               repository: quay.io/go-skynet/local-ai
               tag: v3.12.1
             args:
-              [
-                "federated",
-              ]
+              - federated
             env:
               LOCALAI_CONFIG_DIR: &config /configuration
             envFrom:
@@ -52,10 +50,11 @@ spec:
             port: 8080
     route:
       app:
-        hostnames: ["local-ai.davidstewen.com"]
+        hostnames:
+        - local-ai.davidstewen.com
         parentRefs:
-          - name: envoy-internal
-            namespace: network
+        - name: envoy-internal
+          namespace: network
     persistence:
       local-ai-backends:
         existingClaim: "local-ai-backends"
@@ -88,11 +87,9 @@ spec:
               repository: quay.io/go-skynet/local-ai
               tag: v3.12.1-gpu-intel
             args:
-              [
-                "run",
-                "--p2p",
-                "--federated",
-              ]
+              - run
+              - --p2p
+              - --federated
             securityContext:
               privileged: true
             env:
@@ -136,18 +133,19 @@ spec:
             port: 8080
     route:
       app:
-        hostnames: ["{{ .Release.Name }}-worker.davidstewen.com"]
+        hostnames:
+        - '{{ .Release.Name }}-worker.davidstewen.com'
         parentRefs:
           - name: envoy-internal
             namespace: network
     persistence:
       local-ai-models:
-        existingClaim: "{{ .Release.Name }}-models"
+        existingClaim: '{{ .Release.Name }}-models'
         globalMounts:
           - path: /models
             subPath: flux-models
       local-ai-backends:
-        existingClaim: "{{ .Release.Name }}-backends"
+        existingClaim: '{{ .Release.Name }}-backends'
         globalMounts:
           - path: /backends
             subPath: flux-backends
