@@ -19,7 +19,7 @@ spec:
         key: minio-secret-access-key
     wal:
       compression: bzip2
-      maxParallel: 8
+      maxParallel: 1
   retentionPolicy: 30d
 # Maybe fixes https://github.com/cloudnative-pg/plugin-barman-cloud/issues/393
   instanceSidecarConfiguration:
