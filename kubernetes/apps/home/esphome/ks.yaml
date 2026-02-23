@@ -9,14 +9,14 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-#    - name: volsync
-#      namespace: volsync
+    - name: volsync
+      namespace: volsync
   targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../../components/volsync
+  components:
+    - ../../../../components/volsync
 #  decryption:
 #    provider: sops
 #    secretRef:
