@@ -9,8 +9,10 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: volsync
-      namespace: volsync
+    - name: multus-networks
+      namespace: network
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   targetNamespace: *namespace
   commonMetadata:
     labels:
@@ -36,6 +38,9 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: esphome-config
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_ACCESSMODES: ReadWriteMany
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
