@@ -14,3 +14,19 @@ spec:
   resources:
     requests:
       storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: esphome-buildcache
+  namespace: home
+  labels:
+    app.kubernetes.io/name: &name esphome
+    app.kubernetes.io/instance: *name
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-filesystem
+  resources:
+    requests:
+      storage: 50Gi
