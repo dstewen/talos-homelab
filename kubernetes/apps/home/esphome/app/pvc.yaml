@@ -2,15 +2,15 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: esphome-config
+  name: esphome
   namespace: home
   labels:
     app.kubernetes.io/name: &name esphome
     app.kubernetes.io/instance: *name
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: ceph-block
+    - ReadWriteMany
+  storageClassName: ceph-filesystem
   resources:
     requests:
       storage: 5Gi
