@@ -47,9 +47,16 @@ spec:
         memory: 4G
       limits:
         memory: 16G
-    securityContext:
+    podSecurityContext:
       runAsUser: 1000
+      runAsGroup: 1000
       fsGroup: 1000
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
     serviceAnnotations:
       lbipam.cilium.io/ips: "10.200.15.230"
 #      mc-router.itzg.me/externalServerName: "mcsv.${SECRET_DOMAIN}"
