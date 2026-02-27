@@ -5,39 +5,19 @@ kind: HelmRelease
 metadata:
   name: rook-ceph-operator
 spec:
-  interval: 30m
-  timeout: 15m
-  chart:
-    spec:
-      chart: rook-ceph
-      version: v1.19.2
-      sourceRef:
-        kind: HelmRepository
-        name: rook-ceph
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: snapshot-controller
-      namespace: storage
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph
+  interval: 1h
   values:
     csi:
-      csiAddons:
-        enabled: false
       # Set when encryption/compression is enabled
       cephFSKernelMountOptions: ms_mode=prefer-crc
       enableLiveness: true
       serviceMonitor:
         enabled: true
+    image:
+      repository: ghcr.io/rook/ceph
     monitoring:
       enabled: true
     logLevel: DEBUG

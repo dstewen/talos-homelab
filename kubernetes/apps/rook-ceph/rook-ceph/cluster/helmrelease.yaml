@@ -5,86 +5,24 @@ kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
 spec:
-  interval: 30m
-  timeout: 15m
-  chart:
-    spec:
-      chart: rook-ceph-cluster
-      version: v1.19.2
-      sourceRef:
-        kind: HelmRepository
-        name: rook-ceph
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-operator
-      namespace: rook-ceph
-    - name: snapshot-controller
-      namespace: storage
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph-cluster
+  interval: 1h
   values:
-    monitoring:
-      enabled: true
-      createPrometheusRules: true
-#    ingress:
-#      dashboard:
-#        ingressClassName: internal
-#        annotations:
-#          hajimari.io/appName: "Rook"
-#          hajimari.io/icon: mdi:chess-rook
-#          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-#        host:
-#          name: &host rook.${SECRET_DOMAIN}
-#          path: /
-#        tls:
-#          - hosts:
-#              - *host
-    toolbox:
-      enabled: true
-#      affinity:
-#        nodeAffinity:
-#          requiredDuringSchedulingIgnoredDuringExecution:
-#            nodeSelectorTerms:
-#            - matchExpressions:
-#              - key: node-role.kubernetes.io/worker
-#                operator: In
-#                values:
-#                - worker
-#          preferredDuringSchedulingIgnoredDuringExecution:
-#          - weight: 1
-#            preference:
-#              matchExpressions:
-#              - key: kubernetes.io/arch
-#                operator: In
-#                values:
-#                - arm64
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
-      osd_class_update_on_start = false
     cephClusterSpec:
-      network:
-        provider: host
-        connections:
-          requireMsgr2: true
+      cleanupPolicy:
+        wipeDevicesFromOtherClusters: true
       crashCollector:
         disable: false
+      csi:
+        readAffinity:
+          enabled: false
       dashboard:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
 #        port: 8443
       mgr:
         count: 1
@@ -97,6 +35,13 @@ spec:
             enabled: true
           - name: rook
             enabled: true
+      mon:
+        allowMultiplePerNode: false
+        count: 2
+      network:
+        provider: host
+        connections:
+          requireMsgr2: true
       placement:
         mgr: &placement
           nodeAffinity:
@@ -138,6 +83,54 @@ spec:
 #          - name: blade8
 #            devices:
 #              - name: /dev/nvme0n1p3
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
+#    ingress:
+#      dashboard:
+#        ingressClassName: internal
+#        annotations:
+#          hajimari.io/appName: "Rook"
+#          hajimari.io/icon: mdi:chess-rook
+#          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+#        host:
+#          name: &host rook.${SECRET_DOMAIN}
+#          path: /
+#        tls:
+#          - hosts:
+#              - *host
+    toolbox:
+      enabled: false
+#      affinity:
+#        nodeAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#            nodeSelectorTerms:
+#            - matchExpressions:
+#              - key: node-role.kubernetes.io/worker
+#                operator: In
+#                values:
+#                - worker
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#          - weight: 1
+#            preference:
+#              matchExpressions:
+#              - key: kubernetes.io/arch
+#                operator: In
+#                values:
+#                - arm64
+    route:
+      dashboard:
+        annotations:
+          hajimari.io/appName: "Rook"
+          hajimari.io/icon: mdi:chess-rook
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        host:
+          name: rook.davidstewen.com
+          path: /
+          pathType: PathPrefix
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -147,10 +140,10 @@ spec:
         storageClass:
           enabled: true
           name: ceph-block
-          isDefault: true
-          reclaimPolicy: Delete
           allowVolumeExpansion: true
-          volumeBindingMode: Immediate
+          isDefault: true
+          mountOptions:
+            - discard
           parameters:
             imageFormat: "2"
             imageFeatures: layering
@@ -161,6 +154,8 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
+          reclaimPolicy: Delete
+          volumeBindingMode: Immediate
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
@@ -173,13 +168,23 @@ spec:
             replicated:
               size: 3
           dataPools:
-            - failureDomain: host
-              replicated:
-                size: 3
-              name: data0
+            -  name: data0
+               failureDomain: host
+               replicated:
+                 size: 3
           metadataServer:
             activeCount: 1
             activeStandby: true
+            placement:
+              topologySpreadConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: DoNotSchedule
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: ceph-mds
+                      app.kubernetes.io/part-of: ceph-filesystem
+            priorityClassName: system-cluster-critical
             resources:
               requests:
                 cpu: 1000m
@@ -188,25 +193,28 @@ spec:
                 memory: 4Gi
         storageClass:
           enabled: true
-          isDefault: false
           name: ceph-filesystem
+          allowVolumeExpansion: true
+          isDefault: false
           pool: data0
           reclaimPolicy: Delete
-          allowVolumeExpansion: true
-          volumeBindingMode: Immediate
           parameters:
-            csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+
             csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/controller-publish-secret-name: rook-csi-cephfs-provisioner
+            csi.storage.k8s.io/controller-publish-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-            csi.storage.k8s.io/fstype: ext4
+            csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+#            csi.storage.k8s.io/fstype: ext4
+          volumeBindingMode: Immediate
     cephFileSystemVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-filesystem
-      isDefault: false
       deletionPolicy: Delete
+      isDefault: false
     cephObjectStores:
       - name: ceph-objectstore
         spec:
