@@ -10,4 +10,4 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
 #  - ./pgadmin/ks.yaml
-#  - ./plugin-barman-cloud/ks.yaml
+  - ./plugin-barman-cloud/ks.yaml
