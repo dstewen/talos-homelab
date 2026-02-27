@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./1password-charts.yaml
 #  - ./aqua.yaml
-  - ./authentik.yaml
+#  - ./authentik.yaml
   - ./backube.yaml
 #  - ./bjw-s.yaml
   - ./cloudnative-pg.yaml
