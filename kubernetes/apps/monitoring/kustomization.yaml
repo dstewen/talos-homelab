@@ -23,7 +23,7 @@ resources:
 #  - ./promtail/ks.yaml
 #  - ./qbittorrent-exporter/ks.yaml
   - ./rsyslog/ks.yaml
-  - ./smartctl-exporter/ks.yaml
+#  - ./smartctl-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
 #  - ./snmp-exporter-aggregate/ks.yaml
 #  - ./snmp-exporter-pdu/ks.yaml
