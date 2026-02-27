@@ -13,7 +13,7 @@ resources:
   - ./grafana.yaml
   - ./intel.yaml
   - ./itzg.yaml
-  - ./kubernetes-sigs-nfd.yaml
+#  - ./kubernetes-sigs-nfd.yaml
 #  - ./prometheus-community.yaml
   - ./openebs.yaml
   - ./pihole-charts.yaml
