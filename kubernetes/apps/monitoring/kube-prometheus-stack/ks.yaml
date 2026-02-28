@@ -7,9 +7,6 @@ metadata:
   namespace: &namespace monitoring
 spec:
   targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
 #  decryption:
 #    provider: sops
 #    secretRef:
@@ -25,9 +22,7 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  interval: 1h
 #  postBuild:
 #    substitute:
 #      # renovate: datasource=docker depName=quay.io/thanos/thanos
