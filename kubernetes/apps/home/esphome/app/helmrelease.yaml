@@ -153,7 +153,7 @@ spec:
           gethomepage.dev/name: ESPHome
           gethomepage.dev/icon: esphome.png
           gethomepage.dev/widget.type: esphome
-          gethomepage.dev/widget.url: http://esphome.home:6052
+          gethomepage.dev/widget.url: http://esphome.home.svc.cluster.local:6052
         hostnames:
           - esphome.davidstewen.com
         parentRefs:
