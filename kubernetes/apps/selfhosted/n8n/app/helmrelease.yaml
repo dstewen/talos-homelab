@@ -52,6 +52,7 @@ spec:
               N8N_HOST: &hostName "n8n.${SECRET_DOMAIN}"
               N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console
+              N8N_METRICS: true
               N8N_ENCRYPTION_KEY:
                 valueFrom:
                   secretKeyRef:
