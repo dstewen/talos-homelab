@@ -19,3 +19,14 @@ spec:
   staticConfigs:
     - targets:
         - "minecraft-ftb-metrics.gameserver.svc.cluster.local:19565"
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: n8n
+spec:
+  staticConfigs:
+    - targets:
+        - "n8n.selfhosted.svc.cluster.local:8080"
+  metricsPath: /metrics
