@@ -18,4 +18,4 @@ resources:
 #  - ./multus/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
-  - ./spegel/ks.yaml
+#  - ./spegel/ks.yaml
