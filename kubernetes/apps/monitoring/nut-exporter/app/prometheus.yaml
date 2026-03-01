@@ -82,7 +82,7 @@ spec:
           targetLabel: server
       params:
         server:
-          - ${NUT_EXPORTER_SERVER}
+          - "${NUT_EXPORTER_SERVER}"
       path: /ups_metrics
       port: metrics
       scheme: http
