@@ -42,6 +42,7 @@ spec:
       plugin_admin_enabled: "false"
       preinstall_sync: "vonage-status-panel,pr0ps-trackmap-panel"
     security:
+      allow_embedding: "true"
       angular_support_enabled: "true"
     server:
       enable_gzip: "true"
