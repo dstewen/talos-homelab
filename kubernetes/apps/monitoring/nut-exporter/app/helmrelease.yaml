@@ -47,10 +47,12 @@ spec:
               tag: "3.2.3"
             env:
               TZ: Australia/Melbourne
+              NUT_EXPORTER_SERVER: ${NUT_EXPORTER_SERVER}
+              NUT_EXPORTER_USERNAME: ${NUT_EXPORTER_USERNAME}
+              NUT_EXPORTER_PASSWORD: ${NUT_EXPORTER_PASSWORD}
             args:
               # the first time I set this, the first and last entries were ignored, so I have doubled them.
               - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status,ups.status"
-              - --nut.server="192.168.10.23"
             resources:
               requests:
                 cpu: 50m
