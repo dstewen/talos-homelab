@@ -47,7 +47,7 @@ spec:
               tag: "3.2.3"
             env:
               TZ: Australia/Melbourne
-#              NUT_EXPORTER_SERVER: ${NUT_EXPORTER_SERVER}
+              NUT_EXPORTER_SERVER: 192.168.10.23
 #              NUT_EXPORTER_USERNAME: ${NUT_EXPORTER_USERNAME}
 #              NUT_EXPORTER_PASSWORD: ${NUT_EXPORTER_PASSWORD}
             args:
