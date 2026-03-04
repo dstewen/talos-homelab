@@ -46,7 +46,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gabe565/stable-diffusion/webui
-              tag: 1.10.1@sha256:4f90eae0d4c4e30bf28275bccc524f5607604d926a557c366724f0e709807b17
+              tag: 1.10.1@sha256:e1c8cf10931dde4bb96077d52c92ef61ab221bf70f4db15caa30cf1f1fe8e217
               pullPolicy: IfNotPresent
             args:
               - --opt-sdp-attention
