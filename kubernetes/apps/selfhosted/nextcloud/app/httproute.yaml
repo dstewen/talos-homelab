@@ -12,10 +12,23 @@ spec:
   hostnames:
     - cloud.davidstewen.com
   rules:
+    - backendRefs: &backendRef
+        - name: nextcloud
+          port: 8080
     - matches:
         - path:
             type: PathPrefix
             value: /
+    # fix security and setup warnings failing to load in the web ui
+    - backendRefs:
+        - name: nextcloud
+          port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /settings/ajax/checksetup
+      timeouts:
+        request: 300s
 #      filters:
 #        - &hsts
 #          type: ResponseHeaderModifier
