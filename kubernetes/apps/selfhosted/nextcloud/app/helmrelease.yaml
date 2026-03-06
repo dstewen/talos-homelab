@@ -60,8 +60,8 @@ spec:
       mail:
         enabled: false
       podSecurityContext:
-        runAsUser: 33
-        runAsGroup: 33
+        runAsUser: 1022
+        runAsGroup: 1022
         runAsNonRoot: true
       configs:
         logging.config.php: |-
@@ -98,6 +98,24 @@ spec:
             'default_phone_region' => 'AU',
             'maintenance_window_start' => 2,
           ); ?>
+    httpRoute:
+      enabled: true
+      hostnames:
+        - *host
+      parentRefs:
+        - name: envoy-internal
+          namespace: network
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: "/"
+          filters:
+            - type: ResponseHeaderModifier
+              responseHeaderModifier:
+                add:
+                  - name: strict-transport-security
+                    value: max-age=31536000
     internalDatabase:
       enabled: false
     externalDatabase:
