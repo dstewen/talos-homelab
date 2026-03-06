@@ -55,8 +55,8 @@ spec:
       mail:
         enabled: false
       securityContext:
-        runAsUser: 1022
-        runAsGroup: 1022
+        runAsUser: 82
+        runAsGroup: 82
         runAsNonRoot: true
       configs:
         proxy.config.php: |-
