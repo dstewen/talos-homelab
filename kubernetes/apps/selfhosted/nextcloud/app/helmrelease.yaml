@@ -59,7 +59,7 @@ spec:
       host: &host cloud.davidstewen.com
       mail:
         enabled: false
-      podSecurityContext:
+      securityContext:
         runAsUser: 1022
         runAsGroup: 1022
         runAsNonRoot: true
