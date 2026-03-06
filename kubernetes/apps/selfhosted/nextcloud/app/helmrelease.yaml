@@ -18,6 +18,11 @@ spec:
 #      config:
 #        headers:
 #          Strict-Transport-Security: "max-age=15552000; includeSubDomains; preload;"
+      securityContext:
+        runAsUser: 82
+        runAsGroup: 33
+        runAsNonRoot: true
+        readOnlyRootFilesystem: true
     nextcloud:
       extraInitContainers:
         - name: init-db
@@ -54,10 +59,10 @@ spec:
       host: &host cloud.davidstewen.com
       mail:
         enabled: false
-#      securityContext:
-#        runAsUser: 82
-#        runAsGroup: 82
-#        runAsNonRoot: true
+      podSecurityContext:
+        runAsUser: 33
+        runAsGroup: 33
+        runAsNonRoot: true
       configs:
         logging.config.php: |-
           <?php
