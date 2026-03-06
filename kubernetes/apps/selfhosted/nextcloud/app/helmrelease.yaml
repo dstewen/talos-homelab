@@ -83,6 +83,9 @@ spec:
               3 => '192.168.10.0/24',
               4 => '10.200.15.0/24',
             ),
+            'trusted_domains' => array(
+              0 => 'cloud.davidstewen.com',
+            ),
           ); ?>
         misc.config.php: |-
           <?php
