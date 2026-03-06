@@ -115,7 +115,11 @@ spec:
               responseHeaderModifier:
                 add:
                   - name: strict-transport-security
-                    value: max-age=31536000
+                    value: max-age=31536000; includeSubDomains
+          backendRefs:
+            - name: nextcloud
+              namespace: selfhosted
+              port: 8080
     internalDatabase:
       enabled: false
     externalDatabase:
