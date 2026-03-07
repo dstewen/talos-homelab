@@ -621,6 +621,10 @@ controlPlane:
           # disable default API server admission plugins
           admissionControl:
             $$patch: delete
+          # enable apiserver feature-gates and runtime-config - needed for volsync
+          extraArgs:
+            feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
+            runtime-config: admissionregistration.k8s.io/v1beta1=true
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
