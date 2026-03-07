@@ -9,8 +9,11 @@ metadata:
 spec:
   trigger:
     manual: restore-once
-  restic:
+  kopia:
     accessModes: [ "${VOLSYNC_ACCESSMODES:-ReadWriteOnce}" ]
+    cacheAccessModes: [ "${VOLSYNC_ACCESSMODES:-ReadWriteOnce}" ]
+    cacheCapacity: "${VOLSYNC_CAPACITY:-2Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
     capacity: "${VOLSYNC0_CAPACITY:-2Gi}"
     cleanupCachePVC: true
     cleanupTempPVC: true
@@ -22,6 +25,6 @@ spec:
       fsGroup: ${APP_GID:-1000}
     repository: "${APP}-volsync-kopia-nfs"
     sourceIdentity:
-      sourceName: ${APP}-kopia-minio-rsrc
+      sourceName: ${APP}
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"

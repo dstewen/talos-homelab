@@ -16,6 +16,7 @@ spec:
       runAsUser: ${APP_UID:-1000}
       runAsGroup: ${APP_GID:-1000}
       fsGroup: ${APP_GID:-1000}
+    parallelism: 2
     repository: "${APP}-volsync-kopia-nfs"
     retain:
       hourly: 24
