@@ -6,10 +6,10 @@ resources:
   - ./1password-charts.yaml
 #  - ./aqua.yaml
 #  - ./authentik.yaml
-  - ./backube.yaml
+#  - ./backube.yaml
 #  - ./bjw-s.yaml
 #  - ./cloudnative-pg.yaml
-  - ./external-dns.yaml
+#  - ./external-dns.yaml
   - ./grafana.yaml
   - ./intel.yaml
 #  - ./itzg.yaml
