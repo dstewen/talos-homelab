@@ -8,14 +8,14 @@ resources:
 #  - ./authentik.yaml
   - ./backube.yaml
 #  - ./bjw-s.yaml
-  - ./cloudnative-pg.yaml
+#  - ./cloudnative-pg.yaml
   - ./external-dns.yaml
   - ./grafana.yaml
   - ./intel.yaml
-  - ./itzg.yaml
+#  - ./itzg.yaml
 #  - ./kubernetes-sigs-nfd.yaml
 #  - ./prometheus-community.yaml
   - ./openebs.yaml
   - ./pihole-charts.yaml
-  - ./piraeus.yaml
-  - ./rook-ceph.yaml
+#  - ./piraeus.yaml
+#  - ./rook-ceph.yaml
