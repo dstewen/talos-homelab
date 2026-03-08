@@ -44,7 +44,7 @@ spec:
       isWALArchiver: true
       parameters:
         barmanObjectName: minio-pg18-vector
-        serverName: postgres-vector-v2
+        serverName: postgres-vector-v3
   bootstrap:
     recovery:
       source: source
@@ -56,4 +56,4 @@ spec:
         name: barman-cloud.cloudnative-pg.io
         parameters:
           barmanObjectName: minio-pg18-vector
-          serverName: postgres-vector-v1
+          serverName: postgres-vector-v2
