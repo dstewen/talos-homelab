@@ -21,4 +21,3 @@ resources:
   - ./wyoming-piper/ks.yaml
 #  - ./wyoming-services/ks.yaml
   - ./wyoming-whisper/ks.yaml
-#  - ./zigbee2mqtt/ks.yaml
