@@ -11,5 +11,20 @@ spec:
   interval: 1h
   values:
     fullnameOverride: renovate-operator
+    metrics:
+      enabled: true
+      serviceMonitor:
+        # -- whether to create a ServiceMonitor for the operator metrics
+        enabled: true
+        # -- scrape interval for the ServiceMonitor, defaults to Prometheus global scrape interval
+#        interval: ~
+      dashboard:
+        # -- whether to create a Grafana dashboard for the operator metrics
+        enabled: true
+        annotations: {}
+        labels:
+          grafana_dashboard: "true"
+        # -- namespace to create the dashboard in, defaults to the release namespace
+#        namespace: ~
     webhook:
       enabled: true
