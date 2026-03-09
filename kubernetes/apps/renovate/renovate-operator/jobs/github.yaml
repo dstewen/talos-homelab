@@ -1,4 +1,40 @@
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/generators.external-secrets.io/githubaccesstoken_v1alpha1.json
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: GithubAccessToken
+metadata:
+  name: self-hosted-test-auth-token
+spec:
+  appID: "351600"
+  installID: "41646220"
+  auth:
+    privateKey:
+      secretRef:
+        name: selfhosted-test-pem
+        key: private_key_pem
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: &name self-hosted-test-auth-token
+spec:
+  target:
+    name: *name
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        GITHUB_COM_TOKEN: "{{ .token }}"
+        GITHUB_COM_USER: ZHN0ZXdlbg==
+        RENOVATE_TOKEN: "{{ .token }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: GithubAccessToken
+          name: self-hosted-test-auth-token
+---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
 apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
@@ -40,7 +76,7 @@ spec:
       cpu: 100m
       memory: 128Mi
   schedule: 0 * * * *
-  secretRef: renovate-secret
+  secretRef: self-hosted-test-auth-token
   webhook:
     enabled: true
     authentication:
