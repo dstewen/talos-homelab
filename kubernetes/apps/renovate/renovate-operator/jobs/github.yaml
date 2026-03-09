@@ -11,7 +11,7 @@ spec:
     privateKey:
       secretRef:
         name: self-hosted-test-pem
-        key: private_key_pem
+        key: github_app_private_key
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
