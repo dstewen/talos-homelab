@@ -23,6 +23,18 @@ spec:
       value: "true"
   image: ghcr.io/renovatebot/renovate:43.4.3
   parallelism: 5
+  metadata:
+    labels:
+      app: renovate
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app: renovate
+            topologyKey: kubernetes.io/hostname
   resources:
     requests:
       cpu: 100m
