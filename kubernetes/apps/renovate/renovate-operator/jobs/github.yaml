@@ -5,7 +5,7 @@ kind: GithubAccessToken
 metadata:
   name: self-hosted-test-auth-token
 spec:
-  appID: "351600"
+  appID: "351645"
   installID: "41646220"
   auth:
     privateKey:
