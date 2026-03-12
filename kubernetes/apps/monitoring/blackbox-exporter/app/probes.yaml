@@ -18,8 +18,9 @@ spec:
 #        - kiosk.internal
 #        - kvm.internal
 #        - pikvm.internal
-        - receiver.internal
+        - pi3b.davidstewen.com
+#        - receiver.internal
         - ups.davidstewen.com
-        - vacuum.davidstewen.com
+#        - vacuum.davidstewen.com
 #        - zigbee-controller.internal
 #        - zwave-controller.internal
