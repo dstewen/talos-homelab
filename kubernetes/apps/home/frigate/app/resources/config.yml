@@ -42,9 +42,6 @@ audio:
 
 record:
   enabled: true
-  retain:
-    days: 21
-    mode: all
 
 objects:
   track:
