@@ -11,16 +11,16 @@ spec:
   targets:
     staticConfig:
       static:
-        - nas.davidstewen.com
+        - 192.168.10.15 #nas.davidstewen.com
 #        - garage-door.internal
-        - hdhomerun.davidstewen.com
+        - 172.16.20.99 #hdhomerun.davidstewen.com
 #        - idrac.internal
 #        - kiosk.internal
 #        - kvm.internal
 #        - pikvm.internal
-        - pi3b.davidstewen.com
+        - 192.168.10.23 #pi3b.davidstewen.com
 #        - receiver.internal
-        - ups.davidstewen.com
+        - 192.168.10.21 #ups.davidstewen.com
 #        - vacuum.davidstewen.com
 #        - zigbee-controller.internal
 #        - zwave-controller.internal
