@@ -56,6 +56,9 @@ spec:
             name: headlamp-plugins
     config:
       pluginsDir: /build/plugins
+      #sessionTTL: 86400
+      # Bypasses: https://github.com/kubernetes-sigs/headlamp/issues/4883
+      sessionTTL: null
     serviceAccount:
       create: false
       name: headlamp-admin
