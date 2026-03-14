@@ -11,22 +11,9 @@ spec:
   interval: 1h
   values:
     fullnameOverride: blackbox-exporter
-    ingress:
-      enabled: true
-      annotations:
-        external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-      className: internal
-      hosts:
-        - host: blackbox-exporter.${SECRET_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
-    securityContext:
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        add: ["NET_RAW"]
-
+    extraEnvFrom:
+      - secretRef:
+          name: cluster-secrets
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -44,7 +31,6 @@ spec:
               operator: In
               values:
               - arm64
-
     config:
       modules:
         http_2xx:
@@ -73,7 +59,8 @@ spec:
       enabled: true
       rules:
         - alert: BlackboxProbeFailed
-          expr: probe_success == 0
+          expr: |-
+            probe_success == 0
           for: 15m
           labels:
             severity: critical
