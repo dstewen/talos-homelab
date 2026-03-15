@@ -19,13 +19,13 @@ spec:
           install-tools:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.3.12@sha256:c871ddf7ad1b4125218e5f010b59724f0d2bb299714c5bd6ba7c1e99462450a7
+              tag: 2026.3.8@sha256:7b1294f6aa2eb05b2070cc614743f79212313fc294e5de221ada8a2969ea52f6
             command:
               - /bin/sh
               - -c
               - |
                 set -e
-                mkdir -p /home/node/.local/bin /home/node/.local/go
+                mkdir -p /home/node/.local/bin
 
                 echo "Starting tool installation..."
 
@@ -39,30 +39,9 @@ spec:
                   rm -rf gh.tar.gz gh_2.61.0_linux_amd64
                 fi
 
-                # Install Go if not present on PVC
-                if [ ! -f /home/node/.local/go/bin/go ]; then
-                  echo "Installing Go..."
-                  cd /tmp
-                  curl -fsSL https://go.dev/dl/go1.23.5.linux-amd64.tar.gz -o go.tar.gz
-                  tar xzf go.tar.gz
-                  mv go /home/node/.local/
-                  rm -rf go.tar.gz
-                fi
-
-                # Install Homebrew if not present on PVC
-                if [ ! -f /home/node/.local/homebrew/bin/brew ]; then
-                  echo "Installing Homebrew..."
-                  export HOMEBREW_PREFIX=/home/node/.local/homebrew
-                  export HOMEBREW_CELLAR=/home/node/.local/homebrew/Cellar
-                  export HOMEBREW_REPOSITORY=/home/node/.local/homebrew
-                  mkdir -p $HOMEBREW_PREFIX
-                  cd /tmp
-                  git clone --depth 1 https://github.com/Homebrew/brew $HOMEBREW_PREFIX
-                fi
-
-                # Check if pip is available (either standalone or via python3 -m pip)
-                set +e # Don't fail on pip errors
-                if command -v pip3 >/dev/null 2>&1 || command -v pip >/dev/null 2>&1 || python3 -m pip --version >/dev/null 2>&1; then
+                # Install pip if not available
+                set +e
+                if command -v pip3 >/dev/null 2>&1 || python3 -m pip --version >/dev/null 2>&1; then
                   echo "pip is available"
                 else
                   echo "Installing pip..."
@@ -70,80 +49,79 @@ spec:
                   curl -fsSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
                   python3 get-pip.py --user --no-warn-script-location --break-system-packages || \
                   python3 get-pip.py --user --no-warn-script-location || \
-                  echo "pip install skipped (use python3 -m pip instead)"
+                  echo "pip install skipped"
                   rm -f get-pip.py
                 fi
-                set -e # Re-enable error checking
+                set -e
 
                 echo "Tool installation complete"
-
-                # Ensure config directory exists
                 mkdir -p /home/node/.openclaw
                 echo "Init container completed successfully"
         containers:
           app:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.3.12@sha256:c871ddf7ad1b4125218e5f010b59724f0d2bb299714c5bd6ba7c1e99462450a7
+              tag: 2026.3.8@sha256:7b1294f6aa2eb05b2070cc614743f79212313fc294e5de221ada8a2969ea52f6
             command:
               - /bin/sh
               - -c
               - |
-                # Set up openclawbot CLI symlink
                 ln -sf /app/openclawbot.mjs /home/node/.local/bin/openclawbot
-                # Start gateway
-                exec node dist/index.js gateway --bind lan --port 18789 --allow-unconfigured
+                exec node dist/index.js gateway --bind lan
             env:
-              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
-              GOPATH: /home/node/go
+              BROWSER_WS_ENDPOINT: "ws://localhost:3000/chrome?stealth=1&--disable-web-security=true"
               HOME: &homepath /home/node
-              HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
-              HOMEBREW_PREFIX: /home/node/.local/homebrew
-              HOMEBREW_REPOSITORY: /home/node/.local/homebrew
-              PATH: /home/node/.local/bin:/home/node/.local/go/bin:/home/node/.local/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+              OPENAI_API_BASE_URL: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
+              OPENCLAW_GATEWAY_PORT: &port 18789
+              PATH: /home/node/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
               PIP_BREAK_SYSTEM_PACKAGES: "1"
               TERM: xterm-256color
-              TZ: &tz Australia/Melbourne
+              TZ: ${TIMEZONE}
             envFrom:
               - secretRef:
-                  name: openclaw
+                  name: openclaw-secret
+              - secretRef:
+                  name: cluster-secrets
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: *port
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
-                cpu: 500m
+                cpu: 50m
                 memory: 512Mi
               limits:
                 cpu: 2000m
                 memory: 4Gi
           chrome:
             image:
-              repository: zenika/alpine-chrome
-              tag: with-node
-            command:
-              - chromium-browser
-              - --headless=new
-              - --disable-gpu
-              - --remote-debugging-address=0.0.0.0
-              - --remote-debugging-port=9222
-              - --no-sandbox
-              - --disable-dev-shm-usage
-              # Stealth flags to reduce bot detection
-              - --disable-blink-features=AutomationControlled
-              - --user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+              repository: ghcr.io/browserless/chrome
+              tag: v2.42.0@sha256:af7b7069d2a00de431b0c0f5e51946bed3615b90cc4e35dc72d3f1b81b907bdf
             env:
-              TZ: *tz
+              TZ: ${TIMEZONE}
+              TIMEOUT: "60000"
             resources:
               requests:
                 cpu: 100m
                 memory: 256Mi
               limits:
                 cpu: 1000m
-                memory: 1Gi
-          codeserver:
+                memory: 2Gi
+          code-server:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.111.0@sha256:d7a7c0188e942c53e7725dc7b7990086e1701557330f7db179fa270813544dcc
+              tag: 4.110.0@sha256:d56097319b62b1f34e3b919ddbb7ccb90fc1d98bdb69802fb92831a16d9300d3
             env:
-              TZ: Australia/Melbourne
+              TZ: ${TIMEZONE}
             args:
               [
                 "--auth",
@@ -165,46 +143,51 @@ spec:
       shareProcessNamespace: true
       securityContext:
         runAsUser: 1000
-        runAsGroup: 100
-        fsGroup: 100
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        type: LoadBalancer
-#        annotations:
-#          lbipam.cilium.io/ips: 10.69.10.41
-        externalTrafficPolicy: Cluster
+        controller: openclaw
         ports:
           http:
-            port: &port 18789
-          codeserver:
-            port: &codeserverPort 12321
+            port: *port
+          code-server:
+            port: &codePort 12321
     route:
       app:
-        hostnames: ["miso.davidstewen.com"]
+        annotations:
+          internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
+        hostnames:
+          - openclaw.davidstewen.com
         parentRefs:
-          - name: envoy-internal
+          - name: internal
             namespace: network
+            sectionName: https
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
+              - identifier: app
                 port: *port
-      codeserver:
-        hostnames: ["miso-code.davidstewen.com"]
+      code-server:
+        annotations:
+          internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
+        hostnames:
+          - openclaw-code.davidstewen.com
         parentRefs:
-          - name: envoy-internal
+          - name: internal
             namespace: network
+            sectionName: https
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *codeserverPort
+              - identifier: app
+                port: *codePort
     rbac:
       roles:
         openclaw-read-all:
           type: ClusterRole
           rules:
             - apiGroups: [""]
-              resources: ["pods", "nodes", "services", "namespaces", "configmaps", "persistentvolumes", "persistentvolumeclaims", "endpoints", "resourcequotas", "limitranges", "serviceaccounts", "events"]  # Added events
+              resources: ["pods", "nodes", "services", "namespaces", "configmaps", "persistentvolumes", "persistentvolumeclaims", "endpoints", "resourcequotas", "limitranges", "serviceaccounts", "events"]
               verbs: ["get", "list", "watch"]
             - apiGroups: [""]
               resources: ["pods/log"]
@@ -242,6 +225,12 @@ spec:
             - apiGroups: [""]
               resources: ["pods"]
               verbs: ["delete"]
+            - apiGroups: ["batch"]
+              resources: ["jobs"]
+              verbs: ["delete"]
+            - apiGroups: [""]
+              resources: ["pods/exec"]
+              verbs: ["create"]
             - apiGroups: ["apps"]
               resources: ["deployments"]
               verbs: ["patch", "update"]
@@ -264,18 +253,15 @@ spec:
       openclaw: {}
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        existingClaim: openclaw
         globalMounts:
           - path: *homepath
-      data:
-        type: nfs
-        server: 192.168.10.15
-        path: /volume2/piNFS01/flux-cluster/miso
-        globalMounts:
-          - path: /data
       openclaw-config:
         type: secret
-        name: "{{ .Release.Name }}-config"
-        globalMounts:
-          - path: /home/node/.openclaw/openclaw.json
-            subPath: openclaw.json
+        name: openclaw-config
+        advancedMounts:
+          openclaw:
+            app:
+              - path: /home/node/.openclaw/openclaw.json
+                subPath: openclaw.json
+                readOnly: true
