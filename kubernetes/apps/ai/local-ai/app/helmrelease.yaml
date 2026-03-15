@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: quay.io/go-skynet/local-ai
-              tag: v3.12.1-gpu-intel@sha256:8edc281c12c61662a05aac64e3d65986dafcc582947eddcd0c259163da5ce462
+              tag: v4.0.0-gpu-intel@sha256:fc91e0e64fa0bb61aea98af0b07baf3bd3000ff9d015970b35b2590528a68a7b
             args:
               - "run"
               - "--enable-memory-reclaimer"
