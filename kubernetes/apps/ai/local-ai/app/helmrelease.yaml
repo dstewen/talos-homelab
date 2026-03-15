@@ -37,6 +37,9 @@ spec:
               LOCALAI_MODELS_PATH: /models
               LOCALAI_EXTERNAL_BACKENDS: "llama-cpp,whisper,piper"
               DEBUG: "true"
+            envFrom:
+              - secretRef:
+                  name: cluster-secrets
             probes:
               liveness:
                 enabled: true
