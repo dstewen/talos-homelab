@@ -93,7 +93,7 @@ spec:
         annotations:
           internal-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hostnames:
-          - local-ai.${SECRET_DOMAIN}
+          - local-ai.davidstewen.com
         parentRefs:
           - name: envoy-internal
             namespace: network
