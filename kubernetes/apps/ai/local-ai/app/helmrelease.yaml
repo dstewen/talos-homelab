@@ -3,69 +3,6 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: local-ai-load-balancer
-spec:
-  chartRef:
-    kind: OCIRepository
-    name: local-ai
-#  dependsOn: []
-  interval: 15m
-  values:
-    controllers:
-      local-ai:
-        containers:
-          app:
-            image:
-              repository: quay.io/go-skynet/local-ai
-              tag: v4.0.0
-            args:
-              - federated
-            env:
-              LOCALAI_CONFIG_DIR: &config /configuration
-            envFrom:
-              - secretRef:
-                  name: local-ai
-            resources:
-              requests:
-                cpu: 100m
-                memory: 250Mi
-              limits:
-                cpu: 500m
-                memory: 500Mi
-#        pod:
-#          affinity:
-#            podAntiAffinity:
-#              requiredDuringSchedulingIgnoredDuringExecution:
-#                - topologyKey: "kubernetes.io/hostname"
-#                  labelSelector:
-#                    matchExpressions:
-#                      - key: app.kubernetes.io/name
-#                        operator: In
-#                        values:
-#                          - "{{ .Release.Name }}"
-    service:
-      app:
-        ports:
-          http:
-            port: 8080
-    route:
-      app:
-        hostnames:
-        - local-ai.davidstewen.com
-        parentRefs:
-        - name: envoy-internal
-          namespace: network
-    persistence:
-      local-ai-backends:
-        existingClaim: "local-ai-backends"
-        globalMounts:
-          - path: *config
-            subPath: flux-configs
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
   name: local-ai
 spec:
   chartRef:
@@ -75,7 +12,9 @@ spec:
   interval: 15m
   values:
     controllers:
-      local-ai:
+      local-ai-intel:
+        annotations:
+          reloader.stakater.com/auto: "true"
         replicas: 2
         strategy: RollingUpdate
         rollingUpdate:
@@ -85,72 +24,100 @@ spec:
           app:
             image:
               repository: quay.io/go-skynet/local-ai
-              tag: v4.0.0-gpu-intel
+              tag: v3.12.1-gpu-intel@sha256:8edc281c12c61662a05aac64e3d65986dafcc582947eddcd0c259163da5ce462
             args:
-              - run
-              - --p2p
-              - --federated
+              - "run"
+              - "--enable-memory-reclaimer"
+              - "--memory-reclaimer-threshold=0.8"
+              - "--enable-watchdog-idle"
+              - "--watchdog-idle-timeout=15m"
             securityContext:
               privileged: true
             env:
               LOCALAI_MODELS_PATH: /models
-              LOCALAI_FORCE_META_BACKEND_CAPABILITY: default
-              LOCALAI_CONFIG_DIR: &config /configuration
+              LOCALAI_EXTERNAL_BACKENDS: "llama-cpp,whisper,piper"
               DEBUG: "true"
-            envFrom:
-              - secretRef:
-                  name: local-ai
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /readyz
+                    port: &port 8080
+                  initialDelaySeconds: 300
+                  periodSeconds: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /readyz
+                    port: *port
+                  initialDelaySeconds: 120
+                  periodSeconds: 15
             resources:
               claims:
                 - name: gpu
               requests:
                 cpu: 800m
-                memory: 8Gi
+                memory: 16Gi
               limits:
-                cpu: 4000m
-                memory: 32Gi
-#        pod:
+                memory: 64Gi
+        pod:
 #          affinity:
 #            podAntiAffinity:
 #              requiredDuringSchedulingIgnoredDuringExecution:
-#                - topologyKey: "kubernetes.io/hostname"
+#                - topologyKey: kubernetes.io/hostname
 #                  labelSelector:
 #                    matchExpressions:
 #                      - key: app.kubernetes.io/name
 #                        operator: In
 #                        values:
-#                          - ollama
-#                          - ollama-cpu
-#                          - "{{ .Release.Name }}"
-    defaultPodOptions:
-      resourceClaims:
-        - name: gpu
-          resourceClaimTemplateName: local-ai-gpu
+#                          - local-ai-intel
+#                          - plex
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: local-ai-gpu
     service:
       app:
+        controller: local-ai-intel
         ports:
           http:
             port: 8080
     route:
       app:
+        annotations:
+          internal-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hostnames:
-        - '{{ .Release.Name }}-worker.davidstewen.com'
+          - local-ai.${SECRET_DOMAIN}
         parentRefs:
           - name: envoy-internal
             namespace: network
+            sectionName: https
     persistence:
-      local-ai-models:
-        existingClaim: '{{ .Release.Name }}-models'
+      models:
+        existingClaim: local-ai-models-intel
         globalMounts:
           - path: /models
-            subPath: flux-models
-      local-ai-backends:
-        existingClaim: '{{ .Release.Name }}-backends'
+      config:
+        type: configMap
+        name: local-ai-config-intel
+        globalMounts:
+          - path: /models/mistral-7b-instruct.yaml
+            subPath: mistral-7b-instruct.yaml
+          - path: /models/nomic-embed-text.yaml
+            subPath: nomic-embed-text.yaml
+          - path: /models/whisper-base.yaml
+            subPath: whisper-base.yaml
+          - path: /models/piper-tts.yaml
+            subPath: piper-tts.yaml
+      backends:
+        type: emptyDir
         globalMounts:
           - path: /backends
-            subPath: flux-backends
-          - path: *config
-            subPath: flux-configs
       dri:
         type: hostPath
         hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
