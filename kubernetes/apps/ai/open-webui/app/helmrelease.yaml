@@ -57,8 +57,9 @@ spec:
 #              AUDIO_OPENAI_API_BASE_URL: https://piper.${SECRET_DOMAIN}/v1
               AUDIO_OPENAI_API_KEY: sk-111111111111 # fake key needed to make ui happy
               ENABLE_OPENAI_API: true
-              OPENAI_API_BASE_URL: http://open-webui-pipelines.ai.svc.cluster.local:9099
-              OPENAI_API_KEY: "0p3n-w3bu!"
+              # LocalAI backends (Intel: chat/embed/whisper/tts, NVIDIA: coder models)
+              OPENAI_API_BASE_URLS: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
+              OPENAI_API_KEYS: "not-needed;not-needed"
               ENABLE_OAUTH_SIGNUP: true
               ENABLE_OAUTH_GROUP_MANAGEMENT: true
               ENABLE_OAUTH_GROUP_CREATION: true
@@ -76,7 +77,7 @@ spec:
                 cpu: 100m
                 memory: 512Mi
               limits:
-                memory: 2Gi
+                memory: 4Gi
 
     service:
       app:
