@@ -15,6 +15,6 @@ resources:
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
-#  - ./openclaw/ks.yaml
+  - ./openclaw/ks.yaml
   - ./qdrant/ks.yaml
 #  - ./stable-diffusion/ks.yaml
