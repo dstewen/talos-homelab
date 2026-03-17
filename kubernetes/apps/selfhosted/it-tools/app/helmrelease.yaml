@@ -103,6 +103,13 @@ spec:
 
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Selfhosted
+          gethomepage.dev/name: IT Tools
+          gethomepage.dev/href: https://it-tools.davidstewen.com
+          gethomepage.dev/icon: sh-it-tools.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=it-tools
         hostnames: ["it-tools.${SECRET_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
