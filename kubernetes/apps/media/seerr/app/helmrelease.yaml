@@ -80,6 +80,9 @@ spec:
           gethomepage.dev/name: Seerr
           gethomepage.dev/href: https://seerr.davidstewen.com
           gethomepage.dev/icon: sh-seerr.png
+          gethomepage.dev/widget.type: seerr
+          gethomepage.dev/widget.url: http://seerr.media
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_SEERR_API_KEY}}`}}"
           hajimari.io/appName: "Seerr"
           hajimari.io/enable: "true"
           hajimari.io/group: "Downloads"
