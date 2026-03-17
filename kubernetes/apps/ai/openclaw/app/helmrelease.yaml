@@ -157,6 +157,15 @@ spec:
     route:
       app:
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: AI
+          gethomepage.dev/name: OpenClaw
+          gethomepage.dev/href: https://openclaw.davidstewen.com
+          gethomepage.dev/icon: sh-openclaw.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=local-ai
+          hajimari.io/appName: "OpenClaw"
+          hajimari.io/enable: "true"
+          hajimari.io/group: "AI"
           internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
         hostnames:
           - openclaw.davidstewen.com
@@ -170,6 +179,14 @@ spec:
                 port: *port
       code-server:
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: AI
+          gethomepage.dev/name: OpenClaw VSCode
+          gethomepage.dev/href: https://openclaw-code.davidstewen.com
+          gethomepage.dev/icon: sh-visual-studio-code.png
+          hajimari.io/appName: "OpenClaw"
+          hajimari.io/enable: "true"
+          hajimari.io/group: "AI"
           internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
         hostnames:
           - openclaw-code.davidstewen.com
