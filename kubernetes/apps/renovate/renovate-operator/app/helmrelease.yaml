@@ -14,7 +14,10 @@ spec:
     auth:
       oidc:
         enabled: true
-        existingSecret: &oidcSecret renovate-operator-oidc-credentials
+        existingSecret: renovate-operator-oidc-credentials
+        issuerUrl: https://id.davidstewen.com/application/o/renovate-operator/
+        secretKey: RENOVATE_OPERATOR_CLIENT_SECRET
+
     metrics:
       enabled: true
       serviceMonitor:
@@ -34,14 +37,6 @@ spec:
       enabled: true
   valuesFrom:
     - kind: Secret
-      name: *oidcSecret
-      valuesKey: RENOVATE_OPERATOR_OIDC_ISSUER
-      targetPath: auth.oidc.issuerUrl
-    - kind: Secret
-      name: *oidcSecret
+      name: renovate-operator-oidc-credentials
       valuesKey: RENOVATE_OPERATOR_CLIENT_ID
       targetPath: auth.oidc.clientId
-    - kind: Secret
-      name: *oidcSecret
-      valuesKey: RENOVATE_OPERATOR_CLIENT_SECRET
-      targetPath: auth.oidc.secretKey
