@@ -43,5 +43,5 @@ spec:
       targetPath: auth.oidc.clientId
     - kind: Secret
       name: *oidcSecret
-      valuesKey: RENOVATE_OPERATOR_SECRET
+      valuesKey: RENOVATE_OPERATOR_CLIENT_SECRET
       targetPath: auth.oidc.secretKey
