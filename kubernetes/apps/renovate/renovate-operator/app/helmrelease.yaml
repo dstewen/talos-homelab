@@ -11,6 +11,10 @@ spec:
   interval: 1h
   values:
     fullnameOverride: renovate-operator
+    auth:
+      oidc:
+        enabled: true
+        existingSecret: &oidcSecret renovate-operator-oidc-credentials
     metrics:
       enabled: true
       serviceMonitor:
@@ -28,3 +32,16 @@ spec:
 #        namespace: ~
     webhook:
       enabled: true
+  valuesFrom:
+    - kind: Secret
+      name: *oidcSecret
+      valuesKey: RENOVATE_OPERATOR_OIDC_ISSUER
+      targetPath: auth.oidc.issuerUrl
+    - kind: Secret
+      name: *oidcSecret
+      valuesKey: RENOVATE_OPERATOR_CLIENT_ID
+      targetPath: auth.oidc.clientId
+    - kind: Secret
+      name: *oidcSecret
+      valuesKey: RENOVATE_OPERATOR_SECRET
+      targetPath: auth.oidc.secretKey
