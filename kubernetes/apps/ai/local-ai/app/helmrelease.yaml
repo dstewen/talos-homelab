@@ -36,6 +36,7 @@ spec:
             env:
               LOCALAI_MODELS_PATH: /models
               LOCALAI_EXTERNAL_BACKENDS: "llama-cpp,whisper,piper"
+              LOCALAI_MAX_ACTIVE_BACKENDS: 3
               DEBUG: "true"
             envFrom:
               - secretRef:
