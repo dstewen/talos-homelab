@@ -60,7 +60,7 @@ spec:
           gethomepage.dev/name: Garage
           gethomepage.dev/icon: sh-garage
           gethomepage.dev/description: "Garage S3 Storage"
-          gethomepage.dev/pod-selector: app.kubernetes.io/name=garage
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=garage-webui
         hostnames: ["garage.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
