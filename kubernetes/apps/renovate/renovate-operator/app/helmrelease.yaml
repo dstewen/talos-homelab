@@ -13,7 +13,7 @@ spec:
     fullnameOverride: renovate-operator
     auth:
       oidc:
-        enabled: true
+        enabled: false
         existingSecret: renovate-operator-oidc-credentials
         issuerUrl: https://id.davidstewen.com/application/o/renovate-operator/
         secretKey: RENOVATE_OPERATOR_CLIENT_SECRET
