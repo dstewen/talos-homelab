@@ -32,7 +32,7 @@ spec:
           wallos:
             image:
               repository: ghcr.io/ellite/wallos
-              tag: 4.6.2@sha256:216ecb5d33d4a38b5231155ae0b1847aa4acb2a0af0f4a8e9f3c190a11f8da90
+              tag: 4.7.1@sha256:8d5d9da409c553e18ac64d0b4546b3ad204960826f4b53fb7092f4cbf24be136
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
