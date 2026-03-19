@@ -40,6 +40,13 @@ spec:
               SERVER_PROTOCOL: https
               SERVER_HOST: patchmon.${SECRET_DOMAIN}
               SERVER_PORT: 443
+              # OIDC Auth
+              OIDC_ENABLED: true
+              OIDC_SCOPES: "openid email profile groups"
+              OIDC_AUTO_CREATE_USERS: true
+              OIDC_DEFAULT_ROLE: user
+              OIDC_DISABLE_LOCAL_AUTH: false
+              OIDC_BUTTON_TEXT: "Login with SSO"
             envFrom: *envFrom
             securityContext:
               allowPrivilegeEscalation: false
