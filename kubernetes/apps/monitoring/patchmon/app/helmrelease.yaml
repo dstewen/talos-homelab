@@ -91,6 +91,13 @@ spec:
             port: 3000
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Update-Management
+          gethomepage.dev/name: Patchmon
+          gethomepage.dev/icon: patchmon.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/controller=patchmon
+          gethomepage.dev/href: https://patchmon.${SECRET_DOMAIN}
         hostnames:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
         parentRefs:
