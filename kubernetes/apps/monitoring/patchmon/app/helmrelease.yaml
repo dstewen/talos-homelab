@@ -41,6 +41,7 @@ spec:
               SERVER_HOST: patchmon.${SECRET_DOMAIN}
               SERVER_PORT: 443
               # OIDC Auth
+              NODE_ENV: development
               OIDC_ENABLED: true
               OIDC_SCOPES: "openid email profile groups"
               OIDC_AUTO_CREATE_USERS: true
