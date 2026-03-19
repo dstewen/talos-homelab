@@ -54,6 +54,13 @@ spec:
             port: &port 3909
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Storage
+          gethomepage.dev/name: Garage
+          gethomepage.dev/icon: sh-garage
+          gethomepage.dev/description: "Garage S3 Storage"
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=garage
         hostnames: ["garage.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
