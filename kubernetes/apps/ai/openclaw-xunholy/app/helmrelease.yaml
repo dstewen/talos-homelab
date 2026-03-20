@@ -21,6 +21,7 @@ spec:
             env:
               TZ: Australia/Melbourne
               OPENAI_API_BASE_URL: "http://local-ai.ai.svc.cluster.local:8080/v1"
+#              OPENAI_API_KEY: "not-needed"
             envFrom:
               - secretRef:
                   name: openclaw-xunholy-secret
