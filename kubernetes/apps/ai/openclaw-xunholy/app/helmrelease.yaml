@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.3.12
+              tag: 2026.3.12@sha256:c871ddf7ad1b4125218e5f010b59724f0d2bb299714c5bd6ba7c1e99462450a7
             env:
               TZ: Australia/Melbourne
               OPENAI_API_BASE_URL: "http://local-ai.ai.svc.cluster.local:8080/v1"
