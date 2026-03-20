@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openclaw-xunholy-config
+data:
+  openclaw.json: |
+    {
+      "gateway": {
+        "port": 18789,
+        "mode": "local",
+        "bind": "lan",
+        "auth": {
+          "mode": "password"
+        },
+        "controlUi": {
+          "allowedOrigins": ["https://openclaw-xunholy.${SECRET_DOMAIN}"]
+        }
+      },
+      "browser": {
+        "enabled": true
+      },
+      "agents": {
+        "defaults": {
+          "workspace": "/home/node/.openclaw/workspace",
+          "model": {
+            "primary": "openai/gpt-4o",
+            "fallbacks": [
+              "anthropic/claude-sonnet-4-20250514"
+            ]
+          },
+          "userTimezone": "UTC",
+          "timeoutSeconds": 600,
+          "maxConcurrent": 1
+        },
+        "list": [
+          {
+            "id": "main",
+            "default": true,
+            "identity": {
+              "name": "OpenClaw"
+            }
+          }
+        ]
+      },
+      "session": {
+        "scope": "per-sender",
+        "store": "/home/node/.openclaw/sessions",
+        "reset": {
+          "mode": "idle",
+          "idleMinutes": 60
+        }
+      },
+      "logging": {
+        "level": "info",
+        "consoleLevel": "info",
+        "consoleStyle": "compact",
+        "redactSensitive": "tools"
+      },
+      "tools": {
+        "profile": "full",
+        "web": {
+          "search": {
+            "enabled": false
+          },
+          "fetch": {
+            "enabled": true
+          }
+        }
+      }
+    }
