@@ -27,6 +27,16 @@ tasks:
       - test -f {{.TALOSCONFIG}}
       - which talhelper talosctl yq
 
+  defrag:
+    desc: Defrag ETCD database on an single node [IP=required]
+    dir: '{{.TALOS_DIR}}'
+    cmd: talosctl etcd defrag --nodes {{.IP}}
+    requires:
+      vars: [IP]
+    preconditions:
+      - talosctl config info
+      - which talosctl
+
   upgrade-node:
     desc: Upgrade Talos on a single node [IP=required]
     dir: '{{.TALOS_DIR}}'
