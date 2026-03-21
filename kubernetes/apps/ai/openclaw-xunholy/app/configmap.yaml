@@ -88,6 +88,12 @@ data:
           "allowFrom": ["*"],
           "botToken": "{{ .SLACK_BOT_TOKEN }}",
           "appToken": "{{ .SLACK_APP_TOKEN }}",
+          "channels": {
+          "#test-channel": {
+            "allow": true,
+            requireMention: true,
+            },
+          },
           "actions": {
             "messages": true,
             "search": true,
