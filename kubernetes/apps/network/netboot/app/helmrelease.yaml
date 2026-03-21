@@ -80,21 +80,13 @@ spec:
 
     persistence:
       config:
-        enabled: true
-        storageClass: openebs-hostpath
-        accessMode: ReadWriteOnce
-        size: 2Gi
+        existingClaim: netboot-config
         globalMounts:
           - path: /config
-        retain: true
       data:
-        enabled: true
-        storageClass: openebs-hostpath
-        accessMode: ReadWriteOnce
-        size: 50Gi
+        existingClaim: netboot-data
         globalMounts:
           - path: /assets
-        retain: true
       tmpfs:
         type: emptyDir
         globalMounts:
