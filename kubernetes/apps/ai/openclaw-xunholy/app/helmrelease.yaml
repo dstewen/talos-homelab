@@ -24,6 +24,7 @@ spec:
               TZ: Australia/Melbourne
               OPENAI_API_BASE_URL: "http://local-ai.ai.svc.cluster.local:8080/v1"
               OPENAI_API_KEY: "not-needed"
+              NODE_OPTIONS: "--max-old-space-size=4096"
             envFrom:
               - secretRef:
                   name: openclaw-xunholy-secret
@@ -36,7 +37,7 @@ spec:
                 cpu: 200m
                 memory: 512Mi
               limits:
-                memory: 2Gi
+                memory: 8Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
