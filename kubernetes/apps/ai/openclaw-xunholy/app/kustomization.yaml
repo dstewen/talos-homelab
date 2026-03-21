@@ -8,5 +8,5 @@ resources:
   - ./externalsecret.yaml
   - ./pvc.yaml
   - ./configmap.yaml
-  - ./httproute.yaml
+#  - ./httproute.yaml
   - ./ocirepository.yaml

@@ -15,19 +15,88 @@ spec:
       *app :
         annotations:
           reloader.stakater.com/auto: "true"
+
+        initContainers:
+          install-tools:
+            image:
+              repository: ghcr.io/openclaw/openclaw
+              tag: 2026.3.13-1@sha256:a5a4c83b773aca85a8ba99cf155f09afa33946c0aa5cc6a9ccb6162738b5da02
+            command:
+              - /bin/sh
+              - -c
+              - |
+                set -e
+                mkdir -p /home/node/.local/bin /home/node/.local/go
+
+                echo "Starting tool installation..."
+
+                # Install gh CLI if not present on PVC
+                if [ ! -f /home/node/.local/bin/gh ]; then
+                  echo "Installing gh CLI..."
+                  cd /tmp
+                  curl -fsSL https://github.com/cli/cli/releases/download/v2.61.0/gh_2.61.0_linux_amd64.tar.gz -o gh.tar.gz
+                  tar xzf gh.tar.gz
+                  cp gh_2.61.0_linux_amd64/bin/gh /home/node/.local/bin/
+                  rm -rf gh.tar.gz gh_2.61.0_linux_amd64
+                fi
+
+                # Install Homebrew if not present on PVC
+                if [ ! -f /home/node/.local/homebrew/bin/brew ]; then
+                  echo "Installing Homebrew..."
+                  export HOMEBREW_PREFIX=/home/node/.local/homebrew
+                  export HOMEBREW_CELLAR=/home/node/.local/homebrew/Cellar
+                  export HOMEBREW_REPOSITORY=/home/node/.local/homebrew
+                  mkdir -p $HOMEBREW_PREFIX
+                  cd /tmp
+                  git clone --depth 1 https://github.com/Homebrew/brew $HOMEBREW_PREFIX
+                fi
+
+                # Check if pip is available (either standalone or via python3 -m pip)
+                set +e # Don't fail on pip errors
+                if command -v pip3 >/dev/null 2>&1 || command -v pip >/dev/null 2>&1 || python3 -m pip --version >/dev/null 2>&1; then
+                  echo "pip is available"
+                else
+                  echo "Installing pip..."
+                  cd /tmp
+                  curl -fsSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                  python3 get-pip.py --user --no-warn-script-location --break-system-packages || \
+                  python3 get-pip.py --user --no-warn-script-location || \
+                  echo "pip install skipped (use python3 -m pip instead)"
+                  rm -f get-pip.py
+                fi
+                set -e # Re-enable error checking
+
+                echo "Tool installation complete"
+
+                # Ensure config directory exists
+                mkdir -p /home/node/.openclaw
+                echo "Init container completed successfully"
+
         containers:
           app:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.3.12@sha256:c871ddf7ad1b4125218e5f010b59724f0d2bb299714c5bd6ba7c1e99462450a7
+              tag: 2026.3.13-1@sha256:a5a4c83b773aca85a8ba99cf155f09afa33946c0aa5cc6a9ccb6162738b5da02
             env:
               TZ: Australia/Melbourne
+              BROWSER_WS_ENDPOINT: "ws://localhost:3000/chrome?stealth=1&--disable-web-security=true"
               OPENAI_API_BASE_URL: "http://local-ai.ai.svc.cluster.local:8080/v1"
               OPENAI_API_KEY: "not-needed"
               NODE_OPTIONS: "--max-old-space-size=4096"
+              GOPATH: /home/node/go
+              HOME: &homepath /home/node
+              HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
+              HOMEBREW_PREFIX: /home/node/.local/homebrew
+              HOMEBREW_REPOSITORY: /home/node/.local/homebrew
+              OPENCLAW_GATEWAY_PORT: &port 18789
+              PATH: /home/node/.local/bin:/home/node/.local/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+              PIP_BREAK_SYSTEM_PACKAGES: "1"
+              TERM: xterm-256color
             envFrom:
               - secretRef:
                   name: openclaw-xunholy-secret
+              - secretRef:
+                  name: cluster-secrets
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -38,7 +107,47 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 8Gi
+
+          chrome:
+            image:
+              repository: ghcr.io/browserless/chrome
+              tag: v2.44.0@sha256:3305f0d46608ddcdb7931c75e8e4925eeb98cc282f825279154b177d9c4f7fc0
+            env:
+              TZ: Australia/Melbourne
+              TIMEOUT: 60000
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 1000m
+                memory: 2Gi
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.112.0@sha256:ddd9b0b854fec5a3c65ec0095b5c59fb8505ad44d8a18d00d6fcf6a3179692dd
+            env:
+              TZ: Australia/Melbourne
+            args:
+              [
+                "--auth",
+                "none",
+                "--user-data-dir",
+                "/home/node/.vscode",
+                "--extensions-dir",
+                "/home/node/.vscode",
+                "--port",
+                "12321",
+                "/config",
+              ]
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+
     defaultPodOptions:
+      shareProcessNamespace: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -52,6 +161,120 @@ spec:
         ports:
           http:
             port: 18789
+          code-server:
+            port: 12321
+
+    route:
+      app:
+        forceRename: "{{ .Release.Name }}"
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: AI
+          gethomepage.dev/name: OpenClaw
+          gethomepage.dev/href: https://openclaw-xunholy.davidstewen.com
+          gethomepage.dev/icon: sh-openclaw.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=openclaw-xunholy
+          internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
+        hostnames:
+          - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
+      code-server:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: AI
+          gethomepage.dev/name: OpenClaw VSCode
+          gethomepage.dev/href: https://openclaw-code.davidstewen.com
+          gethomepage.dev/icon: sh-visual-studio-code.png
+          hajimari.io/appName: "OpenClaw"
+          hajimari.io/enable: "true"
+          hajimari.io/group: "AI"
+          internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
+        hostnames:
+          - "{{ .Release.Name }}-code.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: code-server
+    rbac:
+      roles:
+        openclaw-xunholy-read-all:
+          type: ClusterRole
+          rules:
+            - apiGroups: [""]
+              resources: ["pods", "nodes", "services", "namespaces", "configmaps", "persistentvolumes", "persistentvolumeclaims", "endpoints", "resourcequotas", "limitranges", "serviceaccounts", "events"]  # Added events
+              verbs: ["get", "list", "watch"]
+            - apiGroups: [""]
+              resources: ["pods/log"]
+              verbs: ["get", "list"]
+            - apiGroups: ["apps"]
+              resources: ["deployments", "daemonsets", "statefulsets", "replicasets"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["batch"]
+              resources: ["jobs", "cronjobs"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["networking.k8s.io"]
+              resources: ["ingresses", "networkpolicies"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["storageclasses"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["rbac.authorization.k8s.io"]
+              resources: ["roles", "rolebindings", "clusterroles", "clusterrolebindings"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["metrics.k8s.io"]
+              resources: ["nodes", "pods"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["helm.toolkit.fluxcd.io"]
+              resources: ["helmreleases"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["kustomize.toolkit.fluxcd.io"]
+              resources: ["kustomizations"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["external-secrets.io"]
+              resources: ["externalsecrets"]
+              verbs: ["get", "list", "watch"]
+        openclaw-xunholy-write-restricted:
+          type: Role
+          rules:
+            - apiGroups: [""]
+              resources: ["pods"]
+              verbs: ["delete"]
+            - apiGroups: ["batch"]
+              resources: ["jobs"]
+              verbs: ["delete"]
+            - apiGroups: [""]
+              resources: ["pods/exec"]
+              verbs: ["create"]
+            - apiGroups: ["apps"]
+              resources: ["deployments"]
+              verbs: ["patch", "update"]
+      bindings:
+        openclaw-xunholy-read-all:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: openclaw-xunholy-read-all
+          subjects:
+            - identifier: openclaw-xunholy
+              serviceAccount: openclaw-xunholy
+        openclaw-xunholy-write-restricted:
+          type: RoleBinding
+          roleRef:
+            identifier: openclaw-xunholy-write-restricted
+          subjects:
+            - identifier: openclaw-xunholy
+              serviceAccount: openclaw-xunholy
+    serviceAccount:
+      openclaw-xunholy: {}
+
     persistence:
       data:
         existingClaim: openclaw-xunholy-data
