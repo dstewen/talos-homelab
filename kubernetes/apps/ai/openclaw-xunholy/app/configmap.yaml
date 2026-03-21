@@ -84,11 +84,12 @@ data:
         "slack": {
           "enabled": true,
           "mode": "socket",
-          "dmPolicy": "open",
+          "dmPolicy": "pairing",
           "allowFrom": ["*"],
           "botToken": "{{ .SLACK_BOT_TOKEN }}",
           "appToken": "{{ .SLACK_APP_TOKEN }}",
           "channels": {
+             "C0AM3KEJF34": { allow: true, requireMention: true, allowBots: false },
           "#test-channel": {
             "allow": true,
             requireMention: true,
@@ -97,9 +98,9 @@ data:
           "actions": {
             "messages": true,
             "search": true,
-            "reactions": false,
+            "reactions": true,
             "permissions": false,
-            "pins": false,
+            "pins": true,
             "channelInfo": false,
           },
         }
