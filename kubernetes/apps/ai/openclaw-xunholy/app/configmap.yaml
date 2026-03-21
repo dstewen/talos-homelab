@@ -85,7 +85,7 @@ data:
           "enabled": true,
           "mode": "socket",
           "dmPolicy": "open",
-          "allowFrom": "*",
+          "allowFrom": ["*"],
           "botToken": "{{ .SLACK_BOT_TOKEN }}",
           "appToken": "{{ .SLACK_APP_TOKEN }}",
           "actions": {
