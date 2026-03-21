@@ -80,6 +80,22 @@ data:
           "idleMinutes": 60
         }
       },
+      "channels": {
+        "slack": {
+          "enabled": true,
+          "mode": "socket",
+          "botToken": "{{ .SLACK_BOT_USER_OAUTH_TOKEN }}",
+          "appToken": "{{ .SLACK_TALOS_HOMELAB_APP_TOKEN }}",
+          "actions": {
+            "messages": true,
+            "search": true,
+            "reactions": false,
+            "permissions": false,
+            "pins": false,
+            "channelInfo": false,
+          },
+        }
+      },
       "logging": {
         "level": "info",
         "consoleLevel": "info",
