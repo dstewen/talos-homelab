@@ -190,7 +190,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: AI
           gethomepage.dev/name: OpenClaw VSCode
-          gethomepage.dev/href: https://openclaw-code.davidstewen.com
+          gethomepage.dev/href: https://openclaw-xunholy-code.davidstewen.com
           gethomepage.dev/icon: sh-visual-studio-code.png
           hajimari.io/appName: "OpenClaw"
           hajimari.io/enable: "true"
