@@ -88,11 +88,15 @@ data:
           "allowFrom": ["*"],
           "botToken": "{{ .SLACK_BOT_TOKEN }}",
           "appToken": "{{ .SLACK_APP_TOKEN }}",
+          "groupPolicy": "allowlist",
           "channels": {
              "C0AM3KEJF34": { allow: true, requireMention: true, allowBots: false },
           "#test-channel": {
             "allow": true,
-            requireMention: true,
+            "requireMention": true,
+            "allowBots": false,
+            "skills": ["docs"],
+            "systemPrompt": "Short answers only.",
             },
           },
           "actions": {
@@ -102,6 +106,12 @@ data:
             "permissions": false,
             "pins": true,
             "channelInfo": false,
+          },
+          "slashCommand": {
+            "enabled": true,
+            "name": "openclaw",
+            "sessionPrefix": "slack:slash",
+            "ephemeral": true,
           },
         }
       },
