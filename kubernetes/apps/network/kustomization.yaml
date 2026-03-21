@@ -13,4 +13,6 @@ resources:
   - ./envoy-gateway/ks.yaml
   - ./external-dns-pihole/ks.yaml
   - ./k8s-gateway/ks.yaml
+  - ./meshcentral/ks.yaml
   - ./multus/ks.yaml
+  - ./netboot/ks.yaml
