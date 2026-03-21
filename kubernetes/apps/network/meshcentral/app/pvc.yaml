@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: network
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+  name: meshcentral-data
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: openebs-hostpath

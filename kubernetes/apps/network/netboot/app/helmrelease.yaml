@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app netboot
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: netboot
+  interval: 1h
+  values:
+    controllers:
+      netboot:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/netbootxyz/netbootxyz
+              tag: 0.7.6-nbxyz2
+            env:
+              TFTPD_OPTS: "--tftp-single-port"
+
+#    defaultPodOptions:
+#      affinity:
+#        nodeAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#            nodeSelectorTerms:
+#            - matchExpressions:
+#              - key: kubernetes.io/arch
+#                operator: In
+#                values:
+#                - arm64
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#          - weight: 50
+#            preference:
+#              matchExpressions:
+#              - key: node-role.kubernetes.io/worker
+#                operator: In
+#                values:
+#                - worker
+#      hostNetwork: true
+
+    service:
+      app:
+        type: LoadBalancer
+#        annotations:
+#          io.cilium/lb-ipam-ips: ${SVC_PXE_ADDR}
+        ports:
+          control:
+            port: &port 3000
+          web:
+            enabled: true
+            primary: false
+            port: 80
+            targetPort: 80
+            protocol: HTTP
+          tftp:
+            enabled: true
+            primary: false
+            port: 69
+            targetPort: 69
+            protocol: UDP
+
+    route:
+      app:
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Netboot.xyz"
+          hajimari.io/info: "Network boot system"
+          hajimari.io/icon: "refresh-auto"
+        hostnames: ["netboot.davidstewen.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      config:
+        enabled: true
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        globalMounts:
+          - path: /config
+        retain: true
+      data:
+        enabled: true
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        globalMounts:
+          - path: /assets
+        retain: true
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
