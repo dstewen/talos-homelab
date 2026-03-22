@@ -1,0 +1,44 @@
+---
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: openclaw
+  namespace: openclaw
+spec:
+  envFrom:
+    - secretRef:
+        name: openclaw-media-secrets
+    - secretRef:
+        name: openclaw-api-keys
+  env:
+    - name: RADARR_URL
+      value: "https://radarr.lumu.au"
+    - name: SONARR_URL
+      value: "https://sonarr.lumu.au"
+  runtimeDeps:
+    python: true
+  gateway:
+    controlUiOrigins:
+      - "https://openclaw.lumu.au"
+    existingSecret: openclaw-gateway-token
+  config:
+    mergeMode: overwrite
+    raw:
+      agents:
+        defaults:
+          model:
+            primary: "anthropic/claude-haiku-4-5-20251001"
+      skills:
+        load:
+          extraDirs:
+            - "/home/openclaw/.openclaw/skills"
+      channels:
+        telegram:
+          enabled: true
+          dmPolicy: pairing
+          groups:
+            "-5222795601": {}
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi
