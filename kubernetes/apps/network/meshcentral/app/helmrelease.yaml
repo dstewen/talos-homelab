@@ -22,7 +22,7 @@ spec:
             env:
               TZ: "Australia/Melbourne"
               NODE_ENV: production
-              HOSTNAME: &host mesh.davidstewen.com
+              HOSTNAME: mesh.davidstewen.com
             resources:
               requests:
                 cpu: 100m
@@ -45,8 +45,8 @@ spec:
       app:
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/appName: "Netboot.xyz"
-          hajimari.io/info: "Network boot system"
+          hajimari.io/appName: "MeshCentral"
+          hajimari.io/info: "Intel-vPro"
           hajimari.io/icon: "refresh-auto"
           external-dns.alpha.kubernetes.io/target: "mesh.davidstewen.com"
         hostnames: ["mesh.davidstewen.com"]
