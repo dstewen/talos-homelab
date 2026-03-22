@@ -90,11 +90,11 @@ data:
           "appToken": "${SLACK_APP_TOKEN}}",
           "groupPolicy": "allowlist",
           "channels": {
-             "C0AM3KEJF34": { allow: true, requireMention: true, allowBots: false },
+             "C0AM3KEJF34": { allow: true, requireMention: true, allowBots: true },
           "#test-channel": {
             "allow": true,
             "requireMention": true,
-            "allowBots": false,
+            "allowBots": true,
             "skills": ["docs"],
             "systemPrompt": "Short answers only.",
             },
