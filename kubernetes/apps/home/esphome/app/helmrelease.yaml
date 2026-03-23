@@ -26,8 +26,7 @@ spec:
               [{
                 "name":"iot",
                 "namespace": "network",
-                "ips": ["172.16.20.105/24"],
-                "mac": "aa:e9:02:a4:7e:78"
+                "ips": ["172.16.20.105/24"]
               }]
 #          labels:
 #            app.kubernetes.io/component: application
