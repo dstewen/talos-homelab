@@ -33,7 +33,7 @@ metadata:
 spec:
   module: tcp_connect
   prober:
-    url: blackbox-exporter-lan.monitoring.svc.cluster.local:9115
+    url: blackbox-exporter.monitoring.svc.cluster.local:9115
   targets:
     staticConfig:
       static:
