@@ -40,5 +40,5 @@ spec:
         - 192.168.10.15:2049
   metricRelabelings:
     - targetLabel: service
-      replacement: blackbox-exporter-lan
+      replacement: blackbox-exporter
       action: replace
