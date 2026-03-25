@@ -3,14 +3,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: blackbox-exporter
+  name: blackbox-exporter-vpn
 spec:
   chartRef:
     kind: OCIRepository
-    name: blackbox-exporter
+    name: blackbox-exporter-vpn
   interval: 1h
   values:
-    fullnameOverride: blackbox-exporter
+    fullnameOverride: blackbox-exporter-vpn
     extraEnvFrom:
       - secretRef:
           name: cluster-secrets
@@ -57,12 +57,12 @@ spec:
     prometheusRule:
       enabled: true
       rules:
-        - alert: BlackboxProbeFailed
+        - alert: VpnProbeFailed
           expr: |-
-            probe_success == 0
+            probe_success{service="blackbox-exporter-vpn"} == 0
           for: 15m
           labels:
             severity: critical
           annotations:
             summary: |-
-              The host {{ $labels.target }} is currently unreachable
+              The probe targeting {{ $labels.instance }} is currently having connectivity issues
