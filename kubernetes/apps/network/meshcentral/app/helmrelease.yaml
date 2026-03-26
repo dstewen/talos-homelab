@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/ylianst/meshcentral
-              tag: 1.1.57
+              tag: 1.1.58
             env:
               TZ: "Australia/Melbourne"
               NODE_ENV: production
