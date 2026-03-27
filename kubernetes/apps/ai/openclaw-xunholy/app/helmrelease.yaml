@@ -283,12 +283,14 @@ spec:
         globalMounts:
           - path: /home/node/.openclaw
       config:
-        type: configMap
+        type: secret
         name: openclaw-xunholy-config
-        globalMounts:
-          - path: /home/node/.openclaw/openclaw.json
-            subPath: openclaw.json
-            readOnly: true
+        advancedMounts:
+          openclaw:
+            app:
+              - path: /home/node/.openclaw/openclaw.json
+                subPath: openclaw.json
+                readOnly: true
       tmp:
         type: emptyDir
         globalMounts:
