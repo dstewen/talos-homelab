@@ -18,5 +18,5 @@ resources:
 #  - ./open-webui-pipelines/ks.yaml
 #  - ./openclaw/ks.yaml
   - ./openclaw-xunholy/ks.yaml
-#  - ./qdrant/ks.yaml
+  - ./qdrant/ks.yaml
 #  - ./stable-diffusion/ks.yaml
