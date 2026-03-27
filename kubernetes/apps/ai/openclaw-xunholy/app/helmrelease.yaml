@@ -76,7 +76,7 @@ spec:
           app:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.3.23-2@sha256:dda9f4b94761e87864c901cf34ee858daf89fa1deed9dcb671e8845a6b24062e
+              tag: 2026.3.24@sha256:7091859602df6b8cdd59b38adbaed723a6d94806fdd4274d488400dd2fcf0fb6
             env:
               TZ: Australia/Melbourne
               BROWSER_WS_ENDPOINT: "ws://localhost:3000/chrome?stealth=1&--disable-web-security=true"
