@@ -159,10 +159,6 @@ spec:
                   name: openclaw-xunholy-secret
               - secretRef:
                   name: cluster-secrets
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 200m
