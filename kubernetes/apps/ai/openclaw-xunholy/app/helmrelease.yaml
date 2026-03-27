@@ -86,7 +86,6 @@ spec:
 
                 # Ensure config directory exists
                 mkdir -p /home/node/.openclaw
-                mkdir -p /home/node/.openclaw/devices
                 echo "Init container completed successfully"
           daemon:
             image:
