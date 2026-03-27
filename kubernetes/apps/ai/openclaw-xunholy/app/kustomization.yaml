@@ -7,6 +7,6 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ./pvc.yaml
-  - ./configmap.yaml
+#  - ./configmap.yaml
 #  - ./httproute.yaml
   - ./ocirepository.yaml
