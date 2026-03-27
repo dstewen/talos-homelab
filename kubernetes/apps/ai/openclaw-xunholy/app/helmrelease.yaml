@@ -239,7 +239,6 @@ spec:
                 "--port",
                 "12321",
                 "/config",
-                "/home/node/.openclaw/workspace",
               ]
             resources:
               requests:
