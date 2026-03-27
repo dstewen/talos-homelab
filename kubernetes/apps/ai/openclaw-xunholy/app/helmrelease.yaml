@@ -264,14 +264,13 @@ spec:
         externalTrafficPolicy: Cluster
         ports:
           http:
-            port: 18789
+            port: *port
           code-server:
             port: &codeserverPort 12321
           missioncontrol:
             port: &missioncontrolPort 3000
     route:
       app:
-        forceRename: "{{ .Release.Name }}"
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: AI
