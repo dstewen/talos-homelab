@@ -15,7 +15,7 @@ spec:
       local-ai-intel:
         annotations:
           reloader.stakater.com/auto: "true"
-        replicas: 2
+        replicas: 1
         strategy: RollingUpdate
         rollingUpdate:
           surge: 0
