@@ -131,20 +131,23 @@ spec:
               repository: ghcr.io/openclaw/openclaw
               tag: 2026.3.24@sha256:7091859602df6b8cdd59b38adbaed723a6d94806fdd4274d488400dd2fcf0fb6
             env:
-              TZ: Australia/Melbourne
-              BROWSER_WS_ENDPOINT: "ws://localhost:3000/chrome?stealth=1&--disable-web-security=true"
-              OPENAI_API_BASE_URL: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
-              OPENAI_API_KEY: "not-needed"
-              NODE_OPTIONS: "--max-old-space-size=4096"
+              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
+              DOCKER_HOST: "tcp://localhost:2376"
+              DOCKER_CERT_PATH: /certs/client
+              DOCKER_TLS_VERIFY: "1"
               GOPATH: /home/node/go
               HOME: &homepath /home/node
               HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
               HOMEBREW_PREFIX: /home/node/.local/homebrew
               HOMEBREW_REPOSITORY: /home/node/.local/homebrew
+              NODE_OPTIONS: "--max-old-space-size=4096"
+              OPENAI_API_BASE_URL: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
+              OPENAI_API_KEY: "not-needed"
               OPENCLAW_GATEWAY_PORT: &port 18789
               PATH: /home/node/.local/bin:/home/node/.local/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
               PIP_BREAK_SYSTEM_PACKAGES: "1"
               TERM: xterm-256color
+              TZ: "${TIMEZONE}"
             envFrom:
               - secretRef:
                   name: openclaw-xunholy-secret
@@ -204,7 +207,7 @@ spec:
               # Allow WebSocket connections from any origin
               - --remote-allow-origins=*
             env:
-              TZ: Australia/Melbourne
+              TZ: "${TIMEZONE}"
               TIMEOUT: 60000
             resources:
               requests:
@@ -250,12 +253,17 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_OPENCLAW_ADDR}
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: 18789
           code-server:
-            port: 12321
-
+            port: &codeserverPort 12321
+          missioncontrol:
+            port: &missioncontrolPort 3000
     route:
       app:
         forceRename: "{{ .Release.Name }}"
@@ -271,12 +279,22 @@ spec:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
         parentRefs:
           - name: envoy-internal
-            namespace: networking
-            sectionName: https
+            namespace: network
         rules:
           - backendRefs:
-              - identifier: app
-                port: http
+              - identifier: "{{ .Release.Name }}"
+                port: *port
+
+      missioncontrol:
+        hostnames: ["mission-control.davidstewen.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *missioncontrolPort
+
       code-server:
         annotations:
           gethomepage.dev/enabled: "true"
@@ -287,17 +305,15 @@ spec:
           hajimari.io/appName: "OpenClaw"
           hajimari.io/enable: "true"
           hajimari.io/group: "AI"
-          internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
         hostnames:
           - "{{ .Release.Name }}-code.${SECRET_DOMAIN}"
         parentRefs:
           - name: envoy-internal
-            namespace: networking
-            sectionName: https
+            namespace: network
         rules:
           - backendRefs:
               - identifier: app
-                port: code-server
+                port: *codeserverPort
     rbac:
       roles:
         openclaw-xunholy-read-all:
