@@ -67,6 +67,10 @@ spec:
               OAUTH_PROVIDER_NAME: Authentik
               OAUTH_SCOPES: "openid email profile"
               TZ: ${TIMEZONE}
+              # Telemetry
+              SCARF_NO_ANALYTICS: "true"
+              DO_NOT_TRACK: "true"
+              ANONYMIZED_TELEMETRY: "false"
             envFrom:
               - secretRef:
                   name: open-webui-secret
