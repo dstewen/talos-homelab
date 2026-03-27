@@ -20,7 +20,7 @@ spec:
           install-tools:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.3.13-1@sha256:a5a4c83b773aca85a8ba99cf155f09afa33946c0aa5cc6a9ccb6162738b5da02
+              tag: 2026.3.24@sha256:7091859602df6b8cdd59b38adbaed723a6d94806fdd4274d488400dd2fcf0fb6
             command:
               - /bin/sh
               - -c
@@ -38,6 +38,22 @@ spec:
                   tar xzf gh.tar.gz
                   cp gh_2.61.0_linux_amd64/bin/gh /home/node/.local/bin/
                   rm -rf gh.tar.gz gh_2.61.0_linux_amd64
+                fi
+
+                if [ ! -f /home/node/.local/bin/openclaw ]; then
+                # Set up openclawbot CLI symlink
+                  echo "Installing creating symlink..."
+                  ln -s /app/openclaw.mjs /home/node/.local/bin/openclaw
+                fi
+
+                # Install Go if not present on PVC
+                if [ ! -f /home/node/.local/go/bin/go ]; then
+                  echo "Installing Go..."
+                  cd /tmp
+                  curl -fsSL https://go.dev/dl/go1.23.5.linux-amd64.tar.gz -o go.tar.gz
+                  tar xzf go.tar.gz
+                  mv go /home/node/.local/
+                  rm -rf go.tar.gz
                 fi
 
                 # Install Homebrew if not present on PVC
@@ -71,7 +87,44 @@ spec:
                 # Ensure config directory exists
                 mkdir -p /home/node/.openclaw
                 echo "Init container completed successfully"
-
+          daemon:
+            image:
+              repository: docker
+              tag: 29.3.1-dind@sha256:4d90f1f6c400315c2dba96d3ec93c01e64198395cbba04f79d12adce4f737029
+            restartPolicy: Always
+            env:
+              DOCKER_TLS_CERTDIR: /certs
+            securityContext:
+              privileged: true
+              runAsUser: 0
+              runAsGroup: 0
+              allowPrivilegeEscalation: true
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec: &dockerProbe
+                  exec:
+                    command: ["docker", "info"]
+                  periodSeconds: 2
+                  timeoutSeconds: 3
+                  failureThreshold: 60
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  <<: *dockerProbe
+                  periodSeconds: 5
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  <<: *dockerProbe
+                  periodSeconds: 20
+                  timeoutSeconds: 3
+                  failureThreshold: 3
         containers:
           app:
             image:
@@ -108,6 +161,31 @@ spec:
               limits:
                 memory: 8Gi
 
+
+          mission-control:
+            image:
+              repository: ghcr.io/joryirving/mission-control
+              tag: 2.0.1@sha256:36e8ecbbd850d44d2f29a01834a6a735d152c4bf0f480786145b4aa9a9bc2043
+            env:
+              OPENCLAW_GATEWAY_HOST: "127.0.0.1"
+              OPENCLAW_GATEWAY_PORT: "18789"
+              OPENCLAW_HOME: "/home/node/.openclaw"
+              OPENCLAW_CONFIG_PATH: "/home/node/.openclaw/openclaw.json"
+              NEXT_PUBLIC_GATEWAY_URL: "wss://miso.davidstewen.com"
+              NEXT_PUBLIC_GATEWAY_CLIENT_ID: "openclaw-control-ui"
+              MC_ALLOWED_HOSTS: "mission-control.davidstewen.com,localhost,127.0.0.1"
+            envFrom:
+              - secretRef:
+                  name: openclaw-mission-control
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+
+
+
           chrome:
             image:
               repository: ghcr.io/browserless/chrome
@@ -139,6 +217,7 @@ spec:
                 "--port",
                 "12321",
                 "/config",
+                "/home/node/.openclaw/workspace",
               ]
             resources:
               requests:
