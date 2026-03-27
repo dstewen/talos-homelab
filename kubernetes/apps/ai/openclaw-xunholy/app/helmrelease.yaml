@@ -286,7 +286,7 @@ spec:
         type: secret
         name: openclaw-xunholy-config
         advancedMounts:
-          openclaw:
+          openclaw-xunholy:
             app:
               - path: /home/node/.openclaw/openclaw.json
                 subPath: openclaw.json
