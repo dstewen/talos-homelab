@@ -130,6 +130,12 @@ spec:
             image:
               repository: ghcr.io/openclaw/openclaw
               tag: 2026.3.24@sha256:7091859602df6b8cdd59b38adbaed723a6d94806fdd4274d488400dd2fcf0fb6
+            command:
+              - /bin/sh
+              - -c
+              - |
+                # Start gateway
+                exec node dist/index.js gateway --bind lan
             env:
               BROWSER_WS_ENDPOINT: "ws://localhost:9222"
               DOCKER_HOST: "tcp://localhost:2376"
@@ -252,7 +258,6 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: *app
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: ${SVC_OPENCLAW_ADDR}
@@ -271,12 +276,12 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: AI
           gethomepage.dev/name: OpenClaw
-          gethomepage.dev/href: https://openclaw-xunholy.davidstewen.com
+          gethomepage.dev/href: https://miso.davidstewen.com
           gethomepage.dev/icon: sh-openclaw.png
           gethomepage.dev/pod-selector: app.kubernetes.io/name=openclaw-xunholy
           internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
         hostnames:
-          - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - "miso.${SECRET_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -300,13 +305,13 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: AI
           gethomepage.dev/name: OpenClaw VSCode
-          gethomepage.dev/href: https://openclaw-xunholy-code.davidstewen.com
+          gethomepage.dev/href: https://miso-code.davidstewen.com
           gethomepage.dev/icon: sh-visual-studio-code.png
           hajimari.io/appName: "OpenClaw"
           hajimari.io/enable: "true"
           hajimari.io/group: "AI"
         hostnames:
-          - "{{ .Release.Name }}-code.${SECRET_DOMAIN}"
+          - "miso-code.${SECRET_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
