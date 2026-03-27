@@ -282,7 +282,7 @@ spec:
         existingClaim: openclaw-xunholy-data
         globalMounts:
           - path: /home/node/.openclaw
-      config:
+      openclaw-xunholy-config:
         type: secret
         name: openclaw-xunholy-config
         advancedMounts:
