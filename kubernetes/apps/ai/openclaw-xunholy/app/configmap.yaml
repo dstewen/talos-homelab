@@ -84,8 +84,8 @@ data:
         "slack": {
           "enabled": true,
           "mode": "socket",
-          "dmPolicy": "pairing",
-          "allowFrom": ["*"],
+          "dmPolicy": "allowlist",
+          "allowFrom": ["U058PJACLBS"],
           "botToken": "${SLACK_BOT_TOKEN}",
           "appToken": "${SLACK_APP_TOKEN}}",
           "groupPolicy": "allowlist",
