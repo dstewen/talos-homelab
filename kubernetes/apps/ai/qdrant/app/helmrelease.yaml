@@ -101,12 +101,13 @@ spec:
                 port: *http-port
     persistence:
       data:
-        enabled: true
-        existingClaim: *app
-        advancedMounts:
-          qdrant:
-            app:
-              - path: /qdrant/storage
-                subPath: storage
-              - path: /qdrant/snapshots
-                subPath: snapshots
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: ceph-block
+        globalMounts:
+          - path: /qdrant/storage
+      snapshots:
+        type: emptyDir
+        globalMounts:
+          - path: /qdrant/snapshots
