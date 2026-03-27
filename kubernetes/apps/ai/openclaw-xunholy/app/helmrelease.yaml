@@ -279,7 +279,7 @@ spec:
           gethomepage.dev/icon: sh-openclaw.png
           gethomepage.dev/pod-selector: app.kubernetes.io/name=openclaw-xunholy
           internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
-        hostnames: ["miso.${SECRET_DOMAIN}"]
+        hostnames: ["miso.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -314,7 +314,7 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: app
+              - identifier: "{{ .Release.Name }}"
                 port: *codeserverPort
     rbac:
       roles:
