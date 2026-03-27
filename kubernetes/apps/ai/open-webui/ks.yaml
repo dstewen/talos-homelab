@@ -14,7 +14,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: ollama
+    - name: local-ai
       namespace: ai
     - name: cloudnative-pg-cluster18
       namespace: database
