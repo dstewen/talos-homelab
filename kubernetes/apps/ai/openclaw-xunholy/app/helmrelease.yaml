@@ -285,7 +285,7 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: "{{ .Release.Name }}"
+              - name: "{{ .Release.Name }}"
                 port: *port
 
       missioncontrol:
@@ -314,7 +314,7 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: "{{ .Release.Name }}"
+              - name: "{{ .Release.Name }}"
                 port: *codeserverPort
     rbac:
       roles:
