@@ -386,20 +386,49 @@ spec:
       openclaw-xunholy: {}
 
     persistence:
-      data:
-        existingClaim: openclaw-xunholy-data
+      config:
+        existingClaim: "{{ .Release.Name }}"
         globalMounts:
-          - path: /home/node/.openclaw
+          - path: *homepath
+
+#      data:
+#        existingClaim: openclaw-xunholy-data
+#        globalMounts:
+#          - path: /home/node/.openclaw
+
+#      downloads:
+#        type: nfs
+#        server: voyager.internal
+#        path: /mnt/akademiya/data
+#        globalMounts:
+#          - path: /downloads
+#            subPath: metube
+
+#      images:
+#        type: nfs
+#        server: voyager.internal
+#        path: /mnt/daena/comfyui/output
+#        globalMounts:
+#          - path: /home/node/.openclaw/workspace/images
+
+      mission-control-data:
+        existingClaim: "{{ .Release.Name }}-mission-control"
+        globalMounts:
+          - path: /app/.data
       openclaw-xunholy-config:
         type: secret
         name: openclaw-xunholy-config
-        advancedMounts:
-          openclaw-xunholy:
-            app:
-              - path: /home/node/.openclaw/openclaw.json
-                subPath: openclaw.json
-                readOnly: true
+        defaultMode: 0400
+        globalMounts:
+          - path: /home/node/.openclaw/openclaw.json
+            subPath: openclaw.json
+      next-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /app/.next/cache
       tmp:
         type: emptyDir
         globalMounts:
           - path: /tmp
+      certs:
+        type: emptyDir
