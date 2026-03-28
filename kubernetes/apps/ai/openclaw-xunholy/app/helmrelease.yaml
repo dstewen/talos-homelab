@@ -386,14 +386,16 @@ spec:
         globalMounts:
           - path: *homepath
 
-#      data:
-#        existingClaim: openclaw-xunholy-data
-#        globalMounts:
-#          - path: /home/node/.openclaw
+      data:
+        type: nfs
+        server: 192.168.10.15
+        path: /volume2/piNFS01/flux-cluster/miso
+        globalMounts:
+          - path: /data
 
 #      downloads:
 #        type: nfs
-#        server: voyager.internal
+#        server: 192.168.10.15
 #        path: /mnt/akademiya/data
 #        globalMounts:
 #          - path: /downloads
@@ -401,7 +403,7 @@ spec:
 
 #      images:
 #        type: nfs
-#        server: voyager.internal
+#        server: 192.168.10.15
 #        path: /mnt/daena/comfyui/output
 #        globalMounts:
 #          - path: /home/node/.openclaw/workspace/images
@@ -412,7 +414,7 @@ spec:
           - path: /app/.data
       openclaw-xunholy-config:
         type: secret
-        name: openclaw-xunholy-config
+        name: "{{ .Release.Name }}-config"
         defaultMode: 0400
         globalMounts:
           - path: /home/node/.openclaw/openclaw.json
