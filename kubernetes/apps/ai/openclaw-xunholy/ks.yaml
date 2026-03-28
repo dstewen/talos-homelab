@@ -13,8 +13,8 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-#  components:
-#    - ../../../../components/volsync
+  components:
+    - ../../../../components/volsync
 #  decryption:
 #    provider: sops
 #    secretRef:
@@ -32,9 +32,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      APP_UID: "1000"
-      APP_GID: "1000"
-#      VOLSYNC_CAPACITY: 20Gi
+#      APP_UID: "1000"
+#      APP_GID: "1000"
+      VOLSYNC_CAPACITY: 20Gi
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
