@@ -113,11 +113,11 @@ spec:
           - path: /tmp
 
       models:
-        type: nfs
-        server: ${NAS_IP}
-        path: /volume2/piNFS01/flux-cluster/ollama/models
-        globalMounts:
-          - path: /models
+        existingClaim: ollama-models-pvc
+        advancedMounts:
+          ollama:
+            main:
+              - path: /models
 
       dri:
         type: hostPath
