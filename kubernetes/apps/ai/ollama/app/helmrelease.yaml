@@ -37,18 +37,18 @@ spec:
               TZ: Australia/Melbourne
               #LIBVA_DRIVER_NAME: i965
 #              no_proxy: localhost,127.0.0.1
-#              OLLAMA_HOST: 0.0.0.0
-#              DEVICE: Arc
-#              OLLAMA_INTEL_GPU: true
+              OLLAMA_HOST: 0.0.0.0
+              DEVICE: Arc
+              OLLAMA_INTEL_GPU: true
 #              OLLAMA_NUM_GPU: 999
 #              ZES_ENABLE_SYSMAN: 1
-#              OLLAMA_ORIGINS: "*"
+              OLLAMA_ORIGINS: "*"
 #              OLLAMA_LOG_LEVEL: debug
-#              OLLAMA_MODELS: /models
-#              OLLAMA_NUM_CTX: 16384
-#              OLLAMA_NUM_PARALLEL: 1
-#              ONEAPI_DEVICE_SELECTOR: level_zero:0
-#              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
+              OLLAMA_MODELS: /models
+              OLLAMA_NUM_CTX: 16384
+              OLLAMA_NUM_PARALLEL: 1
+              ONEAPI_DEVICE_SELECTOR: level_zero:0
+              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
             resources:
               claims:
                 - name: gpu
@@ -73,17 +73,6 @@ spec:
         ports:
           http:
             port: &port 11434
-
-#    ingress:
-#      app:
-#        className: internal
-#        hosts:
-#          - host: &host ollama.${SECRET_DOMAIN}
-#            paths:
-#              - path: /
-#                service:
-#                  identifier: app
-#                  port: *port
 
     route:
       app:
@@ -114,10 +103,8 @@ spec:
 
       models:
         existingClaim: ollama-models-pvc
-        advancedMounts:
-          ollama:
-            main:
-              - path: /models
+        globalMounts:
+          - path: /models
 
       dri:
         type: hostPath
