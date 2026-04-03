@@ -86,6 +86,8 @@ spec:
 
                 # Ensure config directory exists
                 mkdir -p /home/node/.openclaw
+                mkdir -p /home/node/.openclaw/credentials
+                mkdir -p /home/node/.openclaw/agents/main/sessions
                 echo "Init container completed successfully"
           daemon:
             image:
@@ -249,8 +251,8 @@ spec:
       shareProcessNamespace: true
       securityContext:
         runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsGroup: 100
+        fsGroup: 100
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
