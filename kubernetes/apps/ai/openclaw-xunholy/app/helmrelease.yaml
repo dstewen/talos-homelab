@@ -90,8 +90,8 @@ spec:
                 mkdir -p /home/node/.openclaw/agents/main/sessions
                 echo "Init container completed successfully"
             securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
+              runAsUser: 0
+              runAsGroup: 0
           daemon:
             image:
               repository: docker
