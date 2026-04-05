@@ -42,7 +42,8 @@ metadata:
   name: dstewen
   namespace: renovate
 spec:
-  discoveryFilters: dstewen/*
+  discoveryFilters:
+    - "dstewen/*"
   provider:
     name: github
     endpoint: https://api.github.com/
