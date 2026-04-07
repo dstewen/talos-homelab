@@ -38,7 +38,7 @@ spec:
               #LIBVA_DRIVER_NAME: i965
 #              no_proxy: localhost,127.0.0.1
               OLLAMA_HOST: 0.0.0.0
-              DEVICE: Arc
+#              DEVICE: Arc
               OLLAMA_INTEL_GPU: true
 #              OLLAMA_NUM_GPU: 999
 #              ZES_ENABLE_SYSMAN: 1
