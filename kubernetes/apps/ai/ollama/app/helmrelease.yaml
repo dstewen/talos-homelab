@@ -49,8 +49,12 @@ spec:
               OLLAMA_NUM_CTX: 16384
               OLLAMA_KEEP_ALIVE: "10m"
               OLLAMA_NUM_PARALLEL: 1
-              ONEAPI_DEVICE_SELECTOR: level_zero:0
-              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
+              GGML_VK_VISIBLE_DEVICES: 0  # Force GPU0 (Intel)
+              GGML_VULKAN_DEVICE: 0       # Alternative variable
+              VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE: 1  # Force first physical GPU
+#              ONEAPI_DEVICE_SELECTOR: level_zero:0
+#              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
+
             resources:
               claims:
                 - name: gpu
