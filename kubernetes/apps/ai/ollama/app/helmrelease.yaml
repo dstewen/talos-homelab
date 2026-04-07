@@ -44,6 +44,7 @@ spec:
 #              ZES_ENABLE_SYSMAN: 1
               OLLAMA_ORIGINS: "*"
 #              OLLAMA_LOG_LEVEL: debug
+              OLLAMA_VULKAN: 1
               OLLAMA_MODELS: /models
               OLLAMA_NUM_CTX: 16384
               OLLAMA_KEEP_ALIVE: "10m"
