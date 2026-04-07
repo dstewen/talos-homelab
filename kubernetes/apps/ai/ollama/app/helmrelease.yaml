@@ -111,3 +111,11 @@ spec:
       dri:
         type: hostPath
         hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
+
+      kfd:
+        type: hostPath
+        hostPath: /dev/kfd
+        globalMounts:
+          - path: /dev/kfd
