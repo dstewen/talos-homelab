@@ -52,6 +52,7 @@ spec:
               GGML_VK_VISIBLE_DEVICES: 0  # Force GPU0 (Intel)
               GGML_VULKAN_DEVICE: 0       # Alternative variable
               VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE: 1  # Force first physical GPU
+              OLLAMA_CONTEXT_LENGTH: 32768
 #              ONEAPI_DEVICE_SELECTOR: level_zero:0
 #              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
 
