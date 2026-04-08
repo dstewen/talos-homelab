@@ -54,7 +54,7 @@ spec:
               VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE: 1  # Force first physical GPU
               OLLAMA_CONTEXT_LENGTH: 32768
 #              ONEAPI_DEVICE_SELECTOR: level_zero:0
-#              OLLAMA_FLASH_ATTENTION: 0 # Disable Flash attention - not supported by GPU
+              OLLAMA_FLASH_ATTENTION: 1 # Disable Flash attention - not supported by GPU
 
             resources:
               claims:
