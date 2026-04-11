@@ -33,7 +33,7 @@ spec:
   values:
     image:
       repository: netdata/netdata
-      tag: "v2.9.0"
+      tag: "v2.10.1"
 
     ingress:
       enabled: true
