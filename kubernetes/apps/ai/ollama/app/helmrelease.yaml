@@ -55,7 +55,7 @@ spec:
               OLLAMA_CONTEXT_LENGTH: 32768
 #              ONEAPI_DEVICE_SELECTOR: level_zero:0
               OLLAMA_FLASH_ATTENTION: 1 # Disable Flash attention - not supported by GPU
-              OLLAMA_KV_CACHE_TYPE: q8_0
+              OLLAMA_KV_CACHE_TYPE: q4_0
             resources:
               claims:
                 - name: gpu
