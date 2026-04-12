@@ -10,7 +10,7 @@ resources:
   - ./atuin/ks.yaml
   - ./it-tools/ks.yaml
   - ./n8n/ks.yaml
-  - ./nextcloud/ks.yaml
+#  - ./nextcloud/ks.yaml
   - ./searxng/ks.yaml
   - ./webhook/ks.yaml
   - ./wiki/ks.yaml
