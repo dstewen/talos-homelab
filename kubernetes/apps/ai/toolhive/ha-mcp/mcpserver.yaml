@@ -10,7 +10,7 @@ spec:
   groupRef: mcp-tools
   env:
     - name: HOMEASSISTANT_URL
-      value: https://hass.davidstewen.com
+      value: https://home-assistant.davidstewen.com
   secrets:
     - name: toolhive-home-assistant
       key: HOMEASSISTANT_TOKEN
