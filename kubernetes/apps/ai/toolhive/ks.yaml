@@ -43,7 +43,7 @@ metadata:
 spec:
   targetNamespace: *namespace
   components:
-  - ../../../../../components/dragonfly
+  - ../../../../components/dragonfly
   dependsOn:
   - name: toolhive
   healthCheckExprs:
