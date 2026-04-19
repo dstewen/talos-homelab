@@ -20,4 +20,4 @@ resources:
   - ./openclaw-xunholy/ks.yaml
   - ./qdrant/ks.yaml
 #  - ./stable-diffusion/ks.yaml
-#  - ./toolhive/ks.yaml
+  - ./toolhive/ks.yaml
