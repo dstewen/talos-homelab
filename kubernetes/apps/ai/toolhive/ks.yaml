@@ -74,7 +74,7 @@ spec:
   dependsOn:
   - name: toolhive
   interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/arr-mcp
+  path: ./kubernetes/apps/ai/toolhive/mcp-servers/arr-mcp
   prune: true
   sourceRef:
     kind: GitRepository
@@ -93,7 +93,7 @@ spec:
   dependsOn:
   - name: toolhive
   interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/github-mcp
+  path: ./kubernetes/apps/ai/toolhive/mcp-servers/github-mcp
   prune: true
   sourceRef:
     kind: GitRepository
@@ -112,7 +112,7 @@ spec:
   dependsOn:
   - name: toolhive
   interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/ha-mcp
+  path: ./kubernetes/apps/ai/toolhive/mcp-servers/ha-mcp
   prune: true
   sourceRef:
     kind: GitRepository
@@ -133,7 +133,7 @@ spec:
   dependsOn:
   - name: toolhive
   interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/memory-mcp
+  path: ./kubernetes/apps/ai/toolhive/mcp-servers/memory-mcp
   postBuild:
     substitute:
       APP: *name
@@ -153,7 +153,7 @@ metadata:
 spec:
   targetNamespace: *namespace
   interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/seerr-mcp
+  path: ./kubernetes/apps/ai/toolhive/mcp-servers/seerr-mcp
   postBuild:
     substitute:
       APP: *app
