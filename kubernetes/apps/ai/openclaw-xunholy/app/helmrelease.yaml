@@ -198,13 +198,13 @@ spec:
               tag: 2.0.1@sha256:36e8ecbbd850d44d2f29a01834a6a735d152c4bf0f480786145b4aa9a9bc2043
             env:
 #              OPENCLAW_BIN: "/home/node/.local/bin/openclaw"
-              OPENCLAW_GATEWAY_HOST: "127.0.0.1"
+              OPENCLAW_GATEWAY_HOST: "10.200.15.239"
               OPENCLAW_GATEWAY_PORT: "18789"
               OPENCLAW_STATE_DIR: "/home/node/.openclaw"
               OPENCLAW_CONFIG_PATH: "/home/node/.openclaw/openclaw.json"
               NEXT_PUBLIC_GATEWAY_URL: "wss://miso.davidstewen.com"
               NEXT_PUBLIC_GATEWAY_CLIENT_ID: "openclaw-control-ui"
-              MC_ALLOWED_HOSTS: "mission-control.davidstewen.com,localhost,127.0.0.1"
+              MC_ALLOWED_HOSTS: "mission-control.davidstewen.com,localhost,127.0.0.1,10.200.15.239"
             envFrom:
               - secretRef:
                   name: openclaw-mission-control
