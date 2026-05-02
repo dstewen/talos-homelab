@@ -18,3 +18,7 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  values:
+    replicaCount: 1
+    networkPolicy:
+      enabled: false

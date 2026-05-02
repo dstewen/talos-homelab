@@ -10,7 +10,7 @@ spec:
     enabled: true
   security:
     networkPolicy:
-      enabled: true
+      enabled: false
       allowedIngressNamespaces:
         - "network"
       additionalEgress:
@@ -37,6 +37,11 @@ spec:
       value: "/tools/bin:/home/openclaw/.openclaw/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     - name: TALOSCONFIG
       value: "/home/openclaw/.openclaw/talos/config"
+    - name: OPENAI_API_KEY
+      value: "not-needed"
+    - name: OPENAI_BASE_URL
+      value: "http://ollama.ai.svc:11434/v1"
+
   initContainers:
 
     - name: install-tools
