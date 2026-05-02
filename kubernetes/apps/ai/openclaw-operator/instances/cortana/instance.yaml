@@ -28,7 +28,6 @@ spec:
   skills:
     - pskoett/self-improving-agent
     - steipete/github
-    - odrobnik/unifi-site-manager
   envFrom:
     - secretRef:
         name: openclaw-cortana-secret
@@ -81,18 +80,18 @@ spec:
     - name: mise-config
       configMap:
         name: cortana-mise-config
-    - name: talos-config
-      secret:
-        secretName: openclaw-cortana-secret
-        items:
-          - key: TALOS_CONFIG
-            path: config
+#    - name: talos-config
+#      secret:
+#        secretName: openclaw-cortana-secret
+#        items:
+#          - key: TALOS_CONFIG
+#            path: config
   extraVolumeMounts:
     - name: tools
       mountPath: /tools
-    - name: talos-config
-      mountPath: /home/openclaw/.openclaw/talos/config
-      subPath: config
+#    - name: talos-config
+#      mountPath: /home/openclaw/.openclaw/talos/config
+#      subPath: config
   storage:
     persistence:
       enabled: true
