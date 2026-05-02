@@ -99,5 +99,5 @@ spec:
         port: 18789
         controlUi:
           allowedOrigins:
-            - "https://cortana.unscfleet.com"
+            - "https://cortana.davidstewen.com"
           dangerouslyDisableDeviceAuth: false
