@@ -10,7 +10,7 @@ spec:
     enabled: true
   security:
     networkPolicy:
-      enabled: false
+      enabled: true
       allowedIngressNamespaces:
         - "network"
       additionalEgress:
