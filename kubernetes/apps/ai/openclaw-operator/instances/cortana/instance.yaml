@@ -92,6 +92,14 @@ spec:
 #    - name: talos-config
 #      mountPath: /home/openclaw/.openclaw/talos/config
 #      subPath: config
+  observability:
+    metrics:
+      grafanaDashboard:
+        enabled: true
+        folder: OpenClaw  # Grafana folder (default)
+        labels:
+          grafana_dashboard: "true"
+
   storage:
     persistence:
       enabled: true
