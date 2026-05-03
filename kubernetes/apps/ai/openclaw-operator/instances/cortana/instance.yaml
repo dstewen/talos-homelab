@@ -115,4 +115,4 @@ spec:
         controlUi:
           allowedOrigins:
             - "https://cortana.davidstewen.com"
-          dangerouslyDisableDeviceAuth: false
+          dangerouslyDisableDeviceAuth: true
