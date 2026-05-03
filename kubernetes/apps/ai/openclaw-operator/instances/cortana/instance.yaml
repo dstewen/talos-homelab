@@ -110,6 +110,12 @@ spec:
   config:
     mergeMode: "merge"
     raw:
+
+      agents:
+        defaults:
+          model:
+            primary: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+
       gateway:
         port: 18789
         controlUi:
