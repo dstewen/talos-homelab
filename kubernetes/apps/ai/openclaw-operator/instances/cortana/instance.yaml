@@ -29,7 +29,6 @@ spec:
     rbac:
       createServiceAccount: true
   skills:
-    - arakichanxd/claw-sync
     - asleep123/caldav-calendar
     - pskoett/self-improving-agent
     - steipete/1password
