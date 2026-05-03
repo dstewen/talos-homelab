@@ -22,3 +22,11 @@ spec:
     replicaCount: 1
     networkPolicy:
       enabled: true
+    observability:
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          interval: 15s
+          labels:
+            release: prometheus
