@@ -29,8 +29,19 @@ spec:
     rbac:
       createServiceAccount: true
   skills:
+    - asleep123/caldav-calendar
     - pskoett/self-improving-agent
+    - steipete/1password
+    - steipete/brave-search
+    - steipete/camsnap
+    - steipete/discord
+    - steipete/gemini
     - steipete/github
+    - steipete/gog
+    - steipete/mcporter
+    - steipete/obsidian
+    - steipete/openai-whisper
+    - steipete/qmd
   envFrom:
     - secretRef:
         name: openclaw-cortana-secret
