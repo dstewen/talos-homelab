@@ -94,18 +94,18 @@ spec:
     - name: mise-config
       configMap:
         name: cortana-mise-config
-#    - name: talos-config
-#      secret:
-#        secretName: openclaw-cortana-secret
-#        items:
-#          - key: TALOS_CONFIG
-#            path: config
+    - name: talos-config
+      secret:
+        secretName: openclaw-cortana-secret
+        items:
+          - key: TALOS_CONFIG
+            path: config
   extraVolumeMounts:
     - name: tools
       mountPath: /tools
-#    - name: talos-config
-#      mountPath: /home/openclaw/.openclaw/talos/config
-#      subPath: config
+    - name: talos-config
+      mountPath: /home/openclaw/.openclaw/talos/config
+      subPath: config
   observability:
     metrics:
       grafanaDashboard:
@@ -126,10 +126,18 @@ spec:
         defaults:
           model:
             primary: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
-
+            fallbacks: "ollama-rig/gemma4:e4b"
       gateway:
         port: 18789
         controlUi:
           allowedOrigins:
             - "https://cortana.davidstewen.com"
           dangerouslyDisableDeviceAuth: true
+
+      models:
+        providers:
+          ollama-rig:
+            baseUrl: "http://192.168.10.80:11434"
+            apiKey: "not-needed"
+            api: "ollama"
+            timeoutSeconds: 300
