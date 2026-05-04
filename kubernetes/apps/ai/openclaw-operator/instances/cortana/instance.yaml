@@ -127,6 +127,7 @@ spec:
           model:
             primary: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
             fallbacks: "ollama-rig/gemma4:e4b"
+
       gateway:
         port: 18789
         controlUi:
@@ -141,3 +142,14 @@ spec:
             apiKey: "not-needed"
             api: "ollama"
             timeoutSeconds: 300
+            models: [
+              {
+                id: "gemma4:e4b",
+                name: "Gemma 4 E4B (Ollama Server)",
+                reasoning: false,
+                input: ["text", "image"],
+                cost: { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+                contextWindow: 262144,
+                maxTokens: 8192
+              }
+            ]
