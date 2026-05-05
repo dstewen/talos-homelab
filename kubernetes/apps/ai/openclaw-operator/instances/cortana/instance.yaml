@@ -194,5 +194,3 @@ spec:
       messages:
         groupChat:
           visibleReplies: "message_tool"
-      commands:
-
