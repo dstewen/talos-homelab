@@ -8,7 +8,7 @@ metadata:
 spec:
   image:
     repository: ghcr.io/openclaw/openclaw
-    tag: 2026.5.4-beta.2@sha256:c38796efc4befc8a0985aad4d98f8b2694dbc35ba37fec1a96f5d773b5826884
+    tag: 2026.5.4-beta.3@sha256:9782c78aa1f613a8bcea5ac882de2d8c393d82b5857d6ea7a4bf72049e0478de
   selfConfigure:
     enabled: true
     allowedActions:
