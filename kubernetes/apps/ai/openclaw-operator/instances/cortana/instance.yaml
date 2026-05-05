@@ -182,3 +182,6 @@ spec:
                   cacheWrite: 0
                 contextWindow: 262144
                 maxTokens: 8192
+      messages:
+        groupChat:
+          visibleReplies: "message_tool"
