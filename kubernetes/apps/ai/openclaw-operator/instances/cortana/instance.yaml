@@ -9,6 +9,9 @@ spec:
   image:
     repository: ghcr.io/openclaw/openclaw
     tag: 2026.5.4@sha256:7f4dfd4ed0d5469a4f12eccaa5f46b0c70fca802806be625dce782e69203e689
+  # ── Self-Configure ────────────────────────────────────────────
+  # Let the agent add/remove skills and config at runtime via K8s API
+  # (replaces brew-based interactive installs)
   selfConfigure:
     enabled: true
     allowedActions:
@@ -33,6 +36,9 @@ spec:
               protocol: TCP
     rbac:
       createServiceAccount: true
+  # ── Skills ────────────────────────────────────────────────────
+  # Fetched by init-skills container before the agent starts
+  # Formats: "clawhub-slug" | "npm:package" | "pack:owner/repo/path"
   skills:
     - asleep123/caldav-calendar
     - pskoett/self-improving-agent
@@ -55,10 +61,10 @@ spec:
       value: "/tools/bin:/home/openclaw/.openclaw/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     - name: TALOSCONFIG
       value: "/home/openclaw/.openclaw/talos/config"
-    - name: OPENAI_API_KEY
+    - name: OLLAMA_API_KEY
       value: "not-needed"
-    - name: OPENAI_BASE_URL
-      value: "http://ollama.ai.svc:11434/v1"
+    - name: OLLAMA_BASE_URL
+      value: "http://ollama.ai.svc.cluster.local:11434"
 
   initContainers:
 
@@ -144,6 +150,7 @@ spec:
 
       models:
         providers:
+
           ollama-rig:
             baseUrl: "http://192.168.10.80:11434"
             apiKey: "not-needed"
