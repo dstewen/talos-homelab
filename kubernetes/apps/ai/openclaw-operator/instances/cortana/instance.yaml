@@ -14,7 +14,7 @@ spec:
     allowedActions:
       - skills
       - config
-      - envVars
+#      - envVars
       - workspaceFiles
   security:
     networkPolicy:
