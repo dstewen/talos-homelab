@@ -142,7 +142,6 @@ spec:
              - "ollama/gemma4:e4b-it-q4_K_M"
 
       gateway:
-        mode: "local"
         port: 18789
         controlUi:
           allowedOrigins:
