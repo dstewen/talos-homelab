@@ -149,7 +149,6 @@ spec:
             - "http://localhost:18789"
             - "https://cortana.davidstewen.com"
           dangerouslyDisableDeviceAuth: true
-
       models:
         providers:
 
