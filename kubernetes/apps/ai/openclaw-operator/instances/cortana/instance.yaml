@@ -127,7 +127,7 @@ spec:
         enabled: true
         folder: OpenClaw  # Grafana folder (default)
         labels:
-          grafana_dashboard_instance: grafana
+          grafana_dashboard_discovery: enabled
 
   storage:
     persistence:
