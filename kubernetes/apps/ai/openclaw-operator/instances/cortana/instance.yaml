@@ -119,11 +119,15 @@ spec:
       subPath: config
   observability:
     metrics:
+      prometheusRule:
+        enabled: true
+        labels:
+          release: kube-prometheus-stack  # must match Prometheus ruleSelector
       grafanaDashboard:
         enabled: true
         folder: OpenClaw  # Grafana folder (default)
         labels:
-          grafana_dashboard: "true"
+          grafana_dashboard_instance: grafana
 
   storage:
     persistence:
