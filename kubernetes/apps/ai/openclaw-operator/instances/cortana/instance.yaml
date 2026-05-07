@@ -120,15 +120,15 @@ spec:
       subPath: config
   observability:
     metrics:
-      prometheusRule:
+      enabled: true
+      port: 9090
+      serviceMonitor:
         enabled: true
-        labels:
-          release: kube-prometheus-stack  # must match Prometheus ruleSelector
-      grafanaDashboard:
-        enabled: true
-        folder: OpenClaw  # Grafana folder (default)
-        labels:
-          grafana_dashboard_discovery: enabled
+        interval: 15s
+        labels: {}
+    logging:
+      level: info
+      format: json
 
   storage:
     persistence:
