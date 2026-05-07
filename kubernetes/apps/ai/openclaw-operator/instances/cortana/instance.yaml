@@ -201,10 +201,18 @@ spec:
 
       channels:
         discord:
-          enabled: true
-          streaming:
-            mode: block
-            chunkMode: length
-          replyToMode: all
+          token: "${DISCORD_BOT_TOKEN}"
           groupPolicy: allowlist
           dmPolicy: pairing
+          execApprovals:
+            enabled: true
+            approvers:
+              - "376208104494465048"
+          allowFrom:
+            - "376208104494465048"
+          guilds:
+            "1488878305888305313":
+              requireMention: true
+              channels:
+                "1500148773555404860":
+                  allow: true
