@@ -202,27 +202,6 @@ spec:
       channels:
         discord:
           enabled: true
-          threadBindings:
-            spawnSessions: true
-          actions:
-            messages: true
-            channels: true
-            search: true
-            reactions: false
-            stickers: false
-            polls: false
-            permissions: false
-            threads: false
-            pins: false
-            memberInfo: false
-            roleInfo: false
-            roles: false
-            channelInfo: false
-            voiceStatus: false
-            events: false
-            moderation: false
-            emojiUploads: false
-            stickerUploads: false
           streaming:
             mode: block
             chunkMode: length
@@ -231,25 +210,6 @@ spec:
           allowFrom:
             - "${MY_DISCORD_USERID}"
           dmPolicy: pairing
-          accounts:
-            default:
-              token: "${OPENCLAW_DISCORD_BOT_TOKEN}"
-              guilds:
-                "${DISCORD_SERVER_ID}":
-                  channels:
-                    "${DISCORD_CHANNEL_ID}":
-                      enabled: true,
-                      requireMention: false
-                      users:
-                        - "${MY_DISCORD_USERID}"
-                    "${DISCORD_TEST_VOICE_CHANNEL_ID}":
-                      enabled: true
-                      requireMention: false
-                      users:
-                        - "${MY_DISCORD_USERID}"
-                    "${DISCORD_GENERAL_CHANNEL_ID}":
-                      enabled: true
-                      requireMention: false
           voice:
             enabled: true
             daveEncryption: true
