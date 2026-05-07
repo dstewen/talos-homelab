@@ -207,16 +207,6 @@ spec:
             chunkMode: length
           replyToMode: all
           groupPolicy: allowlist
-          allowFrom:
-            - "${MY_DISCORD_USERID}"
           dmPolicy: pairing
           voice:
             enabled: true
-            daveEncryption: true
-            decryptionFailureTolerance: 24
-            tts:
-              provider: elevenlabs
-              providers:
-                elevenlabs:
-                  apiKey: "${ELEVENLABS_API_KEY}"
-                  voiceId: "${ELEVENLABS_VOICE_ID}"
