@@ -54,6 +54,7 @@ spec:
     - steipete/obsidian
     - steipete/openai-whisper
     - steipete/qmd
+    - steipete/weather
   envFrom:
     - secretRef:
         name: openclaw-cortana-secret
