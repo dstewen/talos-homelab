@@ -208,5 +208,3 @@ spec:
           replyToMode: all
           groupPolicy: allowlist
           dmPolicy: pairing
-          voice:
-            enabled: true
