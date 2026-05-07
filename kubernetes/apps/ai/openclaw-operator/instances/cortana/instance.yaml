@@ -180,7 +180,7 @@ spec:
             baseUrl: "http://ollama.ai.svc.cluster.local:11434"
             apiKey: "not-needed"
             api: "ollama"
-            timeoutSeconds: 300
+            timeoutSeconds: 180
             models:
               - id: "gemma4:e4b-it-q4_K_M"
                 name: "Gemma 4 E4B (Ollama Talos Server)"
