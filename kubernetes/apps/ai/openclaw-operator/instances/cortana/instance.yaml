@@ -180,7 +180,7 @@ spec:
             baseUrl: "http://ollama.ai.svc.cluster.local:11434"
             apiKey: "not-needed"
             api: "ollama"
-            timeoutSeconds: 180
+            timeoutSeconds: 300
             models:
               - id: "gemma4:e4b-it-q4_K_M"
                 name: "Gemma 4 E4B (Ollama Talos Server)"
@@ -209,9 +209,3 @@ spec:
               - "376208104494465048"
           allowFrom:
             - "376208104494465048"
-          guilds:
-            "1488878305888305313":
-              requireMention: true
-              channels:
-                "1500148773555404860":
-                  allow: true
