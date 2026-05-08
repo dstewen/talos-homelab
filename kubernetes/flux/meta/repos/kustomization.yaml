@@ -13,6 +13,7 @@ resources:
   - ./grafana.yaml
   - ./intel.yaml
 #  - ./itzg.yaml
+  - ./k8s-ephemeral-storage-metrics.yaml
 #  - ./kubernetes-sigs-nfd.yaml
 #  - ./prometheus-community.yaml
   - ./openebs.yaml
