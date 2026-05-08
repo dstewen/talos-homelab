@@ -211,3 +211,11 @@ spec:
           allowFrom:
             - "376208104494465048"
 
+      tools:
+        media:
+          audio:
+            enabled: true
+            maxBytes: 20971520
+            models:
+              - provider: groq
+                model: whisper-large-v3
