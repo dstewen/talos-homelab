@@ -210,13 +210,6 @@ spec:
               - "376208104494465048"
           allowFrom:
             - "376208104494465048"
-          voice:
-            enabled: true
-            daveEncryption: true
-            decryptionFailureTolerance: 24
-            tts:
-              provider: "elevenlabs"
-
       tools:
         media:
           audio:
