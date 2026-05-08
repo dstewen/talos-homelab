@@ -59,14 +59,36 @@ spec:
     - secretRef:
         name: openclaw-cortana-secret
   env:
+    - name: ESPHOME_URL
+      value: "http://esphome.home.svc.cluster.local:6052"
+    - name: FRIGATE_URL
+      value: "http://frigate.media.svc.cluster.local:5000"
     - name: PATH
       value: "/tools/bin:/home/openclaw/.openclaw/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     - name: TALOSCONFIG
       value: "/home/openclaw/.openclaw/talos/config"
+    - name: N8N_URL
+      value: "http://n8n.selfhosted.svc.cluster.local:8080"
+    - name: NODERED_URL
+      value: "http://nr.home.svc.cluster.local:1880"
     - name: OLLAMA_API_KEY
       value: "not-needed"
     - name: OLLAMA_BASE_URL
       value: "http://ollama.ai.svc.cluster.local:11434"
+    - name: RADARR_URL
+      value: "http://radarr.media.svc.cluster.local"
+    - name: RADARR_UHD_URL
+      value: "http://radarr-uhd.media.svc.cluster.local"
+    - name: SEERR_URL
+      value: "http://requests.media.svc.cluster.local"
+    - name: SEERR_USERS
+      value: "me:1,rosemary:10"
+    - name: SEERR_SERVERS
+      value: "movies:0,kids-movies:1,tv:0,kids-tv:1"
+    - name: SONARR_URL
+      value: "http://sonarr.media.svc.cluster.local"
+    - name: SONARR_UHD_URL
+      value: "http://sonarr-uhd.media.svc.cluster.local"
 
   initContainers:
 
