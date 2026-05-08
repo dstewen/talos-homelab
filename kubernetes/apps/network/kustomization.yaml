@@ -15,4 +15,4 @@ resources:
   - ./k8s-gateway/ks.yaml
 #  - ./meshcentral/ks.yaml
   - ./multus/ks.yaml
-  - ./netboot/ks.yaml
+#  - ./netboot/ks.yaml
