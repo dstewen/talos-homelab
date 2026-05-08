@@ -216,6 +216,7 @@ spec:
             decryptionFailureTolerance: 24
             tts:
               provider: "elevenlabs"
+
       tools:
         media:
           audio:
