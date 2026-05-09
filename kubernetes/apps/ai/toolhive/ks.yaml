@@ -129,7 +129,7 @@ metadata:
 spec:
   targetNamespace: *namespace
   components:
-  - ../../../../components/volsync
+  - ../../../../../components/volsync
   dependsOn:
   - name: toolhive
   interval: 1h
