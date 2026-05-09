@@ -30,5 +30,5 @@ resources:
   - ./sonarr/ks.yaml
   - ./sonarr-uhd/ks.yaml
   - ./tautulli/ks.yaml
-  - ./tdarr/ks.yaml
+#  - ./tdarr/ks.yaml
   - ./whisparr/ks.yaml
