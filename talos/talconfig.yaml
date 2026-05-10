@@ -495,6 +495,352 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+
+# CM4 CM4008000 model - no EMMC storage
+  - hostname: "blade10"
+    ipAddress: "10.200.15.40"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d8:3a:dd:ba:fb:c1"
+        dhcp: false
+        addresses:
+          - "10.200.15.40/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+
+  - hostname: "blade11"
+    ipAddress: "10.200.15.41"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d8:3a:dd:bb:05:64"
+        dhcp: false
+        addresses:
+          - "10.200.15.41/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+  - hostname: "blade12"
+    ipAddress: "10.200.15.42"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d8:3a:dd:bb:22:9b"
+        dhcp: false
+        addresses:
+          - "10.200.15.42/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+  - hostname: "blade13"
+    ipAddress: "10.200.15.43"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d8:3a:dd:ba:fd:2a"
+        dhcp: false
+        addresses:
+          - "10.200.15.43/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+  - hostname: "blade14"
+    ipAddress: "10.200.15.44"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d8:3a:dd:ba:fe:90"
+        dhcp: false
+        addresses:
+          - "10.200.15.44/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+  - hostname: "blade15"
+    ipAddress: "10.200.15.45"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d8:3a:dd:bb:04:7a"
+        dhcp: false
+        addresses:
+          - "10.200.15.45/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+
 # Global patches
 patches:
 #  - "@./patches/global/machine-files.yaml"
