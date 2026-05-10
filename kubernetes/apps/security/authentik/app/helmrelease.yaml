@@ -124,15 +124,27 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: In
+                values:
+                - worker
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
               - key: kubernetes.io/arch
                 operator: In
                 values:
-                - amd64
+                - arm64
       autoscaling:
         enabled: true
         minReplicas: 1
         maxReplicas: 3
 #        targetCPUUtilizationPercentage: 50
+      image:
+        repository: ghcr.io/goauthentik/server
+        digest: sha256:12560ac7e96a81b607cd8bbcd0cb04695b458ba705fb50c65802d390551d7c49
+        tag: 2026.2.2
       pdb:
         enabled: true
         minAvailable: 1
