@@ -34,7 +34,7 @@ spec:
               repository: ghcr.io/ellite/wallos
               tag: 4.8.4@sha256:48f02c63512bf99a2e4368cd5ca139e4ee8357e0f573f25936a11b604e5f427a
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: Australia/Melbourne
               SERVER_PORT: 80
               SERVER_ROOT: /data/git/haraldkoch.git
             probes:
