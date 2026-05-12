@@ -17,7 +17,7 @@ spec:
     - name: openebs
       namespace: openebs-system
   values:
-#    runnerScaleSetName: &name talos-homecluster-amd64-runner
+    runnerScaleSetName: talos-homelab-amd64-runner
     githubConfigUrl: https://github.com/dstewen/talos-homelab
     githubConfigSecret: pre-defined-secret
     minRunners: 1
@@ -279,3 +279,17 @@ spec:
 #      name: actions-runner-controller-auth-secret
 #      valuesKey: github_app_private_key
 #      targetPath: githubConfigSecret.github_app_private_key
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: &app talos-homelab-amd64-runner
+spec:
+  selector:
+    matchLabels:
+      helm.toolkit.fluxcd.io/name: *app
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 5s
