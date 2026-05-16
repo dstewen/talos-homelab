@@ -14,6 +14,8 @@ spec:
     auth:
       defaultAllowedGroups: "ldap_renovate_allow_access"
       oidc:
+        additionalScopes:
+          - groups
         allowedGroupPrefix: "ldap_renovate"
         enabled: true
         existingSecret: renovate-operator-oidc-credentials
