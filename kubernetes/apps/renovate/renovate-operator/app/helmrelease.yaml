@@ -61,7 +61,7 @@ spec:
             password: ""
             permissions: "~* &* +@all"
       dataStorage:
-        enabled: false  # sessions are ephemeral
+        enabled: true  # sessions are ephemeral
 
     webhook:
       enabled: true
