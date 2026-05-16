@@ -155,6 +155,7 @@ spec:
               OPENAI_API_BASE_URL: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
               OPENAI_API_KEY: "not-needed"
               OPENCLAW_GATEWAY_PORT: &port 18789
+              OPENCLAW_DEBUG: 1
               PATH: /home/node/.local/bin:/home/node/.local/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
               PIP_BREAK_SYSTEM_PACKAGES: "1"
               # Enable SearXNG plugin
