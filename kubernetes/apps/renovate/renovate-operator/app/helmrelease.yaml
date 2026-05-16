@@ -12,6 +12,7 @@ spec:
   values:
     fullnameOverride: renovate-operator
     auth:
+      defaultAllowedGroups: "ldap_renovate_allow_access"
       oidc:
         enabled: false
         existingSecret: renovate-operator-oidc-credentials
@@ -47,6 +48,18 @@ spec:
       parentRefs:
         - name: envoy-internal
           namespace: network
+
+    valkey:
+      enabled: true
+      auth:
+        enabled: true
+        aclUsers:
+          default:
+            password: ""
+            permissions: "~* &* +@all"
+      dataStorage:
+        enabled: false  # sessions are ephemeral
+
     webhook:
       enabled: true
   valuesFrom:
