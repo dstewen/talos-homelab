@@ -14,7 +14,8 @@ spec:
     auth:
       defaultAllowedGroups: "ldap_renovate_allow_access"
       oidc:
-        enabled: false
+        allowedGroupPrefix: "ldap_renovate"
+        enabled: true
         existingSecret: renovate-operator-oidc-credentials
         issuerUrl: https://id.davidstewen.com/application/o/renovate-operator/
         secretKey: RENOVATE_OPERATOR_CLIENT_SECRET
