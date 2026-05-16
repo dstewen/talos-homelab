@@ -53,7 +53,7 @@ spec:
     valkey:
       enabled: true
       auth:
-        enabled: true
+        enabled: false
         aclUsers:
           default:
             password: ""
