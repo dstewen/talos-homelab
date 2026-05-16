@@ -51,6 +51,7 @@ spec:
             - name: envoy-internal
               namespace: network
       prometheusSpec:
+        enableOTLPReceiver: true
         externalUrl: https://prometheus.davidstewen.com
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
