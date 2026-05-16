@@ -16,7 +16,6 @@ spec:
       oidc:
         additionalScopes:
           - groups
-        allowedGroupPrefix: "ldap_renovate"
         enabled: true
         existingSecret: renovate-operator-oidc-credentials
         issuerUrl: https://id.davidstewen.com/application/o/renovate-operator/
