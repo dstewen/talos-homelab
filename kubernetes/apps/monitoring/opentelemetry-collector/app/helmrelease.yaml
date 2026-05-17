@@ -12,10 +12,9 @@ spec:
   values:
     fullnameOverride: opentelemetry-collector
     mode: "deployment"
-    opentelemetry-collector:
-      configMap:
-        create: false
-        existingName: &name opentelemetry-collector-configmap
+    configMap:
+      create: false
+      existingName: &name opentelemetry-collector-configmap
     serviceAccount:
       create: true
     serviceMonitor:
