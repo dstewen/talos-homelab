@@ -60,5 +60,5 @@ spec:
         memory: 256Mi
       limits:
         memory: 512Mi
-    prometheusRule:
-      enabled: true
+#    prometheusRule:
+#      enabled: true
