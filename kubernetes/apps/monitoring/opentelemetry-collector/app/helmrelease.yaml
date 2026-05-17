@@ -11,13 +11,17 @@ spec:
     name: opentelemetry-collector
   values:
     fullnameOverride: opentelemetry-collector
-    mode: "deployment"
+    mode: deployment
+
     image:
-      repository: "otel/opentelemetry-collector"
+      repository: otel/opentelemetry-collector-contrib
+
+    replicaCount: 1
+
 
     # OpenTelemetry Collector executable
-    command:
-      name: "otelcol"
+#    command:
+#      name: "otelcol"
     configMap:
       create: false
       existingName: &name opentelemetry-collector-configmap
@@ -37,7 +41,7 @@ spec:
         enabled: true
         containerPort: 4317
         servicePort: 4317
-        hostPort: 4317
+#        hostPort: 4317
         protocol: TCP
         # nodePort: 30317
         appProtocol: grpc
@@ -45,7 +49,7 @@ spec:
         enabled: true
         containerPort: 4318
         servicePort: 4318
-        hostPort: 4318
+#        hostPort: 4318
         protocol: TCP
       metrics:
         # The metrics port is disabled by default. However you need to enable the port
@@ -60,5 +64,3 @@ spec:
         memory: 256Mi
       limits:
         memory: 512Mi
-#    prometheusRule:
-#      enabled: true
