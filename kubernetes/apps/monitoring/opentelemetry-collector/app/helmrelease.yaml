@@ -65,9 +65,9 @@ spec:
         memory: 512Mi
     config:
       exporters:
-        debug: {}
-#        prometheus:
-#          endpoint: "0.0.0.0:9464"
+#        debug: {}
+        prometheus:
+          endpoint: "0.0.0.0:9464"
       extensions:
         # The health_check extension is mandatory for this chart.
         # Without the health_check extension the collector will fail the readiness and liveness probes.
