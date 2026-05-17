@@ -49,13 +49,11 @@ spec:
         containerPort: 8888
         servicePort: 8888
         protocol: TCP
-      resources:
-        requests:
-          cpu: 250m
-          memory: 256Mi
-        limits:
-          memory: 512Mi
-      prometheusRule:
-        enabled: true
-        defaultRules:
-          enabled: true
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+    prometheusRule:
+      enabled: true
