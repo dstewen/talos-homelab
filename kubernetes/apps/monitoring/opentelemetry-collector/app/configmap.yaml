@@ -13,7 +13,14 @@ data:
     exporters:
       prometheus:
         endpoint: "0.0.0.0:9464"
-
+    processors:
+      batch:
+        send_batch_size: 10000
+        timeout: 5s
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 80
+        spike_limit_percentage: 25
     service:
       pipelines:
         metrics:
