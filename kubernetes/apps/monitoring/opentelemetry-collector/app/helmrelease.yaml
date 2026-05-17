@@ -12,7 +12,7 @@ spec:
   values:
     fullnameOverride: opentelemetry-collector
     mode: "deployment"
-    imagge:
+    image:
       repository: "otel/opentelemetry-collector"
 
     # OpenTelemetry Collector executable
