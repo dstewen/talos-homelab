@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: opentelemetry-collector
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: opentelemetry-collector
+  values:
+    fullnameOverride: opentelemetry-collector
+    mode: "deployment"
+    opentelemetry-collector:
+      configMap:
+        create: false
+        existingName: &name opentelemetry-collector-configmap
+    serviceAccount:
+      create: true
+    serviceMonitor:
+      enabled: true
+      # additional labels for the ServiceMonitor
+      extraLabels:
+        release: kube-prometheus-stack
+    podMonitor:
+      enabled: true
+    # Configuration for ports
+    # nodePort is also allowed
+    ports:
+      otlp:
+        enabled: true
+        containerPort: 4317
+        servicePort: 4317
+        hostPort: 4317
+        protocol: TCP
+        # nodePort: 30317
+        appProtocol: grpc
+      otlp-http:
+        enabled: true
+        containerPort: 4318
+        servicePort: 4318
+        hostPort: 4318
+        protocol: TCP
+      metrics:
+        # The metrics port is disabled by default. However you need to enable the port
+        # in order to use the ServiceMonitor (serviceMonitor.enabled) or PodMonitor (podMonitor.enabled).
+        enabled: true
+        containerPort: 8888
+        servicePort: 8888
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
+      prometheusRule:
+        enabled: true
+        defaultRules:
+          enabled: true
