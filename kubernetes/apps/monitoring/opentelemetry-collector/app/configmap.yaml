@@ -22,7 +22,6 @@ data:
         limit_percentage: 80
         spike_limit_percentage: 25
     service:
-      extensions: [health_check, k8s_observer]
       pipelines:
         metrics:
           receivers: [otlp]
