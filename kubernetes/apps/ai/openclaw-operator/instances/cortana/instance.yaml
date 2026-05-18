@@ -168,7 +168,15 @@ spec:
             fallbacks:
              - "ollama-rig/gemma4:e4b"
              - "ollama/gemma4:e4b-it-q4_K_M"
-
+          memorySearch:
+            enabled: true
+            provider: ollama
+            model: nomic-embed-text
+            remote:
+              baseUrl: "http://ollama.ai.svc.cluster.local:11434"
+              apiKey: "ollama-local"
+            sources:
+              - memory
       gateway:
         port: 18789
         controlUi:
