@@ -186,8 +186,68 @@ spec:
             api: "ollama"
             timeoutSeconds: 300
             models:
+              - id: "deepcoder:1.5b"
+                name: "DeepCoder 1.5B (Ollama Rig)"
+                reasoning: true
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 128000
+                maxTokens: 8192
+              - id: "deepcoder:14b"
+                name: "DeepCoder 14B (Ollama Rig)"
+                reasoning: true
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 128000
+                maxTokens: 8192
+              - id: "deepseek-coder:1.3b"
+                name: "DeepSeek-Coder 1.3B (Ollama Rig)"
+                reasoning: true
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 16384
+                maxTokens: 8192
+              - id: "deepseek-coder-v2:16b"
+                name: "DeepSeek-Coder-V2 16B (Ollama Rig)"
+                reasoning: true
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 163840
+                maxTokens: 8192
+              - id: "deepseek-r1:8b"
+                name: "DeepSeek R1 8B (Ollama Rig)"
+                reasoning: true
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 128000
+                maxTokens: 8192
               - id: "gemma4:e4b"
-                name: "Gemma 4 E4B (Ollama-Rig Server)"
+                name: "Gemma 4 E4B (Ollama Rig)"
                 reasoning: false
                 input:
                   - text
@@ -198,6 +258,43 @@ spec:
                   cacheRead: 0
                   cacheWrite: 0
                 contextWindow: 262144
+                maxTokens: 8192
+              - id: "gemma4:31b"
+                name: "Gemma 4 31B (Ollama Rig)"
+                reasoning: false
+                input:
+                  - text
+                  - image
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 262144
+                maxTokens: 8192
+              - id: "granite4.1:8b-q4_K_M"
+                name: "Granite 4.1 8B q4_K_M (Ollama Rig)"
+                reasoning: false
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 128000
+                maxTokens: 8192
+              - id: "granite4.1:30b-q4_K_M"
+                name: "Granite 4.1 30B q4_K_M (Ollama Rig)"
+                reasoning: false
+                input:
+                  - text
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 128000
                 maxTokens: 8192
           ollama:
             baseUrl: "http://ollama.ai.svc.cluster.local:11434"
@@ -216,7 +313,7 @@ spec:
                   output: 0
                   cacheRead: 0
                   cacheWrite: 0
-                contextWindow: 262144
+                contextWindow: 128000
                 maxTokens: 8192
       messages:
         groupChat:
