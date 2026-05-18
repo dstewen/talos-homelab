@@ -355,3 +355,58 @@ spec:
             models:
               - provider: groq
                 model: whisper-large-v3
+      plugins:
+        bundledDiscovery: allowlist
+        enabled: true
+        allow:
+          - "browser"
+          - "diagnostics-otel"
+          - "discord"
+          - "elevenlabs"
+          - "google"
+          - "memory-core"
+          - "memory-wiki"
+          - "ollama"
+          - "searxng"
+        entries:
+          diagnostics-otel:
+            enabled: true
+          elevenlabs:
+            enabled: true
+          searxng:
+            enabled: true
+            config:
+              webSearch:
+                baseUrl: "http://searxng.selfhosted.svc.cluster.local:8080"
+                language: "en"
+          memory-core:
+            config:
+              dreaming:
+                enabled: true
+          memory-wiki:
+            enabled: true
+            config:
+              vaultMode: isolated
+              vault:
+                path: "/home/openclaw/.openclaw/wiki/main"
+                renderMode: "obsidian"
+              bridge:
+                enabled: false
+                readMemoryArtifacts: true
+                indexDreamReports: true
+                indexDailyNotes: true
+                indexMemoryRoot: true
+                followMemoryEvents: true
+              ingest:
+                autoCompile: true
+                maxConcurrentJobs: 1
+                allowUrlIngest: true
+              search:
+                backend: "shared"
+                corpus: "wiki"
+              context":
+                includeCompiledDigestPrompt: false
+              render:
+                preserveHumanBlocks: true
+                createBacklinks: true
+                createDashboards": true
