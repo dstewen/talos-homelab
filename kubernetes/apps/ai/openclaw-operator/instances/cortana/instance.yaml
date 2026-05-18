@@ -369,21 +369,21 @@ spec:
           - "ollama"
           - "searxng"
         entries:
-          diagnostics-otel:
+          "diagnostics-otel":
             enabled: true
-          elevenlabs:
+          "elevenlabs":
             enabled: true
-          searxng:
+          "searxng":
             enabled: true
             config:
               webSearch:
                 baseUrl: "http://searxng.selfhosted.svc.cluster.local:8080"
                 language: "en"
-          memory-core:
+          "memory-core":
             config:
               dreaming:
                 enabled: true
-          memory-wiki:
+          "memory-wiki":
             enabled: true
             config:
               vaultMode: isolated
