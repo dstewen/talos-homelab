@@ -406,7 +406,3 @@ spec:
                 corpus: "wiki"
               context":
                 includeCompiledDigestPrompt: false
-              render:
-                preserveHumanBlocks: true
-                createBacklinks: true
-                createDashboards": true
