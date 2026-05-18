@@ -365,7 +365,6 @@ spec:
           - "elevenlabs"
           - "google"
           - "memory-core"
-          - "memory-wiki"
           - "ollama"
           - "searxng"
         entries:
