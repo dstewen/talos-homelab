@@ -369,8 +369,8 @@ spec:
           - "ollama"
           - "searxng"
         entries:
-          diagnostics-otel:
-            enabled: true
+#          diagnostics-otel:
+#            enabled: true
           elevenlabs:
             enabled: true
           searxng:
