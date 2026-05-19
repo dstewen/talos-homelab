@@ -223,7 +223,7 @@ spec:
             env:
               NODE_ENV: production
               TZ: ${TIMEZONE}
-              OPENCLAW_GATEWAY_URL: ws://openclaw-xunholy.ai.svc.cluster.local:18789
+              OPENCLAW_GATEWAY_URL: ws://127.0.0.1:18789
               DATABASE_PATH: /app/data/mission-control.db
               WORKSPACE_BASE_PATH: /app/workspace
               PROJECTS_PATH: /app/workspace/projects
