@@ -229,7 +229,7 @@ spec:
               PROJECTS_PATH: /app/workspace/projects
             envFrom:
               - secretRef:
-                  name: autensa-secret
+                  name: autensa-mission-control-secret
             resources:
               requests:
                 cpu: 100m
