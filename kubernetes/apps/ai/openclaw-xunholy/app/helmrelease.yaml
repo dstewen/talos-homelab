@@ -216,7 +216,26 @@ spec:
               limits:
                 memory: 1Gi
 
-
+          autensa-mission-control:
+            image:
+              repository: ghcr.io/crshdn/mission-control
+              tag: sha-6a64407
+            env:
+              NODE_ENV: production
+              TZ: ${TIMEZONE}
+              OPENCLAW_GATEWAY_URL: ws://autensa-gateway.default.svc.cluster.local:18789
+              DATABASE_PATH: /app/data/mission-control.db
+              WORKSPACE_BASE_PATH: /app/workspace
+              PROJECTS_PATH: /app/workspace/projects
+            envFrom:
+              - secretRef:
+                  name: autensa-secret
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
 
           chrome:
             image:
@@ -289,6 +308,8 @@ spec:
             port: &codeserverPort 12321
           missioncontrol:
             port: &missioncontrolPort 3000
+          autensa-mission-control:
+            port: &autensamissioncontrolPort 4000
     route:
       app:
         annotations:
@@ -317,6 +338,16 @@ spec:
           - backendRefs:
               - name: "{{ .Release.Name }}"
                 port: *missioncontrolPort
+
+      autensa-mission-control:
+        hostnames: ["autensa.davidstewen.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *autensamissioncontrolPort
 
       code-server:
         annotations:
