@@ -9,7 +9,7 @@ spec:
   image:
     repository: ghcr.io/openclaw/openclaw
     # renovate: datasource=docker depName=ghcr.io/openclaw/openclaw
-    tag: 2026.5.18@sha256:ac2c41d7122194d32258d1ec61b33079dbc498767ecadcd50849782ad5fcb057
+    tag: 2026.5.19@sha256:9dab72d103cb819e0c30c68a84c5faea5a34a2a6d94d7ec82a80f3c6de2f3163
   # ── Self-Configure ────────────────────────────────────────────
   # Let the agent add/remove skills and config at runtime via K8s API
   # (replaces brew-based interactive installs)
