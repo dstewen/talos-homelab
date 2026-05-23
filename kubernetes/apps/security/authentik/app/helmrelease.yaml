@@ -49,9 +49,6 @@ spec:
       error_reporting:
         enable: false
         send_pii: false
-      redis:
-        host: dragonfly.database.svc.cluster.local
-        db: 4
     prometheus:
       rules:
         enabled: true
