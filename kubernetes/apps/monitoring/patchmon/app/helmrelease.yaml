@@ -34,7 +34,7 @@ spec:
               TZ: ${TIMEZONE}
               CORS_ORIGIN: https://patchmon.${SECRET_DOMAIN}
               PORT: &port 3001
-              REDIS_HOST: dragonfly.database.svc.cluster.local
+              REDIS_HOST: patchmon-dragonfly
               REDIS_PORT: 6379
               REDIS_DB: 2
               SERVER_PROTOCOL: https
