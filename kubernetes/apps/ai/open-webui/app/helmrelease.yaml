@@ -50,7 +50,7 @@ spec:
               # https://docs.openwebui.com/getting-started/advanced-topics/env-configuration/#redis
               ENABLE_WEBSOCKET_SUPPORT: true
               WEBSOCKET_MANAGER: "redis"
-              WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
+              WEBSOCKET_REDIS_URL: "redis://open-webui-dragonfly:6379"
               # Vector DB
               VECTOR_DB: qdrant
               QDRANT_URI: http://qdrant.ai.svc.cluster.local:6333

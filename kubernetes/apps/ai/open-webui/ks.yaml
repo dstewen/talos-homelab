@@ -18,12 +18,14 @@ spec:
       namespace: ai
     - name: cloudnative-pg-cluster18
       namespace: database
-#    - name: dragonfly-cluster
-#      namespace: database
+    - name: dragonfly-operator
+      namespace: database
     - name: searxng
       namespace: selfhosted
     - name: qdrant
       namespace: ai
+  components:
+    - ../../../../components/dragonfly
   prune: true
   sourceRef:
     kind: GitRepository
