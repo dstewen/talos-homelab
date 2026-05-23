@@ -26,6 +26,10 @@ spec:
       namespace: ai
   components:
     - ../../../../components/dragonfly
+  postBuild:
+    substitute:
+      APP: open-webui
+      DRAGONFLY_REPLICAS: "1"
   prune: true
   sourceRef:
     kind: GitRepository
