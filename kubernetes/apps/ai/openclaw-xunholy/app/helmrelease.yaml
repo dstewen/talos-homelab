@@ -439,6 +439,20 @@ spec:
       openclaw-xunholy: {}
 
     persistence:
+      autensa-mc-data:
+        existingClaim: autensa-mc-data
+        advancedMounts:
+          mission-control:
+            app:
+              - path: /app/data
+
+      autensa-mc-workspace:
+        existingClaim: autensa-mc-workspace
+        advancedMounts:
+          mission-control:
+            app:
+              - path: /app/mc-workspace
+
       config:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
