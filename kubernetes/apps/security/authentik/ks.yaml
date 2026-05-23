@@ -17,8 +17,6 @@ spec:
       namespace: external-secrets
     - name: lldap
       namespace: security
-    - name: dragonfly-cluster
-      namespace: database
     - name: smtp-relay
       namespace: home
   healthChecks:
