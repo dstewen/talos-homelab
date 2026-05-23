@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster18
       namespace: database
-    - name: dragonfly-cluster
+    - name: dragonfly-operator
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
@@ -21,6 +21,7 @@ spec:
     - name: volsync
       namespace: volsync
   components:
+    - ../../../../components/dragonfly
     - ../../../../components/volsync
   path: ./kubernetes/apps/monitoring/patchmon/app
   prune: true
