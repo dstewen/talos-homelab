@@ -11,6 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/dragonfly
     - ../../../../components/gpu
   dependsOn:
     - name: cloudnative-pg-cluster18-vector
@@ -34,6 +35,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      DRAGONFLY_REPLICAS: "1"
     substituteFrom:
       - name: cluster-secrets
         kind: Secret

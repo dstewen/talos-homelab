@@ -112,36 +112,6 @@ spec:
           http:
             port: &httpPort 2283
 
-#    ingress:
-#      main:
-#        className: internal
-#        annotations:
-##          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-#          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
-#          nginx.ingress.kubernetes.io/proxy-body-size: "0"
-#          hajimari.io/appName: Photos
-#          hajimari.io/icon: heroicons:photo
-#          hajimari.io/instance: "admin"
-#          gethomepage.dev/enabled: "true"
-#          gethomepage.dev/group: Media
-#          gethomepage.dev/name: Immich
-#          gethomepage.dev/icon: immich.png
-#          gethomepage.dev/description: Self-hosted photo and video management solution
-##          gethomepage.dev/widget.type: immich
-##          gethomepage.dev/widget.url: http://immich-server.media.svc.cluster.local:3001
-##          gethomepage.dev/widget.key: "f8J3C8v9xUBrxTixovnoGeOoKUCdgFKj7DVtubfwY"
-#        hosts:
-#          - host: &host "photos.${SECRET_DOMAIN}"
-#            paths:
-#              - path: /
-#                pathType: Prefix
-#                service:
-#                  identifier: main
-#                  port: *httpPort
-#        tls:
-#          - hosts:
-#              - *host
-
     route:
       app:
         annotations:
