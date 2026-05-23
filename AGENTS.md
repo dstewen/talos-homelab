@@ -2,30 +2,110 @@
 
 This is a **Home Kubernetes cluster monorepo** managed with GitOps (Flux, Renovate, GitHub Actions).
 
+## CRITICAL: Treat This Repo As Public
+
+Assume this repository is publicly accessible. Do not commit or propose changes that introduce personally identifiable information or sensitive infrastructure details.
+
+### PII Protection Rules
+
+Never commit any of the following:
+
+| Prohibited | Use Instead | Example |
+| --- | --- | --- |
+| Real names | Pseudonyms or variables | `${USERNAME}` |
+| Email addresses | Secret variables | `${SECRET_CLUSTER_DOMAIN_EMAIL}` |
+| Public hostnames/domains | Secret variables | `app.${SECRET_DOMAIN}` |
+| Public IP addresses | SOPS secret variables (add a `SECRET_*` entry) | `${SECRET_PUBLIC_IP}` |
+
+Allowed in this repository:
+- RFC1918 IP addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)
+- Hostnames used only inside the cluster (e.g. `svc.cluster.local`)
+- Hardware model names and non-sensitive vendor references
+
+### Secret and Variable Reference
+
+All sensitive values are stored in SOPS-encrypted secrets and injected via Flux or External Secrets. Prefer these variables instead of hardcoding:
+
+| Variable | Purpose | Location |
+| --- | --- | --- |
+| `${SECRET_DOMAIN}` | Base domain for email or app config | `kubernetes/components/common/vars/cluster-secrets.sops.yaml` |
+| `${SECRET_EXTERNAL_DOMAIN}` | Public ingress domain | `kubernetes/components/common/vars/cluster-secrets.sops.yaml` |
+| `${SECRET_INTERNAL_DOMAIN}` | Internal DNS domain | `kubernetes/components/common/vars/cluster-secrets.sops.yaml` |
+| `${SECRET_CLUSTER_DOMAIN_EMAIL}` | ACME/cluster email | `kubernetes/components/common/vars/cluster-secrets.sops.yaml` |
+| `${SECRET_CLOUDFLARE_TUNNEL_ID}` | Cloudflare Tunnel ID | `kubernetes/components/common/vars/cluster-secrets.sops.yaml` |
+
+Non-secret cluster values (e.g. load balancer IPs, time zone, CIDRs) live in `kubernetes/components/common/vars/cluster-settings.yaml`.
+
+### Secret Handling Rules
+
+- Encrypt all secrets with SOPS following `.sops.yaml` rules.
+- Use `*.sops.yaml` (or other `*.sops.*`) for Kubernetes secrets.
+- Do not commit plaintext secrets or credentials anywhere.
+- App secrets should use External Secrets with `ClusterSecretStore` named `onepassword-connect`.
+
+## CRITICAL CONTEXT
+
+This repository manages home infrastructure as code.
+
+- Kubernetes GitOps is managed by Flux.
+- Cluster OS and provisioning are managed by Talos Linux.
+- Renovate automates dependency updates.
+
+## BEHAVIORAL GUIDELINES
+
+1. Research existing patterns before proposing changes.
+2. Preserve current functionality unless explicitly asked to remove it.
+3. Keep GitOps as the source of truth. Avoid `kubectl apply` outside documented bootstrap flows.
+4. Prefer existing patterns for HelmRelease, Kustomization, ExternalSecret, and Gateway API resources.
+5. Keep security tight. Do not add `privileged`, `hostNetwork`, or `runAsUser: 0` without a clear need.
+6. Validate changes locally when possible and call out any gaps.
+7. Always ignore the `.archive/` folder when making or proposing changes.
+
+## ANTI-PATTERNS
+
+- Hardcoding domains, emails, API keys, or public IPs.
+- Adding secrets to non-SOPS files.
+- Introducing manual, out-of-band cluster changes.
+- Diverging from existing namespace/app layouts without justification.
+
+## SECURITY BASELINE
+
+Use least privilege defaults when adding new workloads:
+
+```yaml
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 65534
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  readOnlyRootFilesystem: true
+```
+Add resource requests/limits unless there is a strong reason not to:
+
+```yaml
+resources:
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+```
+
 ## Repository Structure
 
 ```
-home-ops/
+talos-homelab/
 ├── kubernetes/           # Kubernetes configurations (Flux-managed)
-│   ├── apps/            # Application configs
-│   │   ├── base/        # Shared base configs
-│   │   ├── main/        # Main cluster overlay
-│   │   ├── utility/     # Utility cluster overlay
-│   │   └── test/        # Test cluster overlay
+│   ├── apps/            # Namespaced app deployments
 │   ├── clusters/        # Flux cluster definitions
 │   └── components/      # Reusable k8s components
 ├── talos/               # Talos Linux machine configs
-├── terraform/           # OpenTofu/Terraform IaC (cloud infra)
 ├── bootstrap/           # Bootstrap templates (helmfile.d, templates)
-├── hack/                # Operational scripts
-└── docs/                # mdBook documentation
+├── docs/                # mdBook documentation
+└── scripts/              # Talos helper scripts
 ```
-
-## Cluster Architecture
-
-- **main** - 3x MS-01 + 1x Bosgame M5 (i9-13900H x3, Ryzen AI Max+ 395 x1, 128GB RAM), hyper-converged storage
-- **utility** - 1x Bosgame P1 (Ryzen 7 5700U), low-power services
-- **test** - 1x Beelink Mini-S (Celeron N5095), testing
 
 ## Key Technologies
 
@@ -39,7 +119,6 @@ home-ops/
 | Secrets    | external-secrets + 1Password | Secret management                 |
 | Storage    | Rook/Ceph + volsync          | Distributed storage + backups     |
 | Images     | spegel                       | Local OCI mirror                  |
-| IaC        | tofu-controller              | Terraform on k8s                  |
 
 ## GitOps Flow
 
@@ -77,7 +156,6 @@ Flux recursively searches `kubernetes/${cluster}/apps/` for `kustomization.yaml`
 
 - Main docs: `/docs/src/` (mdBook)
 - Component docs: README files co-located with components
-- Terraform docs: `/terraform/tofu.md`
 - Personal notes: `/docs/src/notes/`
 
 ## Adding Documentation
