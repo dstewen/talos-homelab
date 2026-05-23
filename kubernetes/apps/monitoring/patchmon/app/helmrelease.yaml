@@ -36,7 +36,6 @@ spec:
               PORT: &port 3001
               REDIS_HOST: patchmon-dragonfly
               REDIS_PORT: 6379
-              REDIS_DB: 2
               SERVER_PROTOCOL: https
               SERVER_HOST: patchmon.${SECRET_DOMAIN}
               SERVER_PORT: 443
