@@ -19,6 +19,6 @@ resources:
 #  - ./openclaw/ks.yaml
   - ./openclaw-operator/ks.yaml
   - ./openclaw-xunholy/ks.yaml
-#  - ./qdrant/ks.yaml
+  - ./qdrant/ks.yaml
 #  - ./stable-diffusion/ks.yaml
 #  - ./toolhive/ks.yaml
