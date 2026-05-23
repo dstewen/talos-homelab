@@ -5,16 +5,15 @@ kind: Dragonfly
 metadata:
   name: dragonfly
 spec:
+  labels:
+    dragonflydb.io/cluster: dragonfly
   image: ghcr.io/dragonflydb/dragonfly:v1.38.1
   replicas: 2
-  env:
-    - name: MAX_MEMORY
-      valueFrom:
-        resourceFieldRef:
-          resource: limits.memory
-          divisor: 1Mi
+  # --maxmemory governs Dragonfly's data budget; RSS sits on top of it
+  # (threads, network buffers, snapshot/replication). Keep it strictly
+  # below cgroup limits.memory or background activity OOM-kills the pod.
   args:
-    - --maxmemory=$(MAX_MEMORY)Mi
+    - --maxmemory=768Mi
     - --proactor_threads=2
     - --cluster_mode=emulated
     - --default_lua_flags=allow-undeclared-keys
@@ -23,5 +22,6 @@ spec:
   resources:
     requests:
       cpu: 100m
+      memory: 1Gi
     limits:
-      memory: 512Mi
+      memory: 1Gi
