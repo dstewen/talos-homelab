@@ -126,11 +126,11 @@ talos-homelab/
 Git push → Flux source sync → Kustomization → HelmRelease → k8s resources
 ```
 
-Flux recursively searches `kubernetes/${cluster}/apps/` for `kustomization.yaml` files. Each must define a namespace and Flux kustomization (`ks.yaml`).
+Flux recursively searches `kubernetes/apps/` for `kustomization.yaml` files. Each must define a namespace and Flux kustomization (`ks.yaml`).
 
 ## Conventions
 
-- Component READMEs stay with components (e.g., `kubernetes/apps/base/cilium/README.md`)
+- Component READMEs stay with components (e.g., `kubernetes/apps/kube-system/cilium/README.md`)
 - Secrets stored in 1Password, referenced via `external-secrets`
 - SOPS used for encrypting sensitive values in Git
 - Apps use `HelmRelease` via Flux, rarely raw manifests
@@ -138,7 +138,7 @@ Flux recursively searches `kubernetes/${cluster}/apps/` for `kustomization.yaml`
 
 ## Common Operations
 
-- **Add app**: Create in `kubernetes/apps/${cluster}/` with kustomization + HelmRelease
+- **Add app**: Create in `kubernetes/apps/` with kustomization + HelmRelease
 - **Update app**: Merge renovate PR or manually edit and push
 - **Troubleshoot**: Check `flux get all -n <namespace>`, `kubectl get events --sort-by=.lastTimestamp`
 - **Scripts**: `hack/` contains operational scripts (cert-extract.sh, delete-stuck-ns.sh, etc.)
@@ -150,7 +150,7 @@ Flux recursively searches `kubernetes/${cluster}/apps/` for `kustomization.yaml`
   # Diff a specific HelmRelease or Kustomization
   /Users/joryirving/.local/share/mise/installs/pipx-flux-local/8.1.0/bin/flux-local diff helmrelease --path ./kubernetes/clusters/main --limit-bytes 10000
   ```
-- **Gateway policy namespace rule**: `ClientTrafficPolicy` and `EnvoyPatchPolicy` that target a `Gateway` must live in the same namespace as that `Gateway`. For `envoy-internal`, put those resources in `kubernetes/apps/base/network/envoy-gateway/config/` with namespace `network`.
+- **Gateway policy namespace rule**: `ClientTrafficPolicy` and `EnvoyPatchPolicy` that target a `Gateway` must live in the same namespace as that `Gateway`. For `envoy-internal`, put those resources in `kubernetes/apps/network/envoy-gateway/config/` with namespace `network`.
 
 ## Documentation
 
@@ -189,11 +189,6 @@ When reviewing Renovate PRs, enforce these criteria:
 - Reject updates from untrusted registries (must be allowlisted)
 - Preferred registries: GHCR.io, registry.k8s.io, Docker Hub (fallback)
 - Avoid Docker Hub for critical infrastructure components
-
-### Cluster-Specific Policies
-- **main cluster** (production): Strict validation - all standards must be met
-- **utility cluster** (low-power services, production): Strict validation - all standards must be met
-- **test cluster** (testing): Can accept bleeding-edge versions, still enforce secrets policy
 
 ### Breaking Change Detection
 Always `request_changes` if:
