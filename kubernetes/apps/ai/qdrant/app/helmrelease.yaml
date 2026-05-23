@@ -12,8 +12,6 @@ spec:
   values:
     controllers:
       qdrant:
-        replicas: 1
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
           prometheus.io/scrape: "true"
@@ -27,9 +25,12 @@ spec:
               QDRANT__SERVICE__HTTP_PORT: &http-port 6333
               QDRANT__SERVICE__GRPC_PORT: &grpc-port 6334
               QDRANT__SERVICE__ENABLE_CORS: "false"
-              QDRANT__STORAGE__STORAGE_PATH: "/qdrant/storage"
-              QDRANT__STORAGE__SNAPSHOT_PATH: "/qdrant/snapshots"
               QDRANT__TELEMETRY__DISABLE: "true"
+              # Default snapshots path is ./snapshots (qdrant's WORKDIR
+              # /qdrant), which the non-root user can't create. Redirect
+              # to the existing PVC so snapshots are also durable.
+              QDRANT__STORAGE__SNAPSHOTS_PATH: /qdrant/storage/snapshots
+
             envFrom:
               - secretRef:
                   name: qdrant-secret
@@ -53,9 +54,16 @@ spec:
                 drop: ["ALL"]
             resources:
               requests:
-                cpu: 100m
-              limits:
+                cpu: 50m
+                # Sized for the initial Paperless ingest + Phase A
+                # dual-collection benchmark (200 docs × 2 embedders).
+                # Pre-Spark-unblocks-RAG sizing (256Mi/512Mi) was fine
+                # for 0 collections but will OOM during ingest. Revisit
+                # downward after the first full ingest measures resident
+                # set in steady state.
                 memory: 1Gi
+              limits:
+                memory: 4Gi
             ports:
               - name: http
                 containerPort: *http-port
@@ -101,13 +109,8 @@ spec:
                 port: *http-port
     persistence:
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 25Gi
-        storageClass: ceph-block
-        globalMounts:
-          - path: /qdrant/storage
-      snapshots:
-        type: emptyDir
-        globalMounts:
-          - path: /qdrant/snapshots
+        existingClaim: qdrant-data-pvc
+        advancedMounts:
+          qdrant:
+            app:
+              - path: /qdrant/storage

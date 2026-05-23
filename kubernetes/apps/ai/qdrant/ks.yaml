@@ -9,6 +9,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 1h
@@ -16,7 +18,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 25Gi
   prune: true
   retryInterval: 2m
   sourceRef:
