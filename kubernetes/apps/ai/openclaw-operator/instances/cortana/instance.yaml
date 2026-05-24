@@ -6,6 +6,11 @@ metadata:
   name: cortana
   namespace: ai
 spec:
+  backup:
+    schedule: "0 4 * * *"     # Daily at 4 AM UTC
+    historyLimit: 5            # Successful job runs to retain (default: 3)
+    failedHistoryLimit: 1      # Failed job runs to retain (default: 1)
+    timeout: "1h"
   image:
     repository: ghcr.io/openclaw/openclaw
     # renovate: datasource=docker depName=ghcr.io/openclaw/openclaw
