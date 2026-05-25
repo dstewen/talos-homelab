@@ -20,7 +20,7 @@ spec:
           install-tools:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.5.22@sha256:dcfd148777401d1bbdc63eab5c2f280bbfa912dfb1818566f9d66bb96ffb3f95
+              tag: 2026.5.24-beta.2@sha256:9f142f3391a42e9486a154e0cf35ed6a02f7307b483c7591a3955ff36370f604
             command:
               - /bin/sh
               - -c
