@@ -11,4 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 0.34.4
-  url: oci://ghcr.io/paperclipinc/charts/openclaw-operator
+  url: oci://ghcr.io/openclaw-rocks/charts/openclaw-operator
