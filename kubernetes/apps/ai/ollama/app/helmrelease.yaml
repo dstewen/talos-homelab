@@ -47,7 +47,6 @@ spec:
               OLLAMA_VULKAN: 1
               OLLAMA_MODELS: /models
 #              OLLAMA_NUM_CTX: 16384
-              OLLAMA_CONTEXT_LENGTH: 16384
               OLLAMA_KEEP_ALIVE: "10m"
               OLLAMA_NUM_PARALLEL: 1
               GGML_VK_VISIBLE_DEVICES: 0  # Force GPU0 (Intel)
