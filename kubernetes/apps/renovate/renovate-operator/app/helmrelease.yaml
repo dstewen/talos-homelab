@@ -42,7 +42,7 @@ spec:
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/group: Update-Management
-        gethomepage.dev/name: Removate-Operator
+        gethomepage.dev/name: Renovate-Operator
         gethomepage.dev/icon: renovate.png
         gethomepage.dev/pod-selector: app.kubernetes.io/controller=renovate-operator
         gethomepage.dev/href: https://renovate.davidstewen.com
