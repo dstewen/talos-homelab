@@ -14,7 +14,7 @@ spec:
     destinationPVC: plex-config-0
     storageClassName: local-hostpath
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
