@@ -47,6 +47,7 @@ spec:
   # Formats: "clawhub-slug" | "npm:package" | "pack:owner/repo/path"
   skills:
     - asleep123/caldav-calendar
+    - hugogu/publish-wiki-js
     - pskoett/self-improving-agent
     - steipete/1password
     - steipete/brave-search
