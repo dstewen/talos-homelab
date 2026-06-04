@@ -25,7 +25,7 @@ machine:
       - 1.1.1.1
     disableSearchDomain: true
   install:
-    disk: /dev/disk/by-id/nvme-WD_Blue_SN570_500GB_
+    disk: /dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800784
     image: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6:v1.13.3
     wipe: false
     grubUseUKICmdline: true
