@@ -386,6 +386,7 @@ spec:
           - "memory-core"
           - "ollama"
           - "searxng"
+          - "workboard"
         entries:
 #          diagnostics-otel:
 #            enabled: true
@@ -401,3 +402,5 @@ spec:
             config:
               dreaming:
                 enabled: true
+          workboard:
+            enabled: true
