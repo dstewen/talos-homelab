@@ -271,6 +271,66 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+
+# Intel NUC workers
+  - hostname: "nuc1"
+    ipAddress: "10.200.15.61"
+    installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH811211KF512D"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d4:5d:df:1a:27:fe"
+        dhcp: false
+        addresses:
+          - "10.200.15.61/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.35/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+
+# CM4 Blades - with EMMC storage formatted as FAT32 and erased - using NVME for OS drive
   - hostname: "blade2"
     ipAddress: "10.200.15.32"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800784"
