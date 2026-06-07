@@ -19,25 +19,6 @@ spec:
         - secretRef:
             name: *secret
       addPrometheusAnnotations: false
-#      nodeSelector:
-#        node-role.kubernetes.io/worker: worker
-#      affinity:
-#        nodeAffinity:
-#          requiredDuringSchedulingIgnoredDuringExecution:
-#            nodeSelectorTerms:
-#            - matchExpressions:
-#              - key: node-role.kubernetes.io/worker
-#                operator: In
-#                values:
-#                - worker
-#          preferredDuringSchedulingIgnoredDuringExecution:
-#          - weight: 50
-#            preference:
-#              matchExpressions:
-#              - key: kubernetes.io/arch
-#                operator: In
-#                values:
-#                - arm64
 
     authentik:
       log_level: info
