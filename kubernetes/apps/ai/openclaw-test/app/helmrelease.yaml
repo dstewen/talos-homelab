@@ -200,43 +200,22 @@ spec:
               tag: latest@sha256:7d763e3f5ed2d0cdc0b4e8c734e1c5a260184875d10accbeb07fdf0a1f1830f2
             env:
               OPENCLAW_BIN: "/home/node/.local/bin/openclaw"
-              OPENCLAW_GATEWAY_HOST: "127.0.0.1"
+              OPENCLAW_GATEWAY_HOST: "${SVC_OPENCLAW2_ADDR}"
               OPENCLAW_GATEWAY_PORT: "18789"
               OPENCLAW_STATE_DIR: "/home/node/.openclaw"
               OPENCLAW_CONFIG_PATH: "/home/node/.openclaw/openclaw.json"
-              NEXT_PUBLIC_GATEWAY_URL: "ws://miso.davidstewen.com"
+              NEXT_PUBLIC_GATEWAY_URL: "ws://miso-test.davidstewen.com"
               NEXT_PUBLIC_GATEWAY_CLIENT_ID: "openclaw-control-ui"
-              MC_ALLOWED_HOSTS: "mission-control.davidstewen.com,localhost,127.0.0.1"
+              MC_ALLOWED_HOSTS: "mission-control-test.davidstewen.com,localhost,127.0.0.1"
             envFrom:
               - secretRef:
-                  name: openclaw-mission-control
+                  name: openclaw-test-mission-control
             resources:
               requests:
                 cpu: 100m
                 memory: 256Mi
               limits:
                 memory: 1Gi
-
-          autensa-mission-control:
-            image:
-              repository: ghcr.io/crshdn/mission-control
-              tag: sha-6a64407
-            env:
-              NODE_ENV: production
-              TZ: ${TIMEZONE}
-              OPENCLAW_GATEWAY_URL: "ws://${SVC_OPENCLAW_ADDR}:18789"
-              DATABASE_PATH: "/app/data/mission-control.db"
-              WORKSPACE_BASE_PATH: "/app/mc-workspace"
-              PROJECTS_PATH: "/app/mc-workspace/projects"
-            envFrom:
-              - secretRef:
-                  name: autensa-mission-control-secret
-            resources:
-              requests:
-                cpu: 100m
-                memory: 512Mi
-              limits:
-                memory: 2Gi
 
           chrome:
             image:
@@ -300,7 +279,7 @@ spec:
       app:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${SVC_OPENCLAW_ADDR}
+          lbipam.cilium.io/ips: ${SVC_OPENCLAW2_ADDR}
         externalTrafficPolicy: Cluster
         ports:
           http:
@@ -309,19 +288,17 @@ spec:
             port: &codeserverPort 12321
           missioncontrol:
             port: &missioncontrolPort 3000
-          autensa-mission-control:
-            port: &autensamissioncontrolPort 4000
     route:
       app:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: AI
           gethomepage.dev/name: OpenClaw
-          gethomepage.dev/href: https://miso.davidstewen.com
+          gethomepage.dev/href: https://miso-test.davidstewen.com
           gethomepage.dev/icon: sh-openclaw.png
           gethomepage.dev/pod-selector: app.kubernetes.io/name=openclaw-test
           internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
-        hostnames: ["miso.davidstewen.com"]
+        hostnames: ["miso-test.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -331,7 +308,7 @@ spec:
                 port: *port
 
       missioncontrol:
-        hostnames: ["mission-control.davidstewen.com"]
+        hostnames: ["mission-control-test.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -340,27 +317,17 @@ spec:
               - name: "{{ .Release.Name }}"
                 port: *missioncontrolPort
 
-      autensa-mission-control:
-        hostnames: ["autensa.davidstewen.com"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-        rules:
-          - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *autensamissioncontrolPort
-
       code-server:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: AI
-          gethomepage.dev/name: OpenClaw VSCode
-          gethomepage.dev/href: https://miso-code.davidstewen.com
+          gethomepage.dev/name: OpenClaw VSCode Test
+          gethomepage.dev/href: https://miso-code-test.davidstewen.com
           gethomepage.dev/icon: sh-visual-studio-code.png
           hajimari.io/appName: "OpenClaw"
           hajimari.io/enable: "true"
           hajimari.io/group: "AI"
-        hostnames: ["miso-code.davidstewen.com"]
+        hostnames: ["miso-code-test.davidstewen.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -440,16 +407,6 @@ spec:
       openclaw-test: {}
 
     persistence:
-      autensa-mc-data:
-        existingClaim: autensa-mc-data
-        globalMounts:
-          - path: /app/data
-
-      autensa-mc-workspace:
-        existingClaim: autensa-mc-workspace
-        globalMounts:
-          - path: /app/mc-workspace
-
       config:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
