@@ -31,7 +31,7 @@ spec:
               - key: kubernetes.io/arch
                 operator: In
                 values:
-                - arm64
+                - amd64
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 50
             preference:
