@@ -8,6 +8,7 @@ components:
 resources:
   # Flux-Kustomizations
   - ./atuin/ks.yaml
+  - ./changedetection/ks.yaml
   - ./it-tools/ks.yaml
   - ./n8n/ks.yaml
 #  - ./nextcloud/ks.yaml
