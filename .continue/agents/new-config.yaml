@@ -1,0 +1,67 @@
+# This is an example configuration file
+# To learn more, see the full config.yaml reference: https://docs.continue.dev/reference
+
+name: Talos Ollama Assistant
+version: 1.0.0
+schema: v1
+models:
+  - name: Llama 3.1 8B
+    provider: openai
+    model: llama3.1:8b
+    env:
+      useLegacyCompletionsEndpoint: false
+    apiBase: https://open-webui.davidstewen.com/api
+    apiKey: sk-12a157f5615b4bf9bec729d88ee3d935
+    contextLength: 8192
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Deepseek R1 7B
+    provider: openai
+    model: deepseek-r1:7b
+    env:
+      useLegacyCompletionsEndpoint: false
+    apiBase: https://open-webui.davidstewen.com/api
+    apiKey: sk-12a157f5615b4bf9bec729d88ee3d935
+    contextLength: 8192
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Qwen2.5-Coder 7B
+    provider: openai
+    model: qwen2.5-coder:7b
+    env:
+      useLegacyCompletionsEndpoint: false
+    apiBase: https://open-webui.davidstewen.com/api
+    apiKey: sk-12a157f5615b4bf9bec729d88ee3d935
+    contextLength: 8192
+    roles:
+      - autocomplete
+  - name: Nomic Embed
+    provider: openai
+    model: nomic-embed-text:latest
+    env:
+      useLegacyCompletionsEndpoint: false
+    apiBase: https://open-webui.davidstewen.com/api
+    apiKey: sk-12a157f5615b4bf9bec729d88ee3d935
+    contextLength: 8192
+    roles:
+      - embed
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+  - provider: url
+  - provider: web
+  - provider: open
+
+# MCP Servers that Continue can access
+# https://docs.continue.dev/customization/mcp-tools
+#mcpServers:
+#  - uses: anthropic/memory-mcp
