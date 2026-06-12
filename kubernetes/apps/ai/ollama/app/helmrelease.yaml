@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ollama/ollama
-              tag: 0.30.7
+              tag: 0.30.8
             securityContext:
               privileged: true
             env:
