@@ -26,7 +26,7 @@ spec:
               [{
                 "name":"iot",
                 "namespace": "network",
-                "ips": ["172.16.20.105/24"]
+                "ips": ["172.16.20.105/24"],
                 "mac": "3e:77:4e:fe:0e:12"
               }]
 #          labels:
