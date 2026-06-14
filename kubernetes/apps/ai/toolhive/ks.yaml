@@ -2,9 +2,17 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &name toolhive-crds
+  name: &name toolhive-operator-crds
   namespace: &namespace ai
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: toolhive-operator-crds
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: toolhive-operator-crds
+      namespace: ai
   targetNamespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/ai/toolhive/crds
@@ -19,12 +27,20 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &name toolhive
+  name: &name toolhive-operator
   namespace: &namespace ai
 spec:
-  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: toolhive-operator
   dependsOn:
-  - name: toolhive-crds
+    - name: toolhive-operator-crds
+      namespace: ai
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: toolhive-operator
+      namespace: ai
   interval: 1h
   path: ./kubernetes/apps/ai/toolhive/app
   prune: true
@@ -32,20 +48,26 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: *namespace
   wait: false
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &name toolhive-config
+  name: &name toolhive-operator-config
   namespace: &namespace ai
 spec:
-  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: toolhive-operator-config
   components:
   - ../../../../components/dragonfly
   dependsOn:
-  - name: toolhive
+    - name: toolhive-operator-crds
+      namespace: ai
+    - name: dragonfly-operator
+      namespace: database
   healthCheckExprs:
   - apiVersion: dragonflydb.io/v1alpha1
     kind: Dragonfly
@@ -61,105 +83,5 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &name arr-mcp
-  namespace: &namespace ai
-spec:
   targetNamespace: *namespace
-  dependsOn:
-  - name: toolhive
-  interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/mcp-servers/arr-mcp
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &name github-mcp
-  namespace: &namespace ai
-spec:
-  targetNamespace: *namespace
-  dependsOn:
-  - name: toolhive
-  interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/mcp-servers/github-mcp
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &name ha-mcp
-  namespace: &namespace ai
-spec:
-  targetNamespace: *namespace
-  dependsOn:
-  - name: toolhive
-  interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/mcp-servers/ha-mcp
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &name memory-mcp
-  namespace: &namespace ai
-spec:
-  targetNamespace: *namespace
-  components:
-  - ../../../../../components/volsync
-  dependsOn:
-  - name: toolhive
-  interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/mcp-servers/memory-mcp
-  postBuild:
-    substitute:
-      APP: *name
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app seerr-mcp
-  namespace: &namespace ai
-spec:
-  targetNamespace: *namespace
-  interval: 1h
-  path: ./kubernetes/apps/ai/toolhive/mcp-servers/seerr-mcp
-  postBuild:
-    substitute:
-      APP: *app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
   wait: false
