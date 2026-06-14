@@ -107,10 +107,10 @@ data:
             - icon: github.png
               description: Renovate Dashboard
               href: https://github.com/dstewen/cm4-cluster/issues/1
-        - talos-homecluster:
+        - talos-homelab:
             - icon: github.png
               description: Renovate Dashboard
-              href: https://github.com/dstewen/talos-homecluster/issues/1
+              href: https://github.com/dstewen/talos-homelab/issues/1
 
   services.yaml: |
     - Infrastructure:
@@ -146,11 +146,11 @@ data:
               password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
     - Monitoring:
         - Home-Assistant-Status:
-            href: http://192.168.10.22:8123
+            href: http://192.168.10.84:8123
             icon: si-homeassistant
             widget:
               type: homeassistant
-              url: http://192.168.10.22:8123
+              url: http://192.168.10.84:8123
               key: {{HOMEPAGE_VAR_HASS_API_TOKEN}}
         - PiHole:
             href: http://192.168.10.195
