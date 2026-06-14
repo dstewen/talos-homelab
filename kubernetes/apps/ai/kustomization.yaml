@@ -25,4 +25,4 @@ resources:
   - ./qdrant/ks.yaml
   - ./seerr-mcp/ks.yaml
 #  - ./stable-diffusion/ks.yaml
-#  - ./toolhive/ks.yaml
+  - ./toolhive/ks.yaml
