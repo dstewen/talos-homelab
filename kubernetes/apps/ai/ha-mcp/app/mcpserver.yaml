@@ -6,18 +6,24 @@ metadata:
   name: ha-mcp
 spec:
   image: ghcr.io/homeassistant-ai/ha-mcp:7.7.0
-  transport: streamable-http
+
   groupRef:
     name: mcp-tools
   env:
     - name: HOMEASSISTANT_URL
-      value: https://home-assistant.davidstewen.com
-  secrets:
-    - name: toolhive-home-assistant
-      key: HOMEASSISTANT_TOKEN
+      value: http://192.168.10.84:8123
   podTemplateSpec:
     spec:
       containers:
         - name: mcp
           command:
             - ha-mcp-web
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+  secrets:
+    - name: toolhive-home-assistant
+      key: HOMEASSISTANT_TOKEN
+  transport: streamable-http
