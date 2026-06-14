@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: roundcube
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: roundcube
+  interval: 1h
+  values:
+    controllers:
+      roundcube:
+        containers:
+          app:
+            image:
+              repository: docker.io/roundcube/roundcubemail
+              tag: 1.7.1-apache-nonroot@sha256:4a78c0738aaff2fee3df55d935a34d0d24e66c1f7a9ba405904ce1746b6ba862
+            env:
+              ROUNDCUBEMAIL_DB_TYPE: sqlite
+              ROUNDCUBEMAIL_DEFAULT_HOST: ssl://mail.davidstewen.com
+              ROUNDCUBEMAIL_DEFAULT_PORT: 993
+              ROUNDCUBEMAIL_PLUGINS: archive
+              ROUNDCUBEMAIL_SKIN: elastic
+              ROUNDCUBEMAIL_SMTP_PORT: 587
+              ROUNDCUBEMAIL_SMTP_SERVER: tls://mail.davidstewen.com
+              ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE: 25M
+              TZ: Australia/Melbourne
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 8000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - webmail.davidstewen.com
+        parentRefs:
+          - name: envoy-cloudflare
+            namespace: network
+    persistence:
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /var/roundcube
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /var/www/html
+            subPath: html
+          - path: /var/run
+            subPath: run
+          - path: /tmp
+            subPath: tmp
