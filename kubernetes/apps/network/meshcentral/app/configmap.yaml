@@ -7,6 +7,8 @@ data:
     {
       "settings": {
         "port": 8080
+        "redirPort": 0,
+        "TlsOffload": true
       },
       "domains": {
         "": {
