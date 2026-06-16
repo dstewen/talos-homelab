@@ -472,3 +472,8 @@ spec:
                 enabled: true
           workboard:
             enabled: true
+      mcp:
+        servers:
+          toolhive:
+            url: "http://vmcp-mcp-gateway-internal.ai:4483/mcp"
+            transport: "streamable-http"
