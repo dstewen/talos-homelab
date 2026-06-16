@@ -12,6 +12,7 @@ data:
       },
       "domains": {
         "": {
+          "allowedOrigin": [ "mesh2.davidstewen.com" ]
           "userQuota": 1048576,
           "meshQuota": 248576,
           "newAccounts": 0
