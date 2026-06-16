@@ -21,7 +21,7 @@ spec:
   values:
     replicaCount: 1
     networkPolicy:
-      enabled: false
+      enabled: true
     # Metrics configuration
     metrics:
       enabled: true

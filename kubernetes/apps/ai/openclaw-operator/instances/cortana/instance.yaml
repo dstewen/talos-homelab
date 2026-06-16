@@ -34,9 +34,19 @@ spec:
         - ports:
             - port: 22
               protocol: TCP
+            - port: 80
+              protocol: TCP
             - port: 443
               protocol: TCP
+            - port: 4483
+              protocol: TCP
+            - port: 11434
+              protocol: TCP
             - port: 8000
+              protocol: TCP
+            - port: 8080
+              protocol: TCP
+            - port: 8123
               protocol: TCP
             - port: 50000
               protocol: TCP
