@@ -370,10 +370,10 @@ spec:
                   output: 0
                   cacheRead: 0
                   cacheWrite: 0
-                contextWindow: 32768
+                contextWindow: 131072
                 maxTokens: 8192
                 params:
-                  num_ctx: 32768
+                  num_ctx: 131072
               - id: "gemma4:12b-it-qat"
                 name: "Gemma 4 12B IT QAT (Ollama Talos Server)"
                 reasoning: false
