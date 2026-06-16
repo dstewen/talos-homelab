@@ -387,6 +387,11 @@ spec:
             models:
               - provider: groq
                 model: whisper-large-v3
+        web:
+          fetch:
+            enabled: true
+          search:
+            provider: searxng
       plugins:
         bundledDiscovery: allowlist
         enabled: true
@@ -396,6 +401,7 @@ spec:
           - "discord"
           - "elevenlabs"
           - "google"
+          - "groq"
           - "memory-core"
           - "ollama"
           - "searxng"
