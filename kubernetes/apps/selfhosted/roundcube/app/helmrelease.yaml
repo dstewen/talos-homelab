@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: docker.io/roundcube/roundcubemail
-              tag: 1.7.1-apache-nonroot@sha256:ce31fa7f7e441407c13161f9e514531be9a442448bda46fdbb509012f5d3c61e
+              tag: 1.7.1-apache-nonroot@sha256:7de7166c2572cde55baa494b659cb340e3897bdf4dabf67923917e416dbbc81e
             env:
               ROUNDCUBEMAIL_DB_TYPE: sqlite
               ROUNDCUBEMAIL_DEFAULT_HOST: ssl://mail.davidstewen.com
