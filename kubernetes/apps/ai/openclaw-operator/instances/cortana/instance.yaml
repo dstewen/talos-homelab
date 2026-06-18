@@ -179,6 +179,12 @@ spec:
 
       agents:
         defaults:
+          heartbeat:
+            every: "30m"
+            model: "groq/openai/gpt-oss-20b"
+            isolatedSession: true
+            lightContext: true
+            prompt: "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."
           model:
             primary: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
             fallbacks:
@@ -305,6 +311,36 @@ spec:
                 maxTokens: 8192
                 params:
                   num_ctx: 262144
+              - id: "gemma4:12b-it-qat"
+                name: "Gemma 4 12B IT QAT (Ollama Rig)"
+                reasoning: false
+                input:
+                  - text
+                  - image
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 262144
+                maxTokens: 8192
+                params:
+                  num_ctx: 262144
+              - id: "gemma4:26b-a4b-it-qat"
+                name: "Gemma 4 26B A4B IT QAT (Ollama Rig)"
+                reasoning: false
+                input:
+                  - text
+                  - image
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+                contextWindow: 262144
+                maxTokens: 8192
+                params:
+                  num_ctx: 262144
               - id: "gemma4:31b"
                 name: "Gemma 4 31B (Ollama Rig)"
                 reasoning: false
@@ -398,21 +434,6 @@ spec:
                 maxTokens: 8192
                 params:
                   num_ctx: 131072
-              - id: "gemma4:12b-it-qat"
-                name: "Gemma 4 12B IT QAT (Ollama Talos Server)"
-                reasoning: false
-                input:
-                  - text
-                  - image
-                cost:
-                  input: 0
-                  output: 0
-                  cacheRead: 0
-                  cacheWrite: 0
-                contextWindow: 262144
-                maxTokens: 8192
-                params:
-                  num_ctx: 262144
               - id: "gemma4:26b-a4b-it-q4_K_M"
                 name: "Gemma 4 26B A4B IT Q4KM (Ollama Talos Server)"
                 reasoning: false
