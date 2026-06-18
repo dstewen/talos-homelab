@@ -10,7 +10,7 @@ spec:
     name: mcp-tools
   env:
     - name: SEARXNG_URL
-      value: http://search.davidstewen.com:8080
+      value: https://search.davidstewen.com
   podTemplateSpec:
     spec:
       containers:
