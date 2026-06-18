@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: searxng-mcp
+spec:
+  image: docker.io/isokoliuk/mcp-searxng:1.6.0@sha256:56aef42909b7b95c232ed85335efffc38fb518dcd7b40af94b1a1dec352b5d56
+  groupRef:
+    name: mcp-tools
+  env:
+    - name: SEARXNG_URL
+      value: http://search.davidstewen.com:8080
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          command:
+            - npx
+          args:
+            - -y
+            - mcp-searxng
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+  transport: streamable-http
