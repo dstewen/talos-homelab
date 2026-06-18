@@ -24,6 +24,6 @@ resources:
   - ./openclaw-xunholy/ks.yaml
   - ./qdrant/ks.yaml
   - ./seerr-mcp/ks.yaml
-  - ./searxng-mcp/ks.yaml
+#  - ./searxng-mcp/ks.yaml
 #  - ./stable-diffusion/ks.yaml
   - ./toolhive/ks.yaml
