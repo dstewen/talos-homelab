@@ -3,25 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app loki
+  name: loki
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: *app
-  install:
-    crds: Skip
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    crds: Skip
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: openebs
-      namespace: openebs-system
+    name: loki
   values:
     deploymentMode: SingleBinary
     loki:
