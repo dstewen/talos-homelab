@@ -466,7 +466,7 @@ spec:
                   num_ctx: 262144
       messages:
         groupChat:
-          visibleReplies: "message_tool"
+          visibleReplies: "automatic"
 
       channels:
         discord:
