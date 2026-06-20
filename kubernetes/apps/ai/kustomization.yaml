@@ -8,22 +8,22 @@ components:
 resources:
   - ./namespace.yaml
   # Flux-Kustomizations
-#  - ./arr-mcp/ks.yaml
+#  - ./mcp/arr-mcp/ks.yaml
   - ./boinc-amd64/ks.yaml
 #  - ./boinc-arm64/ks.yaml
-#  - ./github-mcp/ks.yaml
-#  - ./ha-mcp/ks.yaml
+#  - ./mcp/github-mcp/ks.yaml
+#  - ./mcp/ha-mcp/ks.yaml
 #  - ./local-ai/ks.yaml
 #  - ./k8sgpt/ks.yaml
 #  - ./mem0/ks.yaml
-#  - ./memory-mcp/ks.yaml
+#  - ./mcp/memory-mcp/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
   - ./openclaw-operator/ks.yaml
   - ./openclaw-xunholy/ks.yaml
   - ./qdrant/ks.yaml
-#  - ./seerr-mcp/ks.yaml
-#  - ./searxng-mcp/ks.yaml
+#  - ./mcp/seerr-mcp/ks.yaml
+#  - ./mcp/searxng-mcp/ks.yaml
 #  - ./stable-diffusion/ks.yaml
   - ./toolhive/ks.yaml
