@@ -3,20 +3,23 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: arr-mcp
+  name: &app kubectl-mcp
+  namespace: &namespace ai
 spec:
+  targetNamespace: *namespace
   commonMetadata:
     labels:
-      app.kubernetes.io/name: arr-mcp
+      app.kubernetes.io/name: *app
   dependsOn:
     - name: toolhive-operator-crds
-      namespace: ai
-  interval: 1h
-  path: "./kubernetes/apps/ai/arr-mcp/app"
+      namespace: *namespace
+  path: ./kubernetes/apps/ai/mcp/kubectl-mcp/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: ai
+  wait: false
+  interval: 1h
+  retryInterval: 2m
   timeout: 5m

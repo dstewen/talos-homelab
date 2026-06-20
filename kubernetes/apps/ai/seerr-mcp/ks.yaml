@@ -3,16 +3,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: github-mcp
+  name: seerr-mcp
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: github-mcp
+      app.kubernetes.io/name: seerr-mcp
   dependsOn:
+    - name: onepassword-connect
+      namespace: external-secrets
     - name: toolhive-operator-crds
       namespace: ai
   interval: 1h
-  path: "./kubernetes/apps/ai/github-mcp/app"
+  path: "./kubernetes/apps/ai/seerr-mcp/app"
   prune: true
   sourceRef:
     kind: GitRepository
