@@ -11,18 +11,4 @@ spec:
   env:
     - name: SEARXNG_URL
       value: https://search.davidstewen.com
-  podTemplateSpec:
-    spec:
-      containers:
-        - name: mcp
-          command:
-            - npx
-          args:
-            - -y
-            - mcp-searxng
-          volumeMounts:
-            - mountPath: /tmp
-              name: tmpfs
-      volumes:
-        - name: tmpfs
-  transport: streamable-http
+  transport: stdio
