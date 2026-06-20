@@ -18,13 +18,13 @@ resources:
   - ./kubectl-mcp/ks.yaml
 #  - ./mem0/ks.yaml
   - ./memory-mcp/ks.yaml
-  - ./n8n-mcp/ks.yaml
+#  - ./n8n-mcp/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
   - ./openclaw-operator/ks.yaml
   - ./openclaw-xunholy/ks.yaml
-  - ./plex-mcp/ks.yaml
+#  - ./plex-mcp/ks.yaml
   - ./prometheus-mcp/ks.yaml
   - ./qdrant/ks.yaml
 #  - ./searxng-mcp/ks.yaml
