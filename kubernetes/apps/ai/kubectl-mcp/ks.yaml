@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: toolhive-operator-crds
       namespace: *namespace
-  path: ./kubernetes/apps/ai/mcp/kubectl-mcp/app
+  path: ./kubernetes/apps/ai/kubectl-mcp/app
   prune: true
   sourceRef:
     kind: GitRepository
