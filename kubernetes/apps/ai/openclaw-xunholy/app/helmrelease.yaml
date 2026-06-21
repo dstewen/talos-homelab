@@ -204,7 +204,8 @@ spec:
               OPENCLAW_GATEWAY_PORT: "18789"
               OPENCLAW_STATE_DIR: "/home/node/.openclaw"
               OPENCLAW_CONFIG_PATH: "/home/node/.openclaw/openclaw.json"
-              NEXT_PUBLIC_GATEWAY_HOST: "miso.davidstewen.com"
+              NEXT_PUBLIC_GATEWAY_URL: "wss://miso.davidstewen.com"
+#              NEXT_PUBLIC_GATEWAY_HOST: "miso.davidstewen.com"
               NEXT_PUBLIC_GATEWAY_CLIENT_ID: "openclaw-control-ui"
               NEXT_PUBLIC_GATEWAY_REVERSE_PROXY: 1
               MC_ALLOWED_HOSTS: "mission-control.davidstewen.com,localhost,127.0.0.1"
