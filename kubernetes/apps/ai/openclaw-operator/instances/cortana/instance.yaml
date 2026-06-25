@@ -186,7 +186,7 @@ spec:
             lightContext: true
             prompt: "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."
           model:
-            primary: "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+            primary: "groq/qwen/qwen3.6-27b"
             fallbacks:
              - "ollama-rig/gemma4:e4b"
              - "ollama/gemma4:e4b-it-q4_K_M"
