@@ -17,6 +17,8 @@ spec:
       capabilities:
         add:
           - PERFMON
+    nodeSelector:
+      kubernetes.io/arch: amd64
     monitoring:
       serviceMonitor:
         enabled: true
