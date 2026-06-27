@@ -224,7 +224,7 @@ spec:
             baseUrl: "http://192.168.10.80:11434"
             apiKey: "not-needed"
             api: "ollama"
-            timeoutSeconds: 300
+            timeoutSeconds: 900
             models:
               - id: "deepcoder:1.5b"
                 name: "DeepCoder 1.5B (Ollama Rig)"
