@@ -17,6 +17,18 @@ models:
       - chat
       - edit
       - apply
+  - name: Qwen3-Coder 30B
+    provider: openai
+    model: qwen3-coder:30b
+    env:
+      useLegacyCompletionsEndpoint: false
+    apiBase: https://open-webui.davidstewen.com/api
+    apiKey: sk-12a157f5615b4bf9bec729d88ee3d935
+    contextLength: 8192
+    roles:
+      - chat
+      - edit
+      - apply
   - name: Deepseek R1 7B
     provider: openai
     model: deepseek-r1:7b
