@@ -25,7 +25,7 @@ spec:
         prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
 #        port: 8443
       mgr:
-        count: 1
+        count: 2
         modules:
           - name: diskprediction_local
             enabled: true
@@ -37,7 +37,7 @@ spec:
             enabled: true
       mon:
         allowMultiplePerNode: false
-        count: 1
+        count: 2
       network:
         provider: host
         connections:
