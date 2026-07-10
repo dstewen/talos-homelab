@@ -63,7 +63,7 @@ spec:
               requests:
                 cpu: 2000m
               limits:
-                memory: 32G
+                memory: 16G
             envFrom:
               - secretRef:
                   name: cluster-secrets
