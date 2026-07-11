@@ -32,11 +32,6 @@ spec:
       dashboard:
         # -- whether to create a Grafana dashboard for the operator metrics
         enabled: true
-        annotations: {}
-        labels:
-          grafana_dashboard: "true"
-        # -- namespace to create the dashboard in, defaults to the release namespace
-#        namespace: ~
     route:
       enabled: true
       annotations:
