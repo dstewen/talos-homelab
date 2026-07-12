@@ -197,7 +197,7 @@ spec:
           mission-control:
             image:
               repository: ghcr.io/builderz-labs/mission-control
-              tag: latest@sha256:8626588279fb9b10cebf76dc15a578ca3af251d68fed5bb8b27a43fca628c5ef
+              tag: latest@sha256:b4868f50aa92288ecda198b3639233f66e701f4ad3102d42697e89980dfc73b0
             env:
               OPENCLAW_BIN: "/home/node/.local/bin/openclaw"
               OPENCLAW_GATEWAY_HOST: "${SVC_OPENCLAW2_ADDR}"
