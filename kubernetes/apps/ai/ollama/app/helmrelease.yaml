@@ -106,8 +106,6 @@ spec:
                   periodSeconds: 5
 
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/hostname: nuc2
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: ollama-gpu
