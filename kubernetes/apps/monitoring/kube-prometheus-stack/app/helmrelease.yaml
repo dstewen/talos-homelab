@@ -28,6 +28,8 @@ spec:
         alertmanagerConfiguration:
           name: alertmanager
         externalUrl: https://alertmanager.davidstewen.com
+        nodeSelector:
+          kubernetes.io/hostname: ms2
         storage:
           volumeClaimTemplate:
             spec:
@@ -58,6 +60,8 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
+        nodeSelector:
+          kubernetes.io/hostname: ms2
         retention: 14d
         retentionSize: 30GB
         resources:
