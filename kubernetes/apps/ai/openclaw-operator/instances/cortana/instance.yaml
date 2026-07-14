@@ -489,8 +489,8 @@ spec:
         web:
           fetch:
             enabled: true
-          search:
-            provider: searxng
+#          search:
+#            provider: searxng
       plugins:
         bundledDiscovery: allowlist
         enabled: true
@@ -503,19 +503,19 @@ spec:
           - "groq"
           - "memory-core"
           - "ollama"
-          - "searxng"
+#          - "searxng"
           - "workboard"
         entries:
 #          diagnostics-otel:
 #            enabled: true
           elevenlabs:
             enabled: true
-          searxng:
-            enabled: true
-            config:
-              webSearch:
-                baseUrl: "http://searxng.selfhosted.svc.cluster.local:8080"
-                language: "en"
+#          searxng:
+#            enabled: true
+#            config:
+#              webSearch:
+#                baseUrl: "http://searxng.selfhosted.svc.cluster.local:8080"
+#                language: "en"
           memory-core:
             config:
               dreaming:
