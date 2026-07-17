@@ -34,7 +34,8 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-
+        pod:
+          automountServiceAccountToken: true
         containers:
           app:
             image:
