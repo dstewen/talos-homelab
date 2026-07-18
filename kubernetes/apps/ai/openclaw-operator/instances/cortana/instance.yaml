@@ -34,19 +34,27 @@ spec:
         - ports:
             - port: 22
               protocol: TCP
-            - port: 80
+            - port: 80 # Seerr, Sonarr, Radarr, Overseerr
               protocol: TCP
             - port: 443
               protocol: TCP
-            - port: 4483
+            - port: 4483 # Toolhive MCP gateway
               protocol: TCP
-            - port: 11434
+            - port: 5000 # Frigate
               protocol: TCP
-            - port: 8000
+            - port: 6052 # ESPHome
+              protocol: TCP
+            - port: 6969 # Whisparr
+              protocol: TCP
+            - port: 8686 # Lidarr
+              protocol: TCP
+            - port: 11434 # Ollama
+              protocol: TCP
+            - port: 8000 # Paperless-ng
               protocol: TCP
             - port: 8080
               protocol: TCP
-            - port: 8123
+            - port: 8123 # Home Assistant
               protocol: TCP
             - port: 50000
               protocol: TCP
@@ -517,8 +525,8 @@ spec:
         web:
           fetch:
             enabled: true
-#          search:
-#            provider: searxng
+          search:
+            provider: searxng
       plugins:
         bundledDiscovery: allowlist
         enabled: true
@@ -531,7 +539,7 @@ spec:
           - "groq"
           - "memory-core"
           - "ollama"
-#          - "searxng"
+          - "searxng"
           - "workboard"
         entries:
 #          diagnostics-otel:
@@ -555,3 +563,5 @@ spec:
           toolhive:
             url: "http://vmcp-mcp-gateway-internal.ai:4483/mcp"
             transport: "streamable-http"
+            headers:
+              Accept: "application/json, text/event-stream"
