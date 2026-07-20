@@ -6,6 +6,13 @@ metadata:
   name: cortana
   namespace: ai
 spec:
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: AI
+    gethomepage.dev/name: OpenClaw Cortana
+    gethomepage.dev/href: https://cortana.davidstewen.com
+    gethomepage.dev/icon: sh-openclaw.png
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=cortana
   backup:
     schedule: "0 4 * * *"     # Daily at 4 AM UTC
     historyLimit: 5            # Successful job runs to retain (default: 3)
