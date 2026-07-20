@@ -12,7 +12,7 @@ metadata:
     gethomepage.dev/name: OpenClaw Cortana
     gethomepage.dev/href: https://cortana.davidstewen.com
     gethomepage.dev/icon: sh-openclaw.png
-    gethomepage.dev/pod-selector: app.kubernetes.io/name=cortana
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=openclaw
 spec:
   hostnames:
     - cortana.davidstewen.com
