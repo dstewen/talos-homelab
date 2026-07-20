@@ -44,6 +44,13 @@ spec:
     route:
       app:
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: "MeshCentral"
+          gethomepage.dev/group: Network
+          gethomepage.dev/name: MeshCentral
+          gethomepage.dev/href: https://mesh2.davidstewen.com
+          gethomepage.dev/icon: sh-meshcentral.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/instance=meshcentral
           hajimari.io/enable: "true"
           hajimari.io/appName: "MeshCentral"
           hajimari.io/info: "Intel-vPro"

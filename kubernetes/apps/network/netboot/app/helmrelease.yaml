@@ -64,6 +64,13 @@ spec:
     route:
       app:
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: "Netboot.xyz"
+          gethomepage.dev/group: Network
+          gethomepage.dev/name: Netboot.xyz
+          gethomepage.dev/href: https://netboot.davidstewen.com
+          gethomepage.dev/icon: sh-netboot-xyz.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/instance=netboot
           hajimari.io/enable: "true"
           hajimari.io/appName: "Netboot.xyz"
           hajimari.io/info: "Network boot system"
