@@ -62,10 +62,17 @@ spec:
             port: *port
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Selfhosted
+          gethomepage.dev/name: Roundcube
+          gethomepage.dev/href: https://webmail.davidstewen.com
+          gethomepage.dev/icon: sh-roundcube.png
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=roundcube
         hostnames:
           - webmail.davidstewen.com
         parentRefs:
-          - name: envoy-cloudflare
+          - name: envoy-external
             namespace: network
     persistence:
       data:
