@@ -5,6 +5,14 @@ kind: HTTPRoute
 metadata:
   name: openclaw
   namespace: ai
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: "OpenClaw Cortana AI Instance"
+    gethomepage.dev/group: AI
+    gethomepage.dev/name: OpenClaw Cortana
+    gethomepage.dev/href: https://cortana.davidstewen.com
+    gethomepage.dev/icon: sh-openclaw.png
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=cortana
 spec:
   hostnames:
     - cortana.davidstewen.com
