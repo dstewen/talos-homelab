@@ -12,6 +12,8 @@ spec:
   components:
     - ../../../../components/nfs-scaler
   dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
     - name: volsync
       namespace: volsync
   interval: 1h
