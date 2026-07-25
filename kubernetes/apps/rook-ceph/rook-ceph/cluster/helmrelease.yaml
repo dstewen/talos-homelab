@@ -51,6 +51,13 @@ spec:
                     - key: node-role.kubernetes.io/control-plane
                       operator: Exists
         mon: *placement
+      resources:
+        mgr:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            memory: 4Gi
       storage:
         useAllNodes: false
         useAllDevices: false
