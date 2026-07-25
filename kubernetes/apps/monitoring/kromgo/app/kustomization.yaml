@@ -5,9 +5,3 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
-configMapGenerator:
-  - name: karma-configmap
-    files:
-      - ./config/config.yaml
-generatorOptions:
-  disableNameSuffixHash: true
