@@ -35,7 +35,7 @@ spec:
       datadir: /var/www/data
       extraEnv:
         - name: REDIS_HOST
-          value: dragonfly.database.svc.cluster.local.
+          value: "{{ .Release.Name }}-dragonfly"
         - name: REDIS_HOST_PORT
           value: "6379"
         - name: OIDC_CLIENT_ID
