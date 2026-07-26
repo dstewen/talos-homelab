@@ -47,6 +47,12 @@ kind: CiliumBGPPeerConfig
 metadata:
   name: l3-bgp-peer-config
 spec:
+  timers:
+    holdTimeSeconds: 90       # How long to wait before assuming router is dead
+    keepAliveTimeSeconds: 30  # How often to send "I'm still here" messages
+  gracefulRestart:
+    enabled: true             # Don't drop connections during Cilium restarts
+    restartTimeSeconds: 120
   families:
     - afi: ipv4
       safi: unicast
