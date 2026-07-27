@@ -9,6 +9,7 @@ spec:
   targetNamespace: ai
   components:
     - ../../../../components/gpu
+    - ../../../../components/igpu-spread
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
