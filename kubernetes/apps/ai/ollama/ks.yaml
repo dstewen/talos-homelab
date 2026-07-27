@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gpu
+    - ../../../../components/igpu-spread
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets

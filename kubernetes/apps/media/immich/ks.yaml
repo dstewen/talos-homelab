@@ -13,6 +13,7 @@ spec:
   components:
     - ../../../../components/dragonfly
     - ../../../../components/gpu
+    - ../../../../components/igpu-spread
   dependsOn:
     - name: cloudnative-pg-cluster18-vector
       namespace: database
@@ -57,6 +58,7 @@ spec:
       namespace: kube-system
   components:
     - ../../../../components/gpu
+    - ../../../../components/igpu-spread
   path: ./kubernetes/apps/media/immich/machine-learning
   prune: true
   sourceRef:
@@ -88,6 +90,7 @@ spec:
       namespace: kube-system
   components:
     - ../../../../components/gpu
+    - ../../../../components/igpu-spread
   path: ./kubernetes/apps/media/immich/microservices
   prune: true
   sourceRef:

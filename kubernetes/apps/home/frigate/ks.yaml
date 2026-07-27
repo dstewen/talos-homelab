@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gpu
+    - ../../../../components/igpu-spread
     - ../../../../components/volsync
   dependsOn:
     - name: mosquitto
