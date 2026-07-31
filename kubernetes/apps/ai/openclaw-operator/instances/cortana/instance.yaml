@@ -229,7 +229,7 @@ spec:
         providers:
 
           ollama-rig:
-            baseUrl: "http://192.168.10.80:11434"
+            baseUrl: "http://192.168.10.87:11434"
             apiKey: "not-needed"
             api: "ollama"
             timeoutSeconds: 900
