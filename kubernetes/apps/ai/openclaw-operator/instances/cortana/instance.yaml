@@ -471,7 +471,7 @@ spec:
                 params:
                   num_ctx: 131072
               - id: "gemma4:12b-it-qat"
-                name: "Gemma 4 12B IT QAT (Ollama Rig)"
+                name: "Gemma 4 12B IT QAT (Ollama Talos Server)"
                 reasoning: false
                 input:
                   - text
