@@ -10,6 +10,10 @@ spec:
     name: tuppr
   interval: 30m
   values:
+    # https://github.com/home-operations/tuppr/blob/main/charts/tuppr/values.yaml
+    env:
+      - name: TZ
+        value: Australia/Melbourne
     replicaCount: 2
     monitoring:
       serviceMonitor:
@@ -26,3 +30,7 @@ spec:
       enabled: true
       secretName: tuppr-secret
       secretKey: url
+    silences:
+      enabled: true
+      alertmanager:
+        address: http://alertmanager.monitoring.svc.cluster.local:9093
