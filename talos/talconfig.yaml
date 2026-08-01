@@ -103,6 +103,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Controller Node MS1"
   - hostname: "ms2"
     ipAddress: "10.200.15.52"
     installDiskSelector:
@@ -187,6 +195,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Controller Node MS2"
   - hostname: "ms3"
     ipAddress: "10.200.15.53"
     installDiskSelector:
@@ -271,7 +287,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
-
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Controller Node MS3"
 # Intel NUC workers
   - hostname: "nuc1"
     ipAddress: "10.200.15.61"
@@ -329,7 +352,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
-
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node NUC1"
   - hostname: "nuc2"
     ipAddress: "10.200.15.62"
     installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH81000E09512D"
@@ -386,7 +416,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
-
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node NUC2"
 # CM4 Blades - with EMMC storage formatted as FAT32 and erased - using NVME for OS drive
   - hostname: "blade2"
     ipAddress: "10.200.15.32"
@@ -444,6 +481,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade2"
   - hostname: "blade4"
     ipAddress: "10.200.15.34"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_22061X806791"
@@ -556,6 +601,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade5"
   - hostname: "blade6"
     ipAddress: "10.200.15.36"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800731"
@@ -612,6 +665,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade6"
   - hostname: "blade7"
     ipAddress: "10.200.15.37"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800801"
@@ -668,6 +729,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade7"
   - hostname: "blade8"
     ipAddress: "10.200.15.38"
     installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
@@ -724,6 +793,14 @@ nodes:
               MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
               SHUTDOWNCMD "/sbin/poweroff"
             mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade8"
 # Global patches
 patches:
 #  - "@./patches/global/machine-files.yaml"
