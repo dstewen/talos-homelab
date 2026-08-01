@@ -11,3 +11,18 @@ spec:
   interval: 30m
   values:
     replicaCount: 2
+    monitoring:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+    notification:
+      enabled: true
+      secretName: tuppr-secret
+      secretKey: url
