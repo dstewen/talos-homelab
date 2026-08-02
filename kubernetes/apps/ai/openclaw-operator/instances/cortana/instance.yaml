@@ -38,6 +38,8 @@ spec:
               protocol: TCP
             - port: 443
               protocol: TCP
+            - port: 4318
+              protocol: TCP
             - port: 4483 # Toolhive MCP gateway
               protocol: TCP
             - port: 5000 # Frigate
@@ -46,15 +48,17 @@ spec:
               protocol: TCP
             - port: 6969 # Whisparr
               protocol: TCP
-            - port: 8686 # Lidarr
-              protocol: TCP
-            - port: 11434 # Ollama
-              protocol: TCP
             - port: 8000 # Paperless-ng
               protocol: TCP
             - port: 8080
               protocol: TCP
             - port: 8123 # Home Assistant
+              protocol: TCP
+            - port: 8686 # Lidarr
+              protocol: TCP
+            - port: 9090 # Prometheus Monitoring
+              protocol: TCP
+            - port: 11434 # Ollama
               protocol: TCP
             - port: 50000
               protocol: TCP
