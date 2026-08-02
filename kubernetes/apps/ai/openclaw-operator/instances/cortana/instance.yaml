@@ -172,7 +172,8 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 15s
-        labels: {}
+        labels:
+          release: prometheus
     logging:
       level: info
       format: json
