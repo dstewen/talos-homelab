@@ -576,7 +576,7 @@ spec:
             enabled: true
 
       diagnostics:
-        enabled: true,
+        enabled: true
         otel:
           enabled: true
 #          endpoint: "http://otel-collector:4318"
