@@ -173,7 +173,7 @@ spec:
         enabled: true
         interval: 15s
         labels:
-          release: prometheus
+          release: kube-prometheus-stack
     logging:
       level: info
       format: json
