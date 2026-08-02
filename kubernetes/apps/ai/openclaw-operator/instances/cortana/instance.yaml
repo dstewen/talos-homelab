@@ -558,8 +558,8 @@ spec:
           - "searxng"
           - "workboard"
         entries:
-#          diagnostics-otel:
-#            enabled: true
+          diagnostics-otel:
+            enabled: true
           elevenlabs:
             enabled: true
 #          searxng:
@@ -574,6 +574,21 @@ spec:
                 enabled: true
           workboard:
             enabled: true
+
+      diagnostics:
+        enabled: true,
+        otel:
+          enabled: true
+#          endpoint: "http://otel-collector:4318"
+          protocol: "http/protobuf"
+#          serviceName: "openclaw-gateway"
+          traces: true
+          metrics: true
+          logs: true
+          sampleRate: 0.2
+          flushIntervalMs: 60000
+
+
       mcp:
         servers:
           toolhive:
