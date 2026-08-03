@@ -172,7 +172,6 @@ spec:
   observability:
     metrics:
       enabled: true
-      port: 9090
       serviceMonitor:
         enabled: true
         interval: 15s
