@@ -583,7 +583,10 @@ spec:
         enabled: true
         otel:
           enabled: true
-          endpoint: "http://localhost:4318"
+          endpoint: "http://otel-collector:4318"
+          logsEndpoint: "http://otel-collector:4318/v1/logs"
+          metricsEndpoint: "http://otel-collector:4318/v1/metrics"
+#          tracesEndpoint: "http://otel-collector:4318/v1/traces"
           protocol: "http/protobuf"
           serviceName: "openclaw-gateway"
           traces: true
