@@ -38,7 +38,7 @@ spec:
               protocol: TCP
             - port: 443
               protocol: TCP
-            - port: 4318
+            - port: 4318 # OpenTelemetry Collector
               protocol: TCP
             - port: 4483 # Toolhive MCP gateway
               protocol: TCP
@@ -583,9 +583,9 @@ spec:
         enabled: true
         otel:
           enabled: true
-#          endpoint: "http://otel-collector:4318"
+          endpoint: "http://localhost:4318"
           protocol: "http/protobuf"
-#          serviceName: "openclaw-gateway"
+          serviceName: "openclaw-gateway"
           traces: true
           metrics: true
           logs: true
