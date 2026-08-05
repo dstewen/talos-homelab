@@ -7,7 +7,7 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 [tools]
 "python" = "3.14.6" # required:template
 uv = "0.12.1"
-pipx = "1.16.5"
+pipx = "1.16.6"
 "pipx:makejinja" = "2.8.2" # required:template
 "aqua:budimanjojo/talhelper" = "3.1.15"
 "aqua:cilium/cilium-cli" = "0.19.6"
@@ -24,5 +24,5 @@ pipx = "1.16.5"
 "aqua:kubernetes-sigs/kustomize" = "5.8.1"
 "aqua:kubernetes/kubernetes/kubectl" = "1.36.2"
 "aqua:mikefarah/yq" = "4.53.3"
-"aqua:siderolabs/talos" = "1.13.8"
+"aqua:siderolabs/talos" = "1.13.7"
 "aqua:yannh/kubeconform" = "0.8.0"
