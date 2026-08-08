@@ -21,7 +21,7 @@ resources:
 #  - ./netdata/ks.yaml
 #  - ./node-problem-detector/ks.yaml
   - ./nut-exporter/ks.yaml
-#  - ./opentelemetry-collector/ks.yaml
+#  - ./otel-collector/ks.yaml
   - ./opnsense-exporter/ks.yaml
   - ./patchmon/ks.yaml
 #  - ./pihole-exporter/ks.yaml
@@ -32,4 +32,5 @@ resources:
   - ./snmp-exporter/ks.yaml
 #  - ./snmp-generator/ks.yaml
   - ./speedtest-exporter/ks.yaml
+#  - ./tempo/ks.yaml
   - ./unpoller/ks.yaml
