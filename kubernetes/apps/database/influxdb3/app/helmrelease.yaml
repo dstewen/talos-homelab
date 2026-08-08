@@ -42,7 +42,7 @@ spec:
               # `home` = free at-home tier: no expiry, 2-CPU limit,
               # activates via verification email to the wired
               # INFLUXDB3_ENTERPRISE_LICENSE_EMAIL, then persists the
-#              INFLUXDB3_LICENSE_EMAIL: "{{ .INFLUXDB3_ENTERPRISE_LICENSE_EMAIL }}"
+              INFLUXDB3_LICENSE_EMAIL: "{{ .INFLUXDB3_ENTERPRISE_LICENSE_EMAIL }}"
               # license into object storage.
 #              INFLUXDB3_ENTERPRISE_LICENSE_TYPE: home
             envFrom:
