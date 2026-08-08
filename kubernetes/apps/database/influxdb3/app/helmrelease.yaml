@@ -31,6 +31,7 @@ spec:
               - --aws-endpoint=http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc:80
               - --aws-default-region=us-east-1
               - --aws-allow-http
+              - --license-type=trial
               # Auth stays ON for data; exempt the health endpoint so the k8s probe
               # (which sends no token) doesn't get rejected with MissingToken.
               - --disable-authz=health
