@@ -12,7 +12,6 @@ resources:
   - ./it-tools/ks.yaml
   - ./n8n/ks.yaml
 #  - ./nextcloud/ks.yaml
-  - ./roundcube/ks.yaml
   - ./searxng/ks.yaml
   - ./webhook/ks.yaml
   - ./wiki/ks.yaml
