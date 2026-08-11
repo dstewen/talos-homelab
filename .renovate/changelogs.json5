@@ -11,5 +11,10 @@
       matchPackageNames: ["/spegel/"],
       changelogUrl: "https://github.com/spegel-org/spegel/blob/main/CHANGELOG.md",
     },
+    {
+      description: "Changelog URL for Code-Server",
+      matchPackageNames: ["/code-server/"],
+      changelogUrl: "https://github.com/coder/code-server/blob/main/CHANGELOG.md",
+    },
   ],
 }
