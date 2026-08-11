@@ -1,0 +1,145 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+# Required variables : APP, GROUP, SUBDOMAIN, DESCRIPTION, REDIRECT_PATH
+# Optional variables : DISPLAY_NAME (defaults to APP if not provided)
+#                      OIDC_ACCESS_GROUP - an existing group bound for access in
+#                        ADDITION to bp-${APP}-users (e.g. media-users). The app uses
+#                        policyEngineMode: any, so the bindings OR together. Unset =
+#                        no extra binding (see the !Condition guard in blueprint-patch).
+#                      OIDC_SIGNING_KEY (defaults to authentik-cert-tls, RSA/RS256).
+#                        Set to authentik-cert-ec for apps that only accept ES256 --
+#                        the key type IS the algorithm, there is no alg field.
+#                      OIDC_EXTRA_SCOPE (defaults to openid, i.e. a no-op duplicate).
+#                        Set to offline_access for clients that must refresh their own
+#                        token instead of re-authenticating in a browser (ha-mcp). Only
+#                        accepts the stock "authentik default OAuth Mapping: OpenID
+#                        '<x>'" scope words - see the note on the scopes list below.
+#                      OIDC_SECRET_NAMESPACE (defaults to security - set to app namespace for direct secret access)
+#                      OIDC_INTERNAL_SUBDOMAIN (defaults to SUBDOMAIN) - registers a
+#                        SECOND redirect URI at
+#                        https://${OIDC_INTERNAL_SUBDOMAIN}.${SECRET_DOMAIN}${REDIRECT_PATH}.
+#                        Set it when the app is reachable on a host different from
+#                        SUBDOMAIN (e.g. files.* external vs filebrowser.* internal).
+#                        Default duplicates the primary URI -> Authentik dedupes it,
+#                        so single-host apps are unaffected.
+# REDIRECT_PATH: The callback path for OIDC (e.g., /accounts/oidc/authentik/login/callback/)
+# Creates blueprint-managed resources with naming convention:
+#   - Provider: bp-${APP}-oidc
+#   - Application: ${DISPLAY_NAME} (display name) / ${APP} (slug)
+#   - Group: bp-${APP}-users
+#   - Secret: ${APP}-oidc-authentik-application (in OIDC_SECRET_NAMESPACE)
+#
+# The provider emits only the openid/email/profile claims (no `groups`). Apps whose
+# native config gates admin/access by group therefore can't match on this provider
+# as-is; add a `groups` scope mapping via a per-app blueprint patch (see the
+# grant_types patch pattern in blueprint-patch.yaml) if you need it. The wrenix
+# chart's static scopes list can't take colon/apostrophe-laden envsubst defaults,
+# so that extra belongs in a patch, not a component variable.
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ${APP}-oidc
+  labels:
+    homelab/auth-component: "true"
+spec:
+  releaseName: ${APP}-oidc
+  targetNamespace: ${OIDC_SECRET_NAMESPACE:=security}
+  chartRef:
+    kind: OCIRepository
+    name: authentik-application
+    namespace: flux-system
+  interval: 1h
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    # From https://codeberg.org/wrenix/helm-charts/src/branch/main/authentik-application/values.yaml
+    blueprint:
+      authentik:
+        domain: "https://sso.${SECRET_DOMAIN}"
+      provider:
+        enabled: true
+        name: "bp-${APP}-oidc"  # bp- prefix for blueprint-managed providers
+        type: "oidc"
+        oidc:
+          clientType: "confidential"
+          # clientID and clientSecret are auto-generated and stored in ${APP}-oidc-authentik-application secret
+          redirectURL:
+          # Primary hostname (SUBDOMAIN). Also the launch URL.
+          - "https://${SUBDOMAIN}.${SECRET_DOMAIN}${REDIRECT_PATH}"
+          # Second redirect URI for apps reachable on a DIFFERENT host than
+          # SUBDOMAIN -- e.g. exposed on both gateways where the internal route
+          # uses a different hostname (files.* external vs filebrowser.* internal).
+          # Filebrowser derives its OIDC callback from the request origin, so
+          # without the internal host registered, internal logins fail with
+          # redirect_uri mismatch. Set OIDC_INTERNAL_SUBDOMAIN to that other host's
+          # subdomain to register it. Defaults to SUBDOMAIN, making this an exact
+          # duplicate of the line above -> Authentik dedupes it (redirect_uris is a
+          # set), so apps that don't set it are completely unaffected.
+          - "https://${OIDC_INTERNAL_SUBDOMAIN:=${SUBDOMAIN}}.${SECRET_DOMAIN}${REDIRECT_PATH}"
+          tokenDuration: "minutes=5"
+          # NAME of a CertificateKeyPair inside Authentik, not a k8s secret reference.
+          # The old value ("namespace_security.secret_authentik-cert-tls.tls") matched
+          # nothing, the chart's !Find resolved to None, and Authentik silently fell back
+          # to HS256 -- unnoticed until hass-oidc-auth, which checks the algorithm.
+          #
+          # These names come from the /certs/* mounts on the authentik HelmRelease;
+          # discovery names each key pair after its directory.
+          #
+          # A provider has one signing key and no algorithm field -- authentik derives
+          # the alg from the key type. Default authentik-cert-tls is RSA -> RS256; set
+          # OIDC_SIGNING_KEY to authentik-cert-ec (P-256) for apps that only accept
+          # ES256. Both are cert-manager Certificates, so both auto-renew.
+          signingKey: "${OIDC_SIGNING_KEY:=authentik-cert-tls}"
+          scopes:
+            - name: "authentik default OAuth Mapping: OpenID 'openid'"
+            - name: "authentik default OAuth Mapping: OpenID 'email'"
+            - name: "authentik default OAuth Mapping: OpenID 'profile'"
+            # Opt-in fourth scope, set OIDC_EXTRA_SCOPE=offline_access to make
+            # Authentik issue a REFRESH token. Needed by clients that cannot silently
+            # re-authenticate: with access_token_validity hardcoded to minutes=5 below,
+            # ha-mcp died every 5 minutes with "requires re-authorization (token
+            # expired)". grant_types already carries refresh_token (blueprint-patch),
+            # so the grant was enabled but the scope that triggers ISSUING the token
+            # was missing. Browser apps never need it -- they re-auth invisibly against
+            # the Authentik session cookie -- which is why this is not on by default.
+            #
+            # The variable is INSIDE the string on purpose. Flux envsubst defaults
+            # cannot carry the colon and apostrophes in the mapping's display name, so
+            # only the bare scope word is substituted. Consequence: this only reaches
+            # mappings named "authentik default OAuth Mapping: OpenID '<x>'" -- the
+            # four stock OIDC ones. A custom mapping still needs a blueprint patch.
+            #
+            # The default duplicates 'openid' above rather than being empty: an empty
+            # name makes the chart's !Find resolve to None. property_mappings is an M2M
+            # set, so the duplicate collapses and non-opted-in apps are unaffected --
+            # the same trick OIDC_INTERNAL_SUBDOMAIN uses for redirect URIs.
+            #
+            # NOT a per-app blueprint patch: the chart's blueprint sets
+            # property_mappings itself, so a second blueprint writing that same field
+            # would fight it every reconcile with no guaranteed ordering, flipping the
+            # scope in and out.
+            - name: "authentik default OAuth Mapping: OpenID '${OIDC_EXTRA_SCOPE:=openid}'"
+      application:
+        name: "${DISPLAY_NAME:=${APP}}"  # Uses DISPLAY_NAME if provided, otherwise APP
+        slug: "${APP}"  # Keep slug simple for compatibility
+        group: "${GROUP}"
+        launchURL: "https://${SUBDOMAIN}.${SECRET_DOMAIN}"
+        openInNewTab: false
+        icon: "${ICON_URL:-}"
+        description: "${DESCRIPTION}"
+        policyEngineMode: "any"
+      # Empty ON PURPOSE -- groups and their application bindings are created by
+      # blueprint-patch.yaml instead. The chart renders each binding with
+      # `identifiers: {pk: <$group.bindID>}` and there is no way to feed it a stable
+      # bindID from here, so the identifier came out empty: it matched nothing, every
+      # reconcile appended another binding (119 redundant estate-wide), and the second
+      # entry displaced the first so bp-${APP}-users was never actually bound.
+      # An empty list (not null) is what suppresses them -- the template falls back to
+      # a default "app: <slug>" group when groups is not a slice.
+      groups: []
