@@ -533,20 +533,6 @@ spec:
                 maxTokens: 8192
                 params:
                   num_ctx: 262144
-              - id: "nemotron-3.5-lightning:30b"
-                name: "Nemotron 3.5 Lightning 30B (Ollama Talos Server)"
-                reasoning: false
-                input:
-                  - text
-                cost:
-                  input: 0
-                  output: 0
-                  cacheRead: 0
-                  cacheWrite: 0
-                contextWindow: 262144
-                maxTokens: 8192
-                params:
-                  num_ctx: 262144
       messages:
         groupChat:
           visibleReplies: "automatic"
