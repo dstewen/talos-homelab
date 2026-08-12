@@ -161,6 +161,7 @@ spec:
               PIP_BREAK_SYSTEM_PACKAGES: "1"
               # Enable SearXNG plugin
               SEARXNG_BASE_URL: http://searxng.selfhosted.svc.cluster.local:8080
+              SEARXNG_URL: http://searxng.selfhosted.svc.cluster.local:8080
               SEARXNG_FORMAT: json
               TERM: xterm-256color
               TZ: "${TIMEZONE}"
