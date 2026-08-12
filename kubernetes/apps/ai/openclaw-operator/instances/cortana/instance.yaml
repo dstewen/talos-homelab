@@ -107,6 +107,8 @@ spec:
       value: "http://radarr.media.svc.cluster.local"
     - name: RADARR_UHD_URL
       value: "http://radarr-uhd.media.svc.cluster.local"
+    - name: SEARXNG_URL
+      value: "http://searxng.selfhosted.svc.cluster.local:8080"
     - name: SEERR_URL
       value: "http://requests.media.svc.cluster.local"
     - name: SEERR_USERS
