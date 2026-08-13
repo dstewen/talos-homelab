@@ -34,10 +34,6 @@ spec:
           secretKeyRef:
             name: cluster-secrets
             key: SVC_OTEL_COLLECTOR_ADDR
-      - name: MY_POD_IP
-        valueFrom:
-          fieldRef:
-            fieldPath: status.podIP
     # Disable receiver ports the chart enables by default but we don't use.
     ports:
       jaeger-compact: { enabled: false }
@@ -67,7 +63,7 @@ spec:
         # NOTE: $$ escapes Flux's ${VAR} postBuild substitution so the collector's
         # own ${env:...} runtime expansion survives. Flux renders $$ -> $.
         health_check:
-          endpoint: $${env:MY_POD_IP}:13133
+          endpoint: "10.200.15.248:13133"
         bearertokenauth:
           scheme: Bearer
           token: $${env:OTEL_BEARER_TOKEN}
