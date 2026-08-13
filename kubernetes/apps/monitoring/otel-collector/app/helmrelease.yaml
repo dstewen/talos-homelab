@@ -34,6 +34,11 @@ spec:
           secretKeyRef:
             name: cluster-secrets
             key: SVC_OTEL_COLLECTOR_ADDR
+      - name: SECRET_DOMAIN
+        valueFrom:
+          secretKeyRef:
+            name: cluster-secrets
+            key: SECRET_DOMAIN
     # Disable receiver ports the chart enables by default but we don't use.
     ports:
       jaeger-compact: { enabled: false }
