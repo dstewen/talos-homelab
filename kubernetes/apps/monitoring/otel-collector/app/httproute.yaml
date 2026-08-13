@@ -12,7 +12,7 @@ spec:
       namespace: network
       sectionName: https
   hostnames:
-    - "otel.${SECRET_DOMAIN}"
+    - "otel.davidstewen.com"
   rules:
     # OTLP/HTTP (:4318) only off-LAN — no gRPC externally.
     # Protected at the edge by Cloudflare Access (service token); the collector
