@@ -29,6 +29,11 @@ spec:
           secretKeyRef:
             name: otel-collector-secret
             key: INFLUXDB3_TOKEN
+      - name: SVC_OTEL_COLLECTOR_ADDR
+        valueFrom:
+          secretKeyRef:
+            name: cluster-secrets
+            key: SVC_OTEL_COLLECTOR_ADDR
     # Disable receiver ports the chart enables by default but we don't use.
     ports:
       jaeger-compact: { enabled: false }
