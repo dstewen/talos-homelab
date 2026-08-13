@@ -63,7 +63,7 @@ spec:
         # NOTE: $$ escapes Flux's ${VAR} postBuild substitution so the collector's
         # own ${env:...} runtime expansion survives. Flux renders $$ -> $.
         health_check:
-          endpoint: "10.200.15.248:13133"
+          endpoint: 0.0.0.0:13133
         bearertokenauth:
           scheme: Bearer
           token: $${env:OTEL_BEARER_TOKEN}
