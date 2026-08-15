@@ -22,7 +22,7 @@ resources:
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
-  - ./openclaw-operator/ks.yaml
+#  - ./openclaw-operator/ks.yaml
   - ./openclaw-xunholy/ks.yaml
 #  - ./paperless-ai/ks.yaml
   - ./plex-mcp/ks.yaml
