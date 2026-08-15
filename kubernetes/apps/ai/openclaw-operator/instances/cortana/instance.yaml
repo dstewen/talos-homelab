@@ -6,7 +6,6 @@ metadata:
   name: cortana
   namespace: ai
 spec:
-  restoreFrom: "backups/ai/cortana/2026-08-12T10:30:00Z"
   backup:
     schedule: "0 4 * * *"     # Daily at 4 AM UTC
     historyLimit: 5            # Successful job runs to retain (default: 3)
