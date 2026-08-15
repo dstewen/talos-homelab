@@ -599,9 +599,9 @@ spec:
         otel:
           enabled: true
           endpoint: "http://otel-collector.monitoring.svc.cluster.local:4318"
-#          logsEndpoint: "http://otel-collector:4318/v1/logs"
-#          metricsEndpoint: "http://otel-collector:4318/v1/metrics"
-#          tracesEndpoint: "http://otel-collector:4318/v1/traces"
+#          logsEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/logs"
+          metricsEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/metrics"
+#          tracesEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/traces"
           protocol: "http/protobuf"
           serviceName: "openclaw-gateway"
           traces: false
