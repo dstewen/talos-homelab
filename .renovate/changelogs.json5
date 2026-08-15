@@ -21,5 +21,10 @@
       matchPackageNames: ["/n8n/"],
       changelogUrl: "https://github.com/n8n-io/n8n/blob/master/CHANGELOG.md",
     },
+    {
+      description: "Enable fetchChangeLogs for Toolhive Operator",
+      matchSourceUrls: ["https://github.com/stacklok/toolhive/"],
+      fetchChangeLogs: "pr",
+    },
   ],
 }
