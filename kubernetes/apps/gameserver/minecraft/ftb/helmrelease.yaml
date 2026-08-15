@@ -85,7 +85,7 @@ spec:
       type: "FTBA"
       forceReDownload: true
       ftbModpackId: "119"
-      ftbModpackVersionId: "12252"
+      ftbModpackVersionId: "100051"
       difficulty: normal
       whitelist: "dneck77"
       ops: "dneck77"
