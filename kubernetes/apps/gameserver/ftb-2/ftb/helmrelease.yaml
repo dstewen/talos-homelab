@@ -58,7 +58,7 @@ spec:
       readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
     serviceAnnotations:
-      lbipam.cilium.io/ips: "10.200.15.230"
+      lbipam.cilium.io/ips: "10.200.15.249"
 #      mc-router.itzg.me/externalServerName: "mcsv.${SECRET_DOMAIN}"
     livenessProbe:
       command:
@@ -95,7 +95,7 @@ spec:
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
       memory: 12288M
       serviceType: LoadBalancer
-      loadBalancerIP: "10.200.15.230"
+      loadBalancerIP: "10.200.15.249"
 #      servicePort: 25565
       motd: "TurtleTest FTB:R"
       externalTrafficPolicy: Cluster
