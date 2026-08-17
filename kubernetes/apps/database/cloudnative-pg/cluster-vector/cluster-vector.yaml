@@ -9,7 +9,7 @@ metadata:
 spec:
   instances: 3
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql versioning=docker
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.1-standard-trixie@sha256:ec0c0d60f9462b49f4c6f2403fd680ac43a063fc793f5d570a21a3cea8e627b5
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
@@ -44,7 +44,7 @@ spec:
       isWALArchiver: true
       parameters:
         barmanObjectName: minio-pg18-vector
-        serverName: postgres-vector-v3
+        serverName: postgres-vector-v4
   bootstrap:
     recovery:
       source: source
@@ -56,4 +56,4 @@ spec:
         name: barman-cloud.cloudnative-pg.io
         parameters:
           barmanObjectName: minio-pg18-vector
-          serverName: postgres-vector-v2
+          serverName: postgres-vector-v3
