@@ -16,8 +16,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
-    namespace: default
+    name: akvorado
   install:
     remediation:
       retries: 3
@@ -239,7 +238,7 @@ spec:
     route:
       console:
         hostnames:
-          - "akvorado.${CLUSTER_SUBDOMAIN}.freckle.services"
+          - "akvorado.${SECRET_DOMAIN}"
         parentRefs:
           - name: tailnet
             namespace: gateway-system
