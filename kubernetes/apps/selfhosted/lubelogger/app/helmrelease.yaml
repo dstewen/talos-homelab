@@ -31,9 +31,11 @@ spec:
             env:
               TZ: ${TIMEZONE}
               LC_ALL: en_US.UTF-8
-            envFrom:
-              - secretRef:
-                  name: lubelog-secret
+              POSTGRES_CONNECTION:
+                valueFrom:
+                  secretKeyRef:
+                    name: lubelog-secret
+                    key: POSTGRES_CONNECTION
             probes:
               liveness: &probes
                 enabled: false
