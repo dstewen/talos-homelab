@@ -10,6 +10,7 @@ resources:
   - ./atuin/ks.yaml
   - ./changedetection/ks.yaml
   - ./it-tools/ks.yaml
+  - ./lubelogger/ks.yaml
   - ./n8n/ks.yaml
 #  - ./nextcloud/ks.yaml
   - ./searxng/ks.yaml
