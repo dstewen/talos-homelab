@@ -7,6 +7,6 @@ components:
   - ../../components/sops
 resources:
   # Flux-Kustomizations
-  - ./akvorado/ks.yaml
+#  - ./akvorado/ks.yaml
   - ./clickhouse/ks.yaml
   - ./kafka/ks.yaml
