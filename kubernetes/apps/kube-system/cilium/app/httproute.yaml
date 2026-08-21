@@ -4,9 +4,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: hubble-dashboard
-  namespace: kube-system
-  annotations:
-    internal-dns.alpha.kubernetes.io/target: internal.davidstewen.com
 spec:
   parentRefs:
     - name: envoy-internal
@@ -14,10 +11,6 @@ spec:
       sectionName: https
   hostnames: ["hubble.davidstewen.com"]
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
+    -  backendRefs:
         - name: hubble-ui
           port: 80
