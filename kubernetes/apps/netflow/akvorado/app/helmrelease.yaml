@@ -108,12 +108,12 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: akvorado-maxmind
-                    key: account-id
+                    key: AKVORADO_ACCOUNT_ID
               GEOIPUPDATE_LICENSE_KEY:
                 valueFrom:
                   secretKeyRef:
                     name: akvorado-maxmind
-                    key: license-key
+                    key: AKVORADO_LICENSE_KEY
             securityContext: *containerSecurity
             resources:
               requests:
@@ -240,8 +240,9 @@ spec:
         hostnames:
           - "akvorado.${SECRET_DOMAIN}"
         parentRefs:
-          - name: tailnet
-            namespace: gateway-system
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
         rules:
           - backendRefs:
               - identifier: console
