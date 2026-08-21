@@ -16,7 +16,7 @@ spec:
 
     image:
       repository: quay.io/cilium/hubble
-      tag: v1.19.4
+      tag: v1.16.4
       pullPolicy: IfNotPresent
 
     verdictFilter: DROPPED # Available verdicts: DROPPED, FORWARDED, AUDIT, REDIRECTED, ERROR, TRACED, TRANSLATED, none (to disable filtering)
