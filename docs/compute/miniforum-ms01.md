@@ -10,12 +10,11 @@ and model loading capabilities.
 
 ## Hardware
 
-- **SoC**: NVIDIA GB10 (Grace CPU + Blackwell GPU via C2C interconnect)
 - **CPU**: Intel® Core™ i9-13900H
 - **GPU**: Intel® Iris® Xe Graphics
 - **Memory**: 96GB
 - **Storage**: 500GB NVMe (Talos Boot), WD_BLACK SN770 2TB (Openebs-local), SAMSUNG U.2 1.9TB (Ceph)
-- **NICs**: 2x Mellanox ConnectX-7 QSFP56 (exposed as 4 interfaces via PCIe lane splitting), 1x Realtek RTL8127 10G copper
+- **NICs**: 2x Intel X710 (bonded as bond0) SFP+ DAC cables, 2x Intel 1G copper (only 1 supports vPro)
 
 #### Talos Extensions
 
@@ -38,12 +37,11 @@ The X710 ports have been bonded.
 One of the 2.5Gbps ports is enabled for Intel vPro with the other being unused.
 The vPro ports are disabled by the switch at 192.168.10.3 and can be enabled for emergency vPro access.
 
-### Physical Port 0 — Bond0 via fairy-r02-fsw01
-### Physical Port 1 — Bond0 via fairy-r02-fsw01
+### Physical Port 0 — Bond0 via S3400-48T6SP
+### Physical Port 1 — Bond0 via S3400-48T6SP
 
-Connected via a 400G to 2x200G DAC breakout cable to the GPU fabric switch
-(MikroTik CRS804-4DDQ, fairy-r02-fsw01) for inter-node GPU communication
-(GPUDirect RDMA, tensor/pipeline parallelism).
+Connected via a 10G to 10G DAC cable to the main 48 port switch
+(S3400-48T6SP, home-r01-msw01) for bonded cilium and Talos access
 
 | Interface | Speed | MTU | Status |
 |-----------|-------|-----|--------|
