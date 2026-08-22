@@ -7,5 +7,5 @@ components:
   - ../../components/sops
 resources:
   # Flux-Kustomizations
-  - ./ftb-2/ks.yaml
+#  - ./ftb-2/ks.yaml
   - ./minecraft/ks.yaml
