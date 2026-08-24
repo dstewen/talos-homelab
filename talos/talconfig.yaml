@@ -47,37 +47,45 @@ nodes:
           hardwareAddr: "58:47:ca:77:cf:39"
         ignore: true
         #bond0
+      # Explicit NIC names instead of deviceSelectors: talhelper 3.1.x splits
+      # bond+vlan into modular configs (BondConfig/VLANConfig kinds) when
+      # deviceSelectors is used, and silently drops VIP during that translation.
+      # All three MS-01 hosts have identical X710 NIC naming.
       - interface: bond0
         bond:
-#          mode: 802.3ad
-          mode: active-backup
-          deviceSelectors:
-            - hardwareAddr: "58:47:ca:77:cf:36"
-              driver: i40e
-#          xmitHashPolicy: layer3+4
-#          lacpRate: fast
-#          miimon: 1000
-        dhcp: false
-        addresses:
-          - "10.200.15.51/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          mode: 802.3ad
+          interfaces:
+            - enp2s0f0np0
+            - enp2s0f1np1
+          xmitHashPolicy: layer3+4
+          lacpRate: fast
+          miimon: 100
+          downdelay: 200
+          updelay: 200
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.51/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
-        vip:
-          ip: "10.200.15.254"
+        # VIP is configured via talos/patches/controller/vip.yaml — talhelper
+        # silently drops VIP fields when translating bond+vlan into modular
+        # configs, so we add it post-translation as a controller-only patch.
+#        vip:
+#          ip: "10.200.15.254"
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.51/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.51/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
 #            vip:
 #              ip: 10.200.15.254
           # K3S_Services_VLAN
@@ -139,37 +147,45 @@ nodes:
           hardwareAddr: "58:47:ca:78:f1:35"
         ignore: true
         #bond0
+      # Explicit NIC names instead of deviceSelectors: talhelper 3.1.x splits
+      # bond+vlan into modular configs (BondConfig/VLANConfig kinds) when
+      # deviceSelectors is used, and silently drops VIP during that translation.
+      # All three MS-01 hosts have identical X710 NIC naming.
       - interface: bond0
         bond:
-#          mode: 802.3ad
-          mode: active-backup
-          deviceSelectors:
-            -  hardwareAddr: "58:47:ca:78:f1:32"
-               driver: i40e
-#          xmitHashPolicy: layer3+4
-#          lacpRate: fast
-#          miimon: 1000
-        dhcp: false
-        addresses:
-          - "10.200.15.52/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          mode: 802.3ad
+          interfaces:
+            - enp2s0f0np0
+            - enp2s0f1np1
+          xmitHashPolicy: layer3+4
+          lacpRate: fast
+          miimon: 100
+          downdelay: 200
+          updelay: 200
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.52/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
-        vip:
-          ip: "10.200.15.254"
+        # VIP is configured via talos/patches/controller/vip.yaml — talhelper
+        # silently drops VIP fields when translating bond+vlan into modular
+        # configs, so we add it post-translation as a controller-only patch.
+#        vip:
+#          ip: "10.200.15.254"
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.52/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.52/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
 #            vip:
 #              ip: 10.200.15.254
           # K3S_Services_VLAN
@@ -231,37 +247,45 @@ nodes:
           hardwareAddr: "58:47:ca:78:f8:4d"
         ignore: true
         #bond0
+      # Explicit NIC names instead of deviceSelectors: talhelper 3.1.x splits
+      # bond+vlan into modular configs (BondConfig/VLANConfig kinds) when
+      # deviceSelectors is used, and silently drops VIP during that translation.
+      # All three MS-01 hosts have identical X710 NIC naming.
       - interface: bond0
         bond:
-#          mode: 802.3ad
-          mode: active-backup
-          deviceSelectors:
-            -  hardwareAddr: "58:47:ca:78:f8:4a"
-               driver: i40e
-#          xmitHashPolicy: layer3+4
-#          lacpRate: fast
-#          miimon: 1000
-        dhcp: false
-        addresses:
-          - "10.200.15.53/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+          mode: 802.3ad
+          interfaces:
+            - enp2s0f0np0
+            - enp2s0f1np1
+          xmitHashPolicy: layer3+4
+          lacpRate: fast
+          miimon: 100
+          downdelay: 200
+          updelay: 200
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.53/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
-        vip:
-          ip: "10.200.15.254"
+        # VIP is configured via talos/patches/controller/vip.yaml — talhelper
+        # silently drops VIP fields when translating bond+vlan into modular
+        # configs, so we add it post-translation as a controller-only patch.
+#        vip:
+#          ip: "10.200.15.254"
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.53/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.53/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
 #            vip:
 #              ip: 10.200.15.254
           # K3S_Services_VLAN
@@ -310,25 +334,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "d4:5d:df:1a:27:fe"
-        dhcp: false
-        addresses:
-          - "10.200.15.61/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.61/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.35/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.61/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -374,25 +398,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "d4:5d:df:1a:28:c4"
-        dhcp: false
-        addresses:
-          - "10.200.15.62/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.62/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.35/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.35/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -439,25 +463,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "e4:5f:01:ec:16:54"
-        dhcp: false
-        addresses:
-          - "10.200.15.32/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.32/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.38/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.32/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -503,25 +527,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "e4:5f:01:ec:16:66"
-        dhcp: false
-        addresses:
-          - "10.200.15.34/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.34/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.35/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.34/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -559,25 +583,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "e4:5f:01:ec:16:b4"
-        dhcp: false
-        addresses:
-          - "10.200.15.35/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.35/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.35/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.35/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -623,25 +647,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "e4:5f:01:ec:16:a5"
-        dhcp: false
-        addresses:
-          - "10.200.15.36/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
-        mtu: 1500
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.36/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
+#        mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.36/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.36/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -687,25 +711,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "e4:5f:01:ec:16:9c"
-        dhcp: false
-        addresses:
-          - "10.200.15.37/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.37/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.37/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.37/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -751,25 +775,25 @@ nodes:
           mode: active-backup
           deviceSelectors:
             - hardwareAddr: "e4:5f:01:ec:16:5a"
-        dhcp: false
-        addresses:
-          - "10.200.15.38/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "10.200.15.1"
-            metric: 1
+#        dhcp: false
+#        addresses:
+#          - "10.200.15.38/24"
+#        routes:
+#          - network: "0.0.0.0/0"
+#            gateway: "10.200.15.1"
+#            metric: 1
         mtu: 1500
         vlans:
-#          # HomeLABServers VLAN
-#          - vlanId: 15
-#            dhcp: false
-#            addresses:
-#              - 10.200.15.38/24
-#            mtu: 1500
-#            routes:
-#              - network: 0.0.0.0/0
-#                gateway: 10.200.15.1
-#                metric: 1
+          # HomeLABServers VLAN
+          - vlanId: 15
+            dhcp: false
+            addresses:
+              - 10.200.15.38/24
+            mtu: 1500
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 10.200.15.1
+                metric: 1
           # K3S_Services_VLAN
           - vlanId: 20
             dhcp: false
@@ -993,3 +1017,14 @@ controlPlane:
             - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
             # Coral Edge TPU
             - SUBSYSTEM=="apex", KERNEL=="apex*", GROUP="44", MODE="0660"
+
+    # Enable Talos VIP on bond0.15 for HA control plane
+    - |-
+      machine:
+        network:
+          interfaces:
+            - interface: bond0
+              vlans:
+                - vlanId: 15
+                  vip:
+                    ip: 10.200.15.254
