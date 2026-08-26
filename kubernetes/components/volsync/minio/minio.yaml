@@ -21,7 +21,7 @@ spec:
     - extract:
         key: volsync-minio-template
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
@@ -51,7 +51,7 @@ spec:
       monthly: 2
       yearly: 1
 #---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/volsync.backube/replicationdestination_v1alpha1.json
 #apiVersion: volsync.backube/v1alpha1
 #kind: ReplicationDestination
 #metadata:
