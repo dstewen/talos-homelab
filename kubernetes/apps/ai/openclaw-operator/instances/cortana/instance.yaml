@@ -611,12 +611,11 @@ spec:
             enabled: true
           elevenlabs:
             enabled: true
-#          searxng:
-#            enabled: true
-#            config:
-#              webSearch:
-#                baseUrl: "http://searxng.selfhosted.svc.cluster.local:8080"
-#                language: "en"
+          searxng:
+            config:
+              webSearch:
+                baseUrl: "http://searxng.selfhosted.svc.cluster.local:8080"
+                language: "en"
           memory-core:
             config:
               dreaming:
