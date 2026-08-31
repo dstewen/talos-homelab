@@ -39,6 +39,8 @@ spec:
               protocol: TCP
             - port: 443
               protocol: TCP
+            - port: 4317 # OpenTelemetry Collector grpc
+              protocol: TCP
             - port: 4318 # OpenTelemetry Collector
               protocol: TCP
             - port: 4483 # Toolhive MCP gateway
