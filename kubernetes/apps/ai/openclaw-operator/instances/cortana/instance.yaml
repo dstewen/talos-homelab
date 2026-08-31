@@ -30,6 +30,7 @@ spec:
       enabled: true
       allowedIngressNamespaces:
         - "network"
+        - "monitoring"
       additionalEgress:
         - ports:
             - port: 22
