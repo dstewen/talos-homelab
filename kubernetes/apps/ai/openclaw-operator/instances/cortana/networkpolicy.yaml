@@ -64,3 +64,23 @@ spec:
               protocol: TCP
             - port: "11434"
               protocol: TCP
+---
+# Allow ingress from Prometheus in the monitoring namespace to scrape metrics from the OpenClaw operator.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: openclaw-allow-ingress-prometheus
+  namespace: openclaw
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: openclaw
+      app.kubernetes.io/name: openclaw
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: monitoring
+      toPorts:
+        - ports:
+            - port: "9090"
+              protocol: TCP
