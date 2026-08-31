@@ -11,8 +11,12 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: onepassword-connect
+      namespace: external-secrets
+    - name: valkey
+      namespace: database
   components:
-    - ../../../../components/dragonfly
+    - ../../../../components/valkey
   targetNamespace: *namespace
   commonMetadata:
     labels:
