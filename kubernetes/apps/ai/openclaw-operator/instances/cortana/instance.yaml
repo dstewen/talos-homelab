@@ -628,20 +628,20 @@ spec:
         enabled: true
         otel:
           enabled: true
-          endpoint: "http://otel-collector.monitoring.svc.cluster.local:4318"
-#          logsEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/logs"
+          logsEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/logs"
           metricsEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/metrics"
-#          tracesEndpoint: "http://tempo.monitoring.svc.cluster.local:4318/v1/traces"
+          tracesEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318/v1/traces"
           headers:
             Authorization: "Bearer e57e0698ad3e3c4e443c694c4b7afab47a02d56f604362dbd9fd770628f5e27f"
           protocol: "http/protobuf"
           serviceName: "openclaw-gateway"
-          traces: false
+          traces: true
           metrics: true
-          logs: false
+          logs: true
+          logsExporter: "both"
           sampleRate: 0.2
           flushIntervalMs: 60000
-
+          captureContent: true
 
       mcp:
         servers:
