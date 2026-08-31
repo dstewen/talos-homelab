@@ -88,7 +88,7 @@ spec:
 
     service:
       app:
-#        controller: searxng
+        controller: searxng
 #        type: LoadBalancer
 #        annotations:
 #          lbipam.cilium.io/ips: ${SVC_SEARXNG_ADDR}
