@@ -6,6 +6,19 @@
 ipv4_prefix = 32
 ipv6_prefix = 48
 
+# If the request IP is in trusted_proxies list, the client IP address is
+# extracted from the X-Forwarded-For and X-Real-IP headers. This should be
+# used if SearXNG is behind a reverse proxy or load balancer.
+
+trusted_proxies = [
+  '127.0.0.0/8',
+  '::1',
+  '192.168.0.0/16',
+  # '172.16.0.0/12',
+  '10.0.0.0/8',
+  # 'fd00::/8',
+]
+
 [botdetection.ip_limit]
 
 # To get unlimited access in a local network, by default link-lokal addresses
