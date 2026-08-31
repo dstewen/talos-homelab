@@ -12,10 +12,11 @@ spec:
     - Egress
   egress:
     - to:
-        - podSelector:
+        - namespaceSelector:
             matchLabels:
-              app.kubernetes.io/instance: core-dns
-              app.kubernetes.io/name: core-dns
+              kubernetes.io/metadata.name: kube-system
       ports:
         - port: 53
           protocol: UDP
+        - port: 53
+          protocol: TCP
