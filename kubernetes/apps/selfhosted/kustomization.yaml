@@ -13,6 +13,6 @@ resources:
   - ./lubelogger/ks.yaml
   - ./n8n/ks.yaml
 #  - ./nextcloud/ks.yaml
-  - ./searxng/ks.yaml
+#  - ./searxng/ks.yaml
   - ./webhook/ks.yaml
   - ./wiki/ks.yaml
