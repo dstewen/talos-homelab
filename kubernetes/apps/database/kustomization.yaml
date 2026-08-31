@@ -12,3 +12,4 @@ resources:
   - ./influxdb3/ks.yaml
 #  - ./pgadmin/ks.yaml
   - ./plugin-barman-cloud/ks.yaml
+  - ./valkey/ks.yaml
