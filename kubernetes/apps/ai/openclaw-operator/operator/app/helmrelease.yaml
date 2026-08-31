@@ -37,3 +37,7 @@ spec:
         interval: ""
         scrapeTimeout: ""
         labels: {}
+    otlp:
+      enabled: true
+      endpoint: "otel-collector.monitoring.svc:4317"
+      insecure: true
