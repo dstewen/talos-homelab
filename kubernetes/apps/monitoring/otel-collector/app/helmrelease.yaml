@@ -103,6 +103,19 @@ spec:
           org: telemetry
           bucket: dev-telemetry
           metrics_schema: telegraf-prometheus-v2
+
+# https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/otlphttpexporter/README.md
+        otlp_http/loki:
+          endpoint: http://loki.monitoring.svc.cluster.local:3100/otlp
+          tls:
+            insecure: true
+
+#https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/otlphttpexporter/README.md
+        otlp_http/tempo:
+          endpoint: http://tempo.monitoring.svc.cluster.local:4318
+          tls:
+            insecure: true
+
       service:
         extensions:
           - health_check
@@ -113,5 +126,14 @@ spec:
             processors: [memory_limiter, resource, batch]
             exporters: [influxdb]
           # traces + logs pipelines stubbed — Tempo wired in spec 3, logs stay on Loki.
-          traces: null
-          logs: null
+          traces:
+            receivers: [otlp]
+            processors: [memory_limiter, batch]
+            exporters: [otlp_http/tempo]
+          logs:
+            receivers: [otlp]
+            processors: [memory_limiter, batch]
+            exporters: [otlp_http/loki]
+        telemetry:
+          metrics:
+            level: detailed
