@@ -198,29 +198,6 @@ spec:
 #                memory: "128Mi"
 #                cpu: "100m"
 
-          mission-control:
-            image:
-              repository: ghcr.io/builderz-labs/mission-control
-              tag: latest@sha256:b6a514c332833803223c8cbfcc8a1c77159fcf6527bb8a237a645c8e1b4b46f5
-            env:
-              OPENCLAW_BIN: "/home/node/.local/bin/openclaw"
-              OPENCLAW_GATEWAY_HOST: "${SVC_OPENCLAW2_ADDR}"
-              OPENCLAW_GATEWAY_PORT: "18789"
-              OPENCLAW_STATE_DIR: "/home/node/.openclaw"
-              OPENCLAW_CONFIG_PATH: "/home/node/.openclaw/openclaw.json"
-              NEXT_PUBLIC_GATEWAY_URL: "ws://miso-test.davidstewen.com"
-              NEXT_PUBLIC_GATEWAY_CLIENT_ID: "openclaw-control-ui"
-              MC_ALLOWED_HOSTS: "mission-control-test.davidstewen.com,localhost,127.0.0.1"
-            envFrom:
-              - secretRef:
-                  name: openclaw-test-mission-control
-            resources:
-              requests:
-                cpu: 100m
-                memory: 256Mi
-              limits:
-                memory: 1Gi
-
           chrome:
             image:
               repository: zenika/alpine-chrome
