@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: openclaw-config
+  name: openclaw-test-config
 data:
   openclaw.json: |
     {
