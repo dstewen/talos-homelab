@@ -1703,24 +1703,6 @@ data:
           "enabled": true,
           "allow": ["main", "planner", "ideator", "critic", "surveyor", "coder", "writer", "reviewer", "scout"]
         },
-        "media": {
-          "concurrency": 2,
-          "asyncCompletion": {
-            "directSend": true
-          },
-          "audio": {
-            "enabled": true,
-            "maxBytes": 20971520,
-            "models": [{ "provider": "groq", "model": "whisper-large-v3" }],
-            "scope": {
-              "default": "deny",
-              "rules": [{ "action": "allow", "match": { "chatType": "direct" } }]
-            },
-            "models": [
-              { "provider": "groq", "model": "whisper-large-v3" }
-            ]
-          }
-        },
         "profile": "full",
         "sessions": {
           "visibility": "all"
