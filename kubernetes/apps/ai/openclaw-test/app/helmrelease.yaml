@@ -89,6 +89,10 @@ spec:
                 mkdir -p /home/node/.openclaw/agents/main/sessions
                 mkdir -p /home/node/.openclaw/credentials
                 mkdir -p /home/node/.openclaw/logs
+                rm -f /home/node/.openclaw/openclaw.json
+                cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
+                chown 1000:100 /home/node/.openclaw/openclaw.json
+                chmod 400 /home/node/.openclaw/openclaw.json
                 echo "Init container completed successfully"
             securityContext:
               runAsUser: 0
@@ -279,7 +283,7 @@ spec:
       app:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${SVC_OPENCLAW2_ADDR}
+          lbipam.cilium.io/ips: $${SVC_OPENCLAW2_ADDR}
         externalTrafficPolicy: Cluster
         ports:
           http:
@@ -438,12 +442,12 @@ spec:
         existingClaim: "{{ .Release.Name }}-mission-control"
         globalMounts:
           - path: /app/.data
-      openclaw-test-config:
-        type: secret
+      configmap:
+        type: configMap
         name: "{{ .Release.Name }}-config"
-        defaultMode: 0400
+        defaultMode: 0755
         globalMounts:
-          - path: /home/node/.openclaw/openclaw.json
+          - path: /tmp/openclaw.json
             subPath: openclaw.json
       next-cache:
         type: emptyDir
