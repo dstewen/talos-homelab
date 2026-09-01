@@ -28,26 +28,12 @@ data:
       "agents": {
         "defaults": {
           "compaction": {
-            "reserveTokensFloor": 24000,
-            "reserveTokens": 2000,
             "keepRecentTokens": 4000,
             "notifyUser": true,
             "memoryFlush": {
               "enabled": true,
-              "softThresholdTokens": 4000,
-              "systemPrompt": "Session nearing compaction. Store durable memories now.",
-              "prompt": "Write any lasting notes to memory/YYYY-MM-DD.md; reply with NO_REPLY if nothing to store."
+              "softThresholdTokens": 4000
             }
-          },
-          "memorySearch": {
-            "enabled": true,
-            "provider": "ollama",
-            "model": "nomic-embed-text",
-            "remote": {
-              "baseUrl": "http://ollama.ai.svc.cluster.local:11434",
-              "apiKey": "ollama-local"
-            },
-            "sources": ["memory"]
           },
           "model": {
             "primary": "google/gemini-3.1-flash-lite-preview",
@@ -98,10 +84,7 @@ data:
           "timeoutSeconds": 900,
           "contextPruning": {
             "mode": "cache-ttl",
-            "ttl": "5m",
-            "keepLastAssistants": 3,
-            "softTrimRatio": 0.3,
-            "hardClearRatio": 0.5
+            "ttl": "5m"
           }
         },
         "list": [
@@ -1684,7 +1667,6 @@ data:
           "mode": "idle",
           "idleMinutes": 1440
         },
-        "agentToAgent": { "maxPingPongTurns": 5 },
         "maintenance": {
           "mode": "enforce",
           "pruneAfter": "7d",
@@ -1697,30 +1679,12 @@ data:
           "visibleReplies": "automatic"
         },
         "ackReactionScope": "group-mentions",
-        "responsePrefix": "[{provider}/{model}]",
-        "tts": {
-          "auto": "inbound",
-          "mode": "final",
-          "providers": {
-            "elevenlabs": {
-              "speakerVoiceId": "aEO01A4wXwd1O8GPgGlF",
-              "modelId": "eleven_multilingual_v2",
-              "voiceSettings": {
-                "stability": 0.7,
-                "similarityBoost": 0.8,
-                "style": 0.3,
-                "useSpeakerBoost": true,
-                "speed": 1.15
-              }
-            }
-          }
-        }
+        "responsePrefix": "[{provider}/{model}]"
       },
       "logging": {
         "level": "info",
         "consoleLevel": "info",
-        "consoleStyle": "compact",
-        "redactSensitive": "tools"
+        "consoleStyle": "pretty"
       },
       "tools": {
         "sessions": {
@@ -1777,7 +1741,6 @@ data:
         }
       },
       "plugins": {
-        "bundledDiscovery": "allowlist",
         "enabled": true,
         "allow": [
           "browser",
