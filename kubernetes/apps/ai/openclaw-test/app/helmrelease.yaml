@@ -283,7 +283,7 @@ spec:
       app:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: $${SVC_OPENCLAW2_ADDR}
+          lbipam.cilium.io/ips: $${SVC_POSTGRES16_ADDR}
         externalTrafficPolicy: Cluster
         ports:
           http:
