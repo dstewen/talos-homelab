@@ -91,12 +91,27 @@ spec:
                 mkdir -p /home/node/.openclaw/logs
                 rm -f /home/node/.openclaw/openclaw.json
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
-                chown 1000:100 /home/node/.openclaw/openclaw.json
+                chown 1000:1000 /home/node/.openclaw/openclaw.json
                 chmod 400 /home/node/.openclaw/openclaw.json
                 echo "Init container completed successfully"
             securityContext:
+              # Runs as root: doctor/session-sqlite migration steps need to chmod/chown
+              # files across ownership boundaries, and this cluster's container runtime
+              # doesn't propagate added Linux capabilities to non-root processes (verified
+              # empirically — capabilities.add lands in the bounding set only, never
+              # effective/ambient, for a non-zero runAsUser). Scoped to this one-shot init
+              # step; the app container keeps its non-root, all-capabilities-dropped profile.
               runAsUser: 0
               runAsGroup: 0
+              runAsNonRoot: false
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
         containers:
           app:
             image:
@@ -106,18 +121,8 @@ spec:
               - /bin/sh
               - -c
               - |
-                # Start gateway in a restart loop so config-reload exits
-                # don't cause container-level CrashLoopBackOff.
-                # The gateway's "full process restart" spawns a replacement
-                # child before exiting — kill it to avoid port conflicts.
-                while true; do
-                  # Auto-fix invalid config before starting
-                  { echo "--- $(date -Iseconds) ---"; node dist/index.js doctor --fix 2>&1 || true; echo; } >> /home/node/.openclaw/doctor-startup.log
-                  node dist/index.js gateway --bind lan
-                  echo "Process exited ($?), cleaning up..."
-                  pkill -f 'node dist/index.js gateway' 2>/dev/null || true
-                  sleep 2
-                done
+                # Start gateway
+                exec node dist/index.js gateway --bind lan
             env:
               BROWSER_WS_ENDPOINT: "ws://localhost:9222"
               DOCKER_HOST: "tcp://localhost:2376"
