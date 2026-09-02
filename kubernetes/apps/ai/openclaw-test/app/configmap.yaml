@@ -1406,7 +1406,7 @@ data:
           },
           "google": {
             "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
-            "apiKey": "$${OPENCLAW_GEMINI_API_KEY}",
+            "apiKey": "$${GOOGLE_API_KEY}",
             "api": "google-generative-ai",
             "models": [
               {
