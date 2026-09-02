@@ -122,9 +122,9 @@ spec:
               - -c
               - |
                 # Install non-bundled ClawHub plugins
-                node dist/index.js plugins install "clawhub:@openclaw/discord" --pin --force --accept-capabilities
-                node dist/index.js plugins install "clawhub:@openclaw/searxng-plugin" --pin --force --accept-capabilities
-                node dist/index.js plugins install "clawhub:@openclaw/groq-provider" --pin --force --accept-capabilities
+                node dist/index.js plugins install "clawhub:@openclaw/discord" --force --accept-capabilities
+                node dist/index.js plugins install "clawhub:@openclaw/searxng-plugin" --force --accept-capabilities
+                node dist/index.js plugins install "clawhub:@openclaw/groq-provider" --force --accept-capabilities
 
                 # Start gateway
                 exec node dist/index.js gateway --bind lan
