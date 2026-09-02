@@ -121,13 +121,43 @@ spec:
               - /bin/sh
               - -c
               - |
+                # Install non-bundled ClawHub plugins (memini memory + signal
+                # channel). The installer refuses to run against a config that
+                # references not-yet-installed plugins (chicken-and-egg), so move
+                # the config aside during install and restore it for the gateway.
+                # $$ escapes Flux postBuild so the shell receives a literal $.
+                # renovate: datasource=github-tags depName=eleboucher/memini
+                MEMINI_PLUGIN_VERSION=0.7.18
+                CFG=/home/node/.openclaw/openclaw.json
+                EXT=/home/node/.openclaw/extensions
+                NEED=0
+                [ "$$(cat "$$EXT/memini/.clawver" 2>/dev/null)" != "$$MEMINI_PLUGIN_VERSION" ] && NEED=1
+                [ ! -d "$$EXT/signal" ] && NEED=1
+                if [ "$$NEED" = 1 ]; then
+                  [ -f "$$CFG" ] && mv "$$CFG" "$$CFG.installtmp"
+                  if node dist/index.js plugins install "clawhub:@eleboucher/memini@$$MEMINI_PLUGIN_VERSION" --pin --force; then
+                    mkdir -p "$$EXT/memini" && printf '%s' "$$MEMINI_PLUGIN_VERSION" > "$$EXT/memini/.clawver"
+                  else
+                    echo "WARN: memini plugin install failed"
+                  fi
+                  if [ ! -d "$$EXT/discord" ]; then
+                    node dist/index.js plugins install "clawhub:@openclaw/discord" --pin --force \
+                      || echo "WARN: discord plugin install failed"
+                  fi
+                  if [ ! -d "$$EXT/searxng-plugin" ]; then
+                    node dist/index.js plugins install "clawhub:@openclaw/searxng-plugin" --pin --force \
+                      || echo "WARN: searxng-plugin install failed"
+                  fi
+                  [ -f "$$CFG.installtmp" ] && mv "$$CFG.installtmp" "$$CFG"
+                fi
+
                 # Start gateway
                 exec node dist/index.js gateway --bind lan
             env:
-              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
-              DOCKER_HOST: "tcp://localhost:2376"
-              DOCKER_CERT_PATH: /certs/client
-              DOCKER_TLS_VERIFY: "1"
+#              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
+#              DOCKER_HOST: "tcp://localhost:2376"
+#              DOCKER_CERT_PATH: /certs/client
+#              DOCKER_TLS_VERIFY: "1"
               GOPATH: /home/node/go
               HOME: &homepath /home/node
               HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
