@@ -1491,7 +1491,7 @@ data:
           "dmPolicy": "pairing",
           "accounts": {
             "default": {
-              "token": "$${OPENCLAW_DISCORD_BOT_TOKEN}",
+              "token": "$${DISCORD_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1503,7 +1503,7 @@ data:
               }
             },
             "planner": {
-              "token": "$${PLANNER_DISCORD_BOT_TOKEN}",
+              "token": "$${PLANNER_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1514,7 +1514,7 @@ data:
               }
             },
             "ideator": {
-              "token": "$${IDEATOR_DISCORD_BOT_TOKEN}",
+              "token": "$${IDEATOR_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1525,7 +1525,7 @@ data:
               }
             },
             "critic": {
-              "token": "$${CRITIC_DISCORD_BOT_TOKEN}",
+              "token": "$${CRITIC_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1536,7 +1536,7 @@ data:
               }
             },
             "surveyor": {
-              "token": "$${SURVEYOR_DISCORD_BOT_TOKEN}",
+              "token": "$${SURVEYOR_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1547,7 +1547,7 @@ data:
               }
             },
             "coder": {
-              "token": "$${CODER_DISCORD_BOT_TOKEN}",
+              "token": "$${CODER_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1558,7 +1558,7 @@ data:
               }
             },
             "writer": {
-              "token": "$${WRITER_DISCORD_BOT_TOKEN}",
+              "token": "$${WRITER_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1569,7 +1569,7 @@ data:
               }
             },
             "reviewer": {
-              "token": "$${REVIEWER_DISCORD_BOT_TOKEN}",
+              "token": "$${REVIEWER_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
@@ -1580,7 +1580,7 @@ data:
               }
             },
             "scout": {
-              "token": "$${SCOUT_DISCORD_BOT_TOKEN}",
+              "token": "$${SCOUT_BOT_TOKEN}",
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
