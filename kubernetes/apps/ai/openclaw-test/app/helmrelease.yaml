@@ -92,6 +92,7 @@ spec:
                 rm -f /home/node/.openclaw/openclaw.json
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
                 chown 1000:1000 /home/node/.openclaw/openclaw.json
+                chown 1000:1000 /home/node/.openclaw/agents
                 chmod 400 /home/node/.openclaw/openclaw.json
                 echo "Init container completed successfully"
             securityContext:
