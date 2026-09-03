@@ -88,7 +88,7 @@ data:
             "ttl": "5m"
           }
         },
-        "entries": [
+        "entries": {
           "main": {
             "name": "C.O.R.T.E.X",
             "workspace": "/home/node/.openclaw/workspace",
@@ -356,7 +356,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           }
-        ]
+        }
       },
       "bindings": [
 
