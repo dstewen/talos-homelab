@@ -150,7 +150,7 @@ data:
               "every": "15317s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_PLANNER_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_PLANNER_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -176,7 +176,7 @@ data:
               "every": "15417s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_IDEATOR_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_IDEATOR_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -202,7 +202,7 @@ data:
               "every": "15517s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_CRITIC_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_CRITIC_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -228,7 +228,7 @@ data:
               "every": "15617s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_SURVEYOR_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_SURVEYOR_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -276,7 +276,7 @@ data:
               "every": "15717s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_CODER_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_CODER_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -301,7 +301,7 @@ data:
               "every": "15817s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_WRITER_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_WRITER_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -327,7 +327,7 @@ data:
               "every": "15917s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_REVIEWER_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_REVIEWER_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
@@ -353,7 +353,7 @@ data:
               "every": "16117s",
               "target": "discord",
               "directPolicy": "allow",
-              "to": "channel:${DISCORD_SCOUT_CHANNEL_ID}",
+              "to": "channel:$${DISCORD_SCOUT_CHANNEL_ID}",
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           }
@@ -393,63 +393,63 @@ data:
           "agentId": "main",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "planner",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_PLANNER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_PLANNER_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "ideator",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_IDEATOR_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_IDEATOR_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "critic",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_CRITIC_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_CRITIC_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "surveyor",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_SURVEYOR_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_SURVEYOR_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "coder",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_CODER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_CODER_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "writer",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_WRITER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_WRITER_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "reviewer",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_REVIEWER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_REVIEWER_CHANNEL_ID}" }
           }
         },
         {
           "agentId": "scout",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "${DISCORD_SCOUT_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_SCOUT_CHANNEL_ID}" }
           }
         }
       ],
@@ -1485,7 +1485,7 @@ data:
             "default": {
               "token": "$${DISCORD_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_TEST_VOICE_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
@@ -1497,7 +1497,7 @@ data:
             "planner": {
               "token": "$${PLANNER_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_PLANNER_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1508,7 +1508,7 @@ data:
             "ideator": {
               "token": "$${IDEATOR_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_IDEATOR_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1519,7 +1519,7 @@ data:
             "critic": {
               "token": "$${CRITIC_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_CRITIC_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1530,7 +1530,7 @@ data:
             "surveyor": {
               "token": "$${SURVEYOR_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_SURVEYOR_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1541,7 +1541,7 @@ data:
             "coder": {
               "token": "$${CODER_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_CODER_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1552,7 +1552,7 @@ data:
             "writer": {
               "token": "$${WRITER_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "${DISCORD_WRITER_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1563,7 +1563,7 @@ data:
             "reviewer": {
               "token": "$${REVIEWER_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_REVIEWER_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
@@ -1574,7 +1574,7 @@ data:
             "scout": {
               "token": "$${SCOUT_BOT_TOKEN}",
               "guilds": {
-                "${DISCORD_SERVER_ID}": {
+                "$${DISCORD_SERVER_ID}": {
                   "channels": {
                     "$${DISCORD_SCOUT_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
