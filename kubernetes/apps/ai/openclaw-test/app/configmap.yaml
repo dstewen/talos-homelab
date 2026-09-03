@@ -392,63 +392,63 @@ data:
           "agentId": "main",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_CHANNEL_ID}", "accountId": "default" }
           }
         },
         {
           "agentId": "planner",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_PLANNER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_PLANNER_CHANNEL_ID}", "accountId": "planner" }
           }
         },
         {
           "agentId": "ideator",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_IDEATOR_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_IDEATOR_CHANNEL_ID}", "accountId": "ideator" }
           }
         },
         {
           "agentId": "critic",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_CRITIC_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_CRITIC_CHANNEL_ID}", "accountId": "critic" }
           }
         },
         {
           "agentId": "surveyor",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_SURVEYOR_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_SURVEYOR_CHANNEL_ID}", "accountId": "surveyor" }
           }
         },
         {
           "agentId": "coder",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_CODER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_CODER_CHANNEL_ID}", "accountId": "coder" }
           }
         },
         {
           "agentId": "writer",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_WRITER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_WRITER_CHANNEL_ID}", "accountId": "writer" }
           }
         },
         {
           "agentId": "reviewer",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_REVIEWER_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_REVIEWER_CHANNEL_ID}", "accountId": "reviewer" }
           }
         },
         {
           "agentId": "scout",
           "match": {
             "channel": "discord",
-            "peer": { "kind": "channel", "id": "$${DISCORD_SCOUT_CHANNEL_ID}" }
+            "peer": { "kind": "channel", "id": "$${DISCORD_SCOUT_CHANNEL_ID}", "accountId": "scout" }
           }
         }
       ],
