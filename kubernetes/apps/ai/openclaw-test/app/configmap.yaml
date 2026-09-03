@@ -27,6 +27,7 @@ data:
       },
       "agents": {
         "defaults": {
+          "systemAgent": { agentId: "main" },
           "compaction": {
             "keepRecentTokens": 4000,
             "notifyUser": true,
@@ -87,10 +88,8 @@ data:
             "ttl": "5m"
           }
         },
-        "list": [
-          {
-            "id": "main",
-            "default": true,
+        "entries": [
+          "main": {
             "name": "C.O.R.T.E.X",
             "workspace": "/home/node/.openclaw/workspace",
             "agentDir": "/home/node/.openclaw/agents/main/agent",
@@ -122,8 +121,7 @@ data:
               ]
             }
           },
-          {
-            "id": "planner",
+          "planner": {
             "name": "Planner",
             "workspace": "/home/node/.openclaw/workspace-planner",
             "agentDir": "/home/node/.openclaw/agents/planner/agent",
@@ -155,8 +153,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "ideator",
+          "ideator": {
             "name": "Ideator",
             "workspace": "/home/node/.openclaw/workspace-ideator",
             "agentDir": "/home/node/.openclaw/agents/ideator/agent",
@@ -182,8 +179,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "critic",
+          "critic": {
             "name": "Critic",
             "workspace": "/home/node/.openclaw/workspace-critic",
             "agentDir": "/home/node/.openclaw/agents/critic/agent",
@@ -209,8 +205,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "surveyor",
+          "surveyor": {
             "name": "Surveyor",
             "workspace": "/home/node/.openclaw/workspace-surveyor",
             "agentDir": "/home/node/.openclaw/agents/surveyor/agent",
@@ -236,8 +231,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "coder",
+          "coder": {
             "name": "Coder",
             "workspace": "/home/node/.openclaw/workspace-coder",
             "agentDir": "/home/node/.openclaw/agents/coder/agent",
@@ -285,8 +279,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "writer",
+          "writer": {
             "name": "Writer",
             "workspace": "/home/node/.openclaw/workspace-writer",
             "agentDir": "/home/node/.openclaw/agents/writer/agent",
@@ -311,8 +304,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "reviewer",
+          "reviewer": {
             "name": "Reviewer",
             "workspace": "/home/node/.openclaw/workspace-reviewer",
             "agentDir": "/home/node/.openclaw/agents/reviewer/agent",
@@ -338,8 +330,7 @@ data:
               "activeHours": { "start": "06:00", "end": "22:00" }
             }
           },
-          {
-            "id": "scout",
+          "scout": {
             "name": "Scout",
             "workspace": "/home/node/.openclaw/workspace-scout",
             "agentDir": "/home/node/.openclaw/agents/scout/agent",
