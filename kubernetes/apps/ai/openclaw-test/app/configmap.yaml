@@ -1599,7 +1599,7 @@ data:
           }
         },
         "telegram": {
-          "enabled": true,
+          "enabled": false,
           "dmPolicy": "pairing",
           "allowFrom": ["tg:8563838649"],
           "groups": {
