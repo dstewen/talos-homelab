@@ -88,13 +88,15 @@ spec:
                 mkdir -p /home/node/.openclaw
                 mkdir -p /home/node/.openclaw/agents/main/sessions
                 mkdir -p /home/node/.openclaw/credentials
+                mkdir -p /home/node/.openclaw/extensions
                 mkdir -p /home/node/.openclaw/logs
                 mkdir -p /home/node/.openclaw/state
                 rm -f /home/node/.openclaw/openclaw.json
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
                 chown 1000:1000 /home/node/.openclaw/openclaw.json
                 chown 1000:1000 /home/node/.openclaw/agents
-                chown 1000:1000 /home/node/.openclaw/state
+                chown 1000:1000 /home/node/.openclaw/extensions
+                chown -R 1000:1000 /home/node/.openclaw/
                 chmod 400 /home/node/.openclaw/openclaw.json
                 echo "Init container completed successfully"
             env:
