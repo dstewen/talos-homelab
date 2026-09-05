@@ -1554,7 +1554,7 @@ data:
               "guilds": {
                 "$${DISCORD_SERVER_ID}": {
                   "channels": {
-                    "${DISCORD_WRITER_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
+                    "$${DISCORD_WRITER_CHANNEL_ID}": { "enabled": true, "requireMention": false, "users": [ "$${MY_DISCORD_USERID}" ] },
                     "$${DISCORD_GENERAL_CHANNEL_ID}": { "enabled": true, "requireMention": false }
                   }
                 }
