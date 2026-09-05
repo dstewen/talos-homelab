@@ -95,6 +95,11 @@ spec:
                 chown 1000:1000 /home/node/.openclaw/agents
                 chmod 400 /home/node/.openclaw/openclaw.json
                 echo "Init container completed successfully"
+            env:
+              TERM: xterm-256color
+            envFrom:
+              - secretRef:
+                  name: openclaw-test-secret
             securityContext:
               # Runs as root: doctor/session-sqlite migration steps need to chmod/chown
               # files across ownership boundaries, and this cluster's container runtime
@@ -360,10 +365,6 @@ spec:
 #        globalMounts:
 #          - path: /home/node/.openclaw/workspace/images
 
-#      mission-control-data:
-#        existingClaim: "{{ .Release.Name }}-mission-control"
-#        globalMounts:
-#          - path: /app/.data
       configmap:
         type: configMap
         name: "{{ .Release.Name }}-config"
