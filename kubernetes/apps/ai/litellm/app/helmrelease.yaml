@@ -22,9 +22,9 @@ spec:
       litellm:
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          labels:
-            networking.tomyail.com/dragonfly-client: "true"
+#        pod:
+#          labels:
+#            networking.tomyail.com/dragonfly-client: "true"
         initContainers:
           init-db:
             image:
@@ -43,7 +43,8 @@ spec:
             env:
               TZ: ${TIMEZONE}
               LITELLM_MODE: PRODUCTION
-              REDIS_HOST: dragonfly.database.svc.cluster.local
+#              SEARXNG_VALKEY_URL: "valkey://{{ .Release.Name }}-valkey:6379"
+              REDIS_HOST: "{{ .Release.Name }}-valkey.ai"
               REDIS_PORT: "6379"
             envFrom: *envFrom
             probes:
