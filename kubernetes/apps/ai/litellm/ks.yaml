@@ -18,6 +18,8 @@ spec:
       namespace: database
     - name: valkey
       namespace: database
+    - name: litellm-operator
+      namespace: ai
 #  decryption:
 #    provider: sops
 #    secretRef:
