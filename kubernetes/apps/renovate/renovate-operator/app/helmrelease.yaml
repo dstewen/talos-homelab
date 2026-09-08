@@ -41,7 +41,7 @@ spec:
         # -- individual accounts granted read-only access, by email or username
         readerUsers: []
         # -- individual accounts granted full access, by email or username
-        adminUsers: []
+        adminUsers: [ dstewen ]
         # -- whether RenovateJobs are readable without a session (public dashboard)
         anonymousRead: false
         # -- whether visitors holding only anonymous read access may stream Renovate logs (logs are unredacted)
