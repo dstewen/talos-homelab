@@ -5,7 +5,7 @@ kind: Model
 metadata:
   name: qwen3-embedding
 spec:
-  source: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/blob/main/Qwen3-Embedding-0.6B-Q8_0.gguf
+  source: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf?download=true
   format: gguf
   hardware:
     accelerator: intel
