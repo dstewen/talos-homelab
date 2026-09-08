@@ -7,9 +7,11 @@ metadata:
 spec:
 #  components:
 #    - ../../../../components/dragonfly
-#  dependsOn:
-#    - name: dragonfly
-#      namespace: database
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: onepassword-connect
+      namespace: external-secrets
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
