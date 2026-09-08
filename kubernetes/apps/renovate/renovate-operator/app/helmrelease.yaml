@@ -17,6 +17,7 @@ spec:
         additionalScopes:
           - groups
         enabled: true
+        clientId: RENOVATE_OPERATOR_CLIENT_ID
         existingSecret: renovate-operator-oidc-credentials
         issuerUrl: https://id.davidstewen.com/application/o/renovate-operator/
         redirectUrl: https://renovate.davidstewen.com/auth/callback
