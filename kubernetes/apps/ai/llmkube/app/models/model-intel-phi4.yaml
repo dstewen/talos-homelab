@@ -3,9 +3,10 @@
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model
 metadata:
-  name: qwen3-embedding
+  name: intel-phi4
+  namespace: ai
 spec:
-  source: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf
+  source: https://huggingface.co/microsoft/Phi-4-mini-instruct-gguf/resolve/main/Phi-4-mini-instruct-q4_0.gguf
   format: gguf
   hardware:
     accelerator: intel
@@ -25,9 +26,16 @@ spec:
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: InferenceService
 metadata:
-  name: qwen3-embedding
+  name: intel-phi4
+  namespace: ai
 spec:
-  modelRef: qwen3-embedding
-  mode: embedding
-  runtime: llamacpp
+  modelRef: intel-phi4
   replicas: 1
+  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:8afcb6ca062f855cee752e99cee2f5753865dd7b420e477157434aba374f11f9
+  resources:
+    cpu: "2"
+    memory: "4Gi"
+  podSecurityContext:
+    runAsUser: 0
+    runAsGroup: 0
+    fsGroup: 0
