@@ -9,7 +9,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./arr-mcp/ks.yaml
-  - ./boinc-amd64/ks.yaml
+#  - ./boinc-amd64/ks.yaml
 #  - ./boinc-arm64/ks.yaml
   - ./github-mcp/ks.yaml
   - ./ha-mcp/ks.yaml
