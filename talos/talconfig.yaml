@@ -345,6 +345,14 @@ nodes:
           - vlanId: 110
             dhcp: false
             mtu: 1500
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915             # NUC CPU iGraphics
+        extraKernelArgs:
+          - i915.enable_guc=3 # Meteor Lake CPU / iGPU
+          - i915.max_vfs=7 # Enable 7 virtual functions for iGPU
     extensionServices:
       - name: nut-client
         configFiles:
@@ -409,6 +417,14 @@ nodes:
           - vlanId: 110
             dhcp: false
             mtu: 1500
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915             # NUC CPU iGraphics
+        extraKernelArgs:
+          - i915.enable_guc=3 # Meteor Lake CPU / iGPU
+          - i915.max_vfs=7 # Enable 7 virtual functions for iGPU
     extensionServices:
       - name: nut-client
         configFiles:
