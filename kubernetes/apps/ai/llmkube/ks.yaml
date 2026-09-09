@@ -25,7 +25,8 @@ metadata:
   name: &app llmkube-models
 spec:
   components:
-    - ../../../../components/gpu
+# Add an extra ../ as we are building in the models subdirectory, and the components are in the parent directory of the app directory.
+    - ../../../../../components/gpu
   targetNamespace: ai
   dependsOn:
     - name: llmkube
