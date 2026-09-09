@@ -14,7 +14,7 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: cloudnative-pg-cluster
+    - name: cloudnative-pg-cluster18
       namespace: database
     - name: valkey
       namespace: database
