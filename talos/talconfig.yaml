@@ -887,12 +887,15 @@ controlPlane:
           - siderolabs/intel-ucode      # Intel ucode
           - siderolabs/mei
           - siderolabs/thunderbolt      # Thunderbolt networking
+          - siderolabs/xe               # Intel Xe Graphics
       extraKernelArgs:
         - -selinux # apparently needed for talos 1.10.x
         - -init_on_alloc # Less security, more speed
         - -init_on_free # Less security, more speed
         - apparmor=0 # Less security, more speed
-        - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
+        - i915.enable_guc=3                   # Meteor Lake CPU / iGPU - Enable GuC and HuC for better graphics performance and stability
+        - i915.force_probe=!a7a0              # Disable iGPU deviceID for i915
+        - xe.force_probe=a7a0                 # Enable iGPU deviceID for xe
         - init_on_alloc=0                     # Less security, faster puter
         - init_on_free=0                      # Less security, faster puter
         - intel_iommu=on # PCI Passthrough
