@@ -81,7 +81,7 @@ spec:
           code-server:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.136.2@sha256:64519a8afa74b34438a6684f7b3edd1ac25a3cfb106e5ff29bea232762be04ea
+              tag: 4.137.0@sha256:3f176812413f33ffcb8caf78a111b33bd730aeb92dffc62ee297c90f5c594327
             args: [
               "--auth", "none",
               "--user-data-dir", "/config/.vscode",
