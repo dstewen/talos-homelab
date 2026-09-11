@@ -11,10 +11,10 @@ spec:
   hardware:
     accelerator: intel
     gpu:
-      enabled: true
-      count: 1
-      vendor: intel
-      layers: -1
+      enabled: false
+#      count: 1
+#      vendor: intel
+#      layers: -1
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: llama-intel-gpu
