@@ -36,6 +36,6 @@ spec:
     cpu: "2"
     memory: "4Gi"
   podSecurityContext:
-    runAsUser: 1000
+#    runAsUser: 1000
     runAsNonRoot: true
     fsGroup: 102
