@@ -33,7 +33,7 @@ metadata:
 spec:
   modelRef: intel-phi4
   replicas: 1
-  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:fc103e6ecbc87e8f1ddc6fc04d81e81d72d500edbbcde6c883cc6579495d4a30
+  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:ec272af0c4d7e5a141d8fb44d3f39fcb77b8d09ef8bc7b6473064104ca706a2d
   resources:
     cpu: "2"
     memory: "4Gi"
