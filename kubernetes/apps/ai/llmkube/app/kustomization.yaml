@@ -6,4 +6,5 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./priorityclass.yaml
+  - ./pvc.yaml
   - ./resourceclaim.yaml
