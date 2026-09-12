@@ -3,12 +3,10 @@
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model
 metadata:
-  name: intel-phi4
+  name: phi4-mini-instruct
   namespace: ai
 spec:
-  # Pull to the shared cache now; no InferenceService required.
-  prefetch: true
-  source: https://huggingface.co/microsoft/Phi-4-mini-instruct-gguf/resolve/main/Phi-4-mini-instruct-q4_0.gguf
+  source: pvc://llmkube-model-cache/unsloth/Phi-4-mini-instruct-GGUF/Phi-4-mini-instruct-Q4_K_M.gguf
   format: gguf
   hardware:
     accelerator: intel
@@ -28,17 +26,21 @@ spec:
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: InferenceService
 metadata:
-  name: intel-phi4
+  name: phi4-mini-instruct
   namespace: ai
 spec:
-  modelRef: intel-phi4
+  modelRef: phi4-mini-instruct
   replicas: 1
   image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:ec272af0c4d7e5a141d8fb44d3f39fcb77b8d09ef8bc7b6473064104ca706a2d
   resources:
     cpu: "2"
     memory: "4Gi"
   podSecurityContext:
-    runAsNonRoot: true
     runAsUser: 1000
     runAsGroup: 1000
     fsGroup: 102
+    supplementalGroups:
+      - 44
+      - 102
+    seccompProfile:
+      type: RuntimeDefault

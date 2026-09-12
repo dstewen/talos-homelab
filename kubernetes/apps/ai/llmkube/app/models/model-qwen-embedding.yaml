@@ -5,15 +5,15 @@ kind: Model
 metadata:
   name: qwen3-embedding
 spec:
-  source: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf
+  source: pvc://llmkube-model-cache/qwen/Qwen3-Embedding-0.6B-GGUF/Qwen3-Embedding-0.6B-Q8_0.gguf
   format: gguf
   hardware:
     accelerator: intel
     gpu:
-      enabled: true
-      count: 1
-      vendor: intel
-      layers: -1
+      enabled: false
+#      count: 1
+#      vendor: intel
+#      layers: -1
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: llmkube-models-gpu
