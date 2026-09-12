@@ -2,9 +2,9 @@
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model
 metadata:
-  name: gemma-4-e4b-it
+  name: gemma-4-26b-a4b-it-qat
 spec:
-  source: pvc://llmkube-model-cache/unsloth/gemma-4-E4B-it-GGUF/gemma-4-E4B-it-Q4_K_M.gguf
+  source: pvc://llmkube-model-cache/unsloth/gemma-4-26B-A4B-it-qat-GGUF/gemma-4-26B-A4B-it-qat-UD-Q4_K_XL.gguf
   format: gguf
   quantization: Q4_K_M
   hardware:
@@ -19,20 +19,20 @@ spec:
           resourceClaimTemplateName: llmkube-llama-gpu
   resources:
     cpu: "500m"
-    memory: 8Gi
+    memory: 20Gi
 ---
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: InferenceService
 metadata:
-  name: gemma-4-e4b-it
+  name: gemma-4-26b-a4b-it-qat
   labels:
     krr/ignore: "true"
 spec:
-  modelRef: gemma-4-e4b-it
+  modelRef: gemma-4-26b-a4b-it-qat
   replicas: 1
   image: ghcr.io/ggml-org/llama.cpp:server-vulkan-b10868@sha256:c4643056a4e827af25cc92f988a57e73e6080ba8759aff2c7d01bd532634e0c8
-  podLabels:
-    igpu-workload: "true"
+#  podLabels:
+#    igpu-workload: "true"
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
@@ -47,9 +47,9 @@ spec:
   uBatchSize: 512
   extraArgs:
     - --alias
-    - gemma4_e4b
+    - gemma4_26b
     - --mmproj-url
-    - pvc://llmkube-model-cache/unsloth/gemma-4-E4B-it-GGUF/mmproj-F16.gguf
+    - pvc://llmkube-model-cache/unsloth/gemma-4-26B-A4B-it-qat-GGUF/mmproj-BF16.gguf
     - --fit
     - "off"
     - --cont-batching
@@ -84,7 +84,7 @@ spec:
       value: /app
   resources:
     cpu: 500m
-    memory: 8Gi
+    memory: 20Gi
   podSecurityContext:
     runAsUser: 1000
     runAsGroup: 1000
