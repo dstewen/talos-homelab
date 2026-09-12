@@ -13,7 +13,7 @@ spec:
     gpu:
       enabled: true
       count: 1
-#      vendor: intel
+      vendor: intel
       layers: -1
       resourceClaims:
         - name: gpu
