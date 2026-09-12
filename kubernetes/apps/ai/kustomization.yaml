@@ -20,7 +20,7 @@ resources:
 #  - ./mem0/ks.yaml
   - ./memory-mcp/ks.yaml
   - ./n8n-mcp/ks.yaml
-#  - ./ollama/ks.yaml
+  - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
 #  - ./open-webui-pipelines/ks.yaml
   - ./openclaw-operator/ks.yaml
