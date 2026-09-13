@@ -17,7 +17,7 @@ spec:
       layers: -1
       resourceClaims:
         - name: gpu
-          resourceClaimTemplateName: llama-intel-gpu
+          resourceClaimTemplateName: ollama-gpu
   resources:
     cpu: "2"
     memory: "4Gi"
