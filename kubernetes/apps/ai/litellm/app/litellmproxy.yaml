@@ -40,7 +40,7 @@ spec:
     - name: LITELLM_MASTER_KEY
       valueFrom:
         secretKeyRef:
-          name: litellm
+          name: litellm-secret
           key: LITELLM_MASTER_KEY
   resources:
     requests:
