@@ -58,11 +58,6 @@ spec:
             memory: 1Gi
           limits:
             memory: 4Gi
-      security:
-        cephx:
-          daemon:
-            keyRotationPolicy: KeyGeneration
-            keyGeneration: 2
       storage:
         useAllNodes: false
         useAllDevices: false
