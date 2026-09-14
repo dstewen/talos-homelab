@@ -63,6 +63,8 @@ spec:
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
+          csi:
+            keyType: aes # required when Kubernetes nodes don't run Linux kernel 7.0+
       storage:
         useAllNodes: false
         useAllDevices: false
