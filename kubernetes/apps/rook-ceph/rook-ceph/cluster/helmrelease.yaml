@@ -33,8 +33,8 @@ spec:
             enabled: true
           - name: pg_autoscaler
             enabled: true
-#          - name: rook
-#            enabled: true
+          - name: rook
+            enabled: false # The Rook mgr module is recommended to be disabled before upgrading to Ceph Tentacle (v20)
       mon:
         allowMultiplePerNode: false
         count: 3
