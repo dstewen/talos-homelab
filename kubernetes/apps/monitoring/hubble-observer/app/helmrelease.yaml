@@ -80,7 +80,7 @@ spec:
         app: grafana
       instanceSelector:
         matchLabels:
-          grafanaInstance: grafana
+          dashboards: grafana
 
     # CiliumNetworkPolicy configuration
     ciliumNetworkPolicy:
