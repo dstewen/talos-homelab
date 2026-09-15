@@ -1,0 +1,1002 @@
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+clusterEndpoint: https://10.200.15.254:6443
+
+nodes:
+  - host: "ms1"
+    ip: "10.200.15.51"
+    installDiskSelector:
+      serial: "1925E20E2038"
+    userVolumes:
+      - name: local-hostpath-2tb
+        provisioning:
+          diskSelector:
+            match: "disk.model.startsWith('WD_BLACK')"
+          minSize: 1TB
+          maxSize: 1TB
+#        filesystem:
+#          type: xfs
+    patches:
+      - "@./patches/ms1/openebs-local.yaml"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:77:cf:38"
+        ignore: true
+        # Intel VPRO
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:77:cf:39"
+        ignore: true
+        #bond0
+      - interface: bond0
+        bond:
+#          mode: 802.3ad
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "58:47:ca:77:cf:36"
+              driver: i40e
+#          xmitHashPolicy: layer3+4
+#          lacpRate: fast
+#          miimon: 1000
+        dhcp: false
+        addresses:
+          - "10.200.15.51/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vip:
+          ip: "10.200.15.254"
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.51/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+#            vip:
+#              ip: 10.200.15.254
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Controller Node MS1"
+  - host: "ms2"
+    ip: "10.200.15.52"
+    installDiskSelector:
+      serial: "220628801124"
+    userVolumes:
+      - name: local-hostpath-2tb
+        provisioning:
+          diskSelector:
+            match: "disk.model.startsWith('WD_BLACK')"
+          minSize: 1TB
+          maxSize: 1TB
+#        filesystem:
+#          type: xfs
+    patches:
+      - "@./patches/ms2/openebs-local.yaml"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:78:f1:34"
+        ignore: true
+        # Intel VPRO
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:78:f1:35"
+        ignore: true
+        #bond0
+      - interface: bond0
+        bond:
+#          mode: 802.3ad
+          mode: active-backup
+          deviceSelectors:
+            -  hardwareAddr: "58:47:ca:78:f1:32"
+               driver: i40e
+#          xmitHashPolicy: layer3+4
+#          lacpRate: fast
+#          miimon: 1000
+        dhcp: false
+        addresses:
+          - "10.200.15.52/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vip:
+          ip: "10.200.15.254"
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.52/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+#            vip:
+#              ip: 10.200.15.254
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Controller Node MS2"
+  - host: "ms3"
+    ip: "10.200.15.53"
+    installDiskSelector:
+      serial: "22061X806789"
+    userVolumes:
+      - name: local-hostpath-2tb
+        provisioning:
+          diskSelector:
+            match: "disk.model.startsWith('WD_BLACK')"
+          minSize: 1TB
+          maxSize: 1TB
+#        filesystem:
+#          type: xfs
+    patches:
+      - "@./patches/ms3/openebs-local.yaml"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:78:f8:4c"
+        ignore: true
+        # Intel VPRO
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:78:f8:4d"
+        ignore: true
+        #bond0
+      - interface: bond0
+        bond:
+#          mode: 802.3ad
+          mode: active-backup
+          deviceSelectors:
+            -  hardwareAddr: "58:47:ca:78:f8:4a"
+               driver: i40e
+#          xmitHashPolicy: layer3+4
+#          lacpRate: fast
+#          miimon: 1000
+        dhcp: false
+        addresses:
+          - "10.200.15.53/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vip:
+          ip: "10.200.15.254"
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.53/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+#            vip:
+#              ip: 10.200.15.254
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Controller Node MS3"
+# Intel NUC workers
+  - host: "nuc1"
+    ip: "10.200.15.61"
+    installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH811211KF512D"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d4:5d:df:1a:27:fe"
+        dhcp: false
+        addresses:
+          - "10.200.15.61/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.35/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915             # NUC CPU iGraphics
+        extraKernelArgs:
+          - i915.enable_guc=3 # Meteor Lake CPU / iGPU
+          - i915.max_vfs=7 # Enable 7 virtual functions for iGPU
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node NUC1"
+  - host: "nuc2"
+    ip: "10.200.15.62"
+    installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH81000E09512D"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "d4:5d:df:1a:28:c4"
+        dhcp: false
+        addresses:
+          - "10.200.15.62/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.35/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915             # NUC CPU iGraphics
+        extraKernelArgs:
+          - i915.enable_guc=3 # Meteor Lake CPU / iGPU
+          - i915.max_vfs=7 # Enable 7 virtual functions for iGPU
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node NUC2"
+# CM4 Blades - with EMMC storage formatted as FAT32 and erased - using NVME for OS drive
+  - host: "blade2"
+    ip: "10.200.15.32"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800784"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "e4:5f:01:ec:16:54"
+        dhcp: false
+        addresses:
+          - "10.200.15.32/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade2"
+  - host: "blade4"
+    ip: "10.200.15.34"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_22061X806791"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "e4:5f:01:ec:16:66"
+        dhcp: false
+        addresses:
+          - "10.200.15.34/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.35/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+  - host: "blade5"
+    ip: "10.200.15.35"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800811"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "e4:5f:01:ec:16:b4"
+        dhcp: false
+        addresses:
+          - "10.200.15.35/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.35/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade5"
+  - host: "blade6"
+    ip: "10.200.15.36"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800731"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "e4:5f:01:ec:16:a5"
+        dhcp: false
+        addresses:
+          - "10.200.15.36/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.36/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade6"
+  - host: "blade7"
+    ip: "10.200.15.37"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800801"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "e4:5f:01:ec:16:9c"
+        dhcp: false
+        addresses:
+          - "10.200.15.37/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.37/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade7"
+  - host: "blade8"
+    ip: "10.200.15.38"
+    installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+    controlPlane: false
+    networkInterfaces:
+        #bond0
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "e4:5f:01:ec:16:5a"
+        dhcp: false
+        addresses:
+          - "10.200.15.38/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.200.15.1"
+            metric: 1
+        mtu: 1500
+        vlans:
+#          # HomeLABServers VLAN
+#          - vlanId: 15
+#            dhcp: false
+#            addresses:
+#              - 10.200.15.38/24
+#            mtu: 1500
+#            routes:
+#              - network: 0.0.0.0/0
+#                gateway: 10.200.15.1
+#                metric: 1
+          # K3S_Services_VLAN
+          - vlanId: 20
+            dhcp: false
+            mtu: 1500
+          # Provisioning VLAN
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          # IOT VLAN
+          - vlanId: 100
+            dhcp: false
+            mtu: 1500
+          # GuestWifi VLAN
+          - vlanId: 110
+            dhcp: false
+            mtu: 1500
+    extensionServices:
+      - name: nut-client
+        configFiles:
+          - content: |-
+              MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+              SHUTDOWNCMD "/sbin/poweroff"
+            mountPath: /usr/local/etc/nut/upsmon.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldp portidsubtype ifname
+              unconfigure lldp management-addresses-advertisements
+              unconfigure lldp capabilities-advertisements
+              configure system description "Talos Worker Node blade8"
+# Global patches
+patches:
+#  - "@./patches/global/machine-files.yaml"
+#  - "@./patches/global/machine-files-nfs.yaml"
+#  - "@./patches/global/machine-hostdns.yaml"
+#  - "@./patches/global/machine-kubelet.yaml"
+#  - "@./patches/global/machine-network.yaml"
+#  - "@./patches/global/machine-sysctls.yaml"
+#  - "@./patches/global/machine-time.yaml"
+#  - "@./patches/global/openebs-local.yaml"
+
+
+
+# Configure NFS mount options
+  - |-
+    machine:
+      features:
+        hostDNS:
+          enabled: true
+          resolveMemberNames: true
+          forwardKubeDNSToHost: false
+
+
+
+      files:
+        # Configure nfs mount options
+        - op: overwrite
+          path: /etc/nfsmount.conf
+          permissions: 0o644
+          content: |
+            [ NFSMount_Global_Options ]
+            nfsvers=4.1
+            hard=True
+            nconnect=16
+            noatime=True
+
+        # configure containerd for spegel and Intel DRA
+        - content: |
+            [plugins."io.containerd.cri.v1.images"]
+              discard_unpacked_layers = false
+            [plugins."io.containerd.cri.v1.runtime"]
+              cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+              device_ownership_from_security_context = true
+          path: /etc/cri/conf.d/20-customization.part
+          permissions: 0o644
+          op: create
+
+      kubelet:
+        extraConfig:
+          serializeImagePulls: false
+        nodeIP:
+          validSubnets:
+            - 10.200.15.0/24
+
+      network:
+        disableSearchDomain: true
+        nameservers:
+          - 192.168.10.195
+          - 1.1.1.1
+
+      sysctls:
+        fs.inotify.max_user_watches: "1048576" # Watchdog
+        fs.inotify.max_user_instances: "8192"  # Watchdog
+        net.core.rmem_max: "7500000" # Cloudflared | QUIC
+        net.core.wmem_max: "7500000" # Cloudflared | QUIC
+        vm.nr_hugepages: 1024        # PostgreSQL
+
+      time:
+        disabled: false
+        servers:
+          - 162.159.200.1
+          - 162.159.200.123
+
+
+# Controller patches
+controlPlane:
+
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/gasket-driver    # Google Coral M.2
+          - siderolabs/i915             # MS-01 CPU iGraphics
+          - siderolabs/intel-ucode      # Intel ucode
+          - siderolabs/mei
+          - siderolabs/thunderbolt      # Thunderbolt networking
+          - siderolabs/xe               # Intel Xe Graphics
+      extraKernelArgs:
+        - -selinux # apparently needed for talos 1.10.x
+        - -init_on_alloc # Less security, more speed
+        - -init_on_free # Less security, more speed
+        - apparmor=0 # Less security, more speed
+        - i915.enable_guc=3                   # Meteor Lake CPU / iGPU - Enable GuC and HuC for better graphics performance and stability
+        - i915.force_probe=!a7a0              # Disable iGPU deviceID for i915
+        - xe.force_probe=a7a0                 # Enable iGPU deviceID for xe
+        - init_on_alloc=0                     # Less security, faster puter
+        - init_on_free=0                      # Less security, faster puter
+        - intel_iommu=on # PCI Passthrough
+        - iommu=pt # PCI Passthrough
+        - mitigations=off # Less security, more speed
+        - security=none # Less security, more speed
+        - talos.auditd.disabled=1 # Less security, more speed
+  #      - net.ifnames=1 # Enable predictable NIC naming
+  patches:
+#    - "@./patches/controller/admission-controller-patch.yaml"
+#    - "@./patches/controller/cluster.yaml"
+#    - "@./patches/controller/enable-talos-api.yaml"
+#    - "@./patches/controller/machine-install.yaml"
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - actions-runner-system
+              - system-upgrade
+
+    # Cluster Configuration
+    - |-
+      cluster:
+        allowSchedulingOnControlPlanes: true
+        apiServer:
+          # disable default API server admission plugins
+          admissionControl:
+            $$patch: delete
+          # enable apiserver feature-gates and runtime-config - needed for volsync
+          extraArgs:
+            feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
+            runtime-config: admissionregistration.k8s.io/v1beta1=true
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        coreDNS:
+          disabled: true
+        etcd:
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
+          advertisedSubnets:
+            - 10.200.15.0/24
+        proxy:
+          disabled: true
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
+
+    # Custom sysfs settings
+    - |-
+      machine:
+        sysfs:
+          devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
+          devices.system.cpu.cpu0.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu1.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu2.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu3.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu4.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu5.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu6.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu7.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu8.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu9.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu10.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu11.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu12.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu13.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu14.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu15.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu16.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu17.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu18.cpufreq.energy_performance_preference: balance_performance
+          devices.system.cpu.cpu19.cpufreq.energy_performance_preference: balance_performance
+
+    # Enable thunderbolt + net
+    - |-
+      machine:
+        kernel:
+          modules:
+            - name: nbd
+            - name: thunderbolt
+            - name: thunderbolt_net
+
+    # Various udev rules
+    - |-
+      machine:
+        udev:
+          rules:
+            # Thunderbolt
+            - ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+            # Intel GPU
+            - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+            # Coral Edge TPU
+            - SUBSYSTEM=="apex", KERNEL=="apex*", GROUP="44", MODE="0660"
