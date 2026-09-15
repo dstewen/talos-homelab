@@ -13,7 +13,7 @@ resources:
 #  - ./cloudflare-exporter/ks.yaml
 #  - ./frigate-exporter/ks.yaml
   - ./grafana/ks.yaml
-  - ./hubble-observer/ks.yaml
+#  - ./hubble-observer/ks.yaml
   - ./k8s-ephemeral-storage-metrics/ks.yaml
   - ./keda/ks.yaml
   - ./kromgo/ks.yaml
