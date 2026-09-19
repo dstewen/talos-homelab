@@ -1,0 +1,133 @@
+---
+clusterName: kubernetes
+clusterEndpoint: https://10.200.15.254:6443
+
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: v1.14.0
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.37.0
+
+secretsPath: secrets.sops.yaml
+
+nodes:
+  - host: "ms1"
+    ip: "10.200.15.51"
+    role: control-plane
+    schematicId: "743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47"
+    data:
+      installDisk: "/dev/nvme0n1"
+      installDiskSerial: ""
+      macAddr: "58:47:ca:77:cf:36"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "ms2"
+    ip: "10.200.15.52"
+    role: control-plane
+    schematicId: "743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47"
+    data:
+      installDisk: "/dev/nvme0n1"
+      installDiskSerial: ""
+      macAddr: "58:47:ca:78:f1:32"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "ms3"
+    ip: "10.200.15.53"
+    role: control-plane
+    schematicId: "743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47"
+    data:
+      installDisk: "/dev/nvme0n1"
+      installDiskSerial: ""
+      macAddr: "58:47:ca:78:f8:4a"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "blade2"
+    ip: "10.200.15.32"
+    role: worker
+    schematicId: "de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800784"
+      installDiskSerial: ""
+      macAddr: "e4:5f:01:ec:16:54"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "blade4"
+    ip: "10.200.15.34"
+    role: worker
+    schematicId: "de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_22061X806791"
+      installDiskSerial: ""
+      macAddr: "e4:5f:01:ec:16:66"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "blade5"
+    ip: "10.200.15.35"
+    role: worker
+    schematicId: "de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800811"
+      installDiskSerial: ""
+      macAddr: "e4:5f:01:ec:16:b4"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "blade6"
+    ip: "10.200.15.36"
+    role: worker
+    schematicId: "de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800731"
+      installDiskSerial: ""
+      macAddr: "e4:5f:01:ec:16:a5"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "blade7"
+    ip: "10.200.15.37"
+    role: worker
+    schematicId: "de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800801"
+      installDiskSerial: ""
+      macAddr: "e4:5f:01:ec:16:9c"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "blade8"
+    ip: "10.200.15.38"
+    role: worker
+    schematicId: "de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800737"
+      installDiskSerial: ""
+      macAddr: "e4:5f:01:ec:16:5a"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "nuc1"
+    ip: "10.200.15.61"
+    role: worker
+    schematicId: "977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH811211KF512D"
+      installDiskSerial: ""
+      macAddr: "d4:5d:df:1a:27:fe"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
+  - host: "nuc2"
+    ip: "10.200.15.62"
+    role: worker
+    schematicId: "977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd"
+    data:
+      installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH81000E09512D"
+      installDiskSerial: ""
+      macAddr: "d4:5d:df:1a:28:c4"
+      mtu: 1500
+      encryptDisk: false
+      kernelModules: []
