@@ -1,0 +1,67 @@
+---
+clusterName: kubernetes
+
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: v1.13.10
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.36.3
+
+clusterEndpoint: https://10.200.15.254:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "10.200.15.254"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - host: "ms1"
+    ip: "10.200.15.51"
+    role: control-plane
+
+  - host: "ms2"
+    ip: "10.200.15.52"
+    role: control-plane
+
+  - host: "ms3"
+    ip: "10.200.15.53"
+    role: control-plane
+
+# Intel NUC workers
+  - host: "nuc1"
+    ip: "10.200.15.61"
+    role: worker
+
+  - host: "nuc2"
+    ip: "10.200.15.62"
+    role: worker
+
+# CM4 Blades - with EMMC storage formatted as FAT32 and erased - using NVME for OS drive
+  - host: "blade2"
+    ip: "10.200.15.32"
+    role: worker
+
+  - host: "blade4"
+    ip: "10.200.15.34"
+    role: worker
+
+  - host: "blade5"
+    ip: "10.200.15.35"
+    role: worker
+
+  - host: "blade6"
+    ip: "10.200.15.36"
+    role: worker
+
+  - host: "blade7"
+    ip: "10.200.15.37"
+    role: worker
+
+  - host: "blade8"
+    ip: "10.200.15.38"
+    role: worker
