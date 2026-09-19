@@ -1,0 +1,72 @@
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: 'off'
+hostname: blade2
+---
+apiVersion: v1alpha1
+kind: ExtensionServiceConfig
+name: nut-client
+configFiles:
+  - content: |-
+      MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+      SHUTDOWNCMD "/sbin/poweroff"
+    mountPath: /usr/local/etc/nut/upsmon.conf
+---
+apiVersion: v1alpha1
+kind: ExtensionServiceConfig
+name: lldpd
+configFiles:
+  - content: |
+      configure lldp portidsubtype ifname
+      unconfigure lldp management-addresses-advertisements
+      unconfigure lldp capabilities-advertisements
+      configure system description "Talos Worker Node blade2"
+    mountPath: /usr/local/etc/lldpd/lldpd.conf
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: bond0-m0
+selector:
+  match: glob("e4:5f:01:ec:16:b4", mac(link.hardware_addr))
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - bond0-m0
+bondMode: active-backup
+mtu: 1500
+addresses:
+  - address: 10.200.15.35/24
+routes:
+  - gateway: 10.200.15.1
+    metric: 1
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.20
+vlanID: 20
+parent: bond0
+mtu: 1500
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.30
+vlanID: 30
+parent: bond0
+mtu: 1500
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.100
+vlanID: 100
+parent: bond0
+mtu: 1500
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.110
+vlanID: 110
+parent: bond0
+mtu: 1500
