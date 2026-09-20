@@ -97,6 +97,7 @@ spec:
                 chown 1000:1000 /home/node/.openclaw/agents
                 chown 1000:1000 /home/node/.openclaw/extensions
                 chown -R 1000:1000 /home/node/.openclaw/
+                chown -R 1000:1000 /home/node/.local/bin
                 chmod 400 /home/node/.openclaw/openclaw.json
                 echo "Init container completed successfully"
             env:
