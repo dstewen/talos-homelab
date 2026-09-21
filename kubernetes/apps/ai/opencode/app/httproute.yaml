@@ -9,7 +9,7 @@ metadata:
       conditions: ["len([BODY]) == 0"]
 spec:
   hostnames:
-    - opencode-api.jory.dev
+    - opencode-api.davidstewen.com
   parentRefs:
     - name: envoy-internal
       namespace: network
