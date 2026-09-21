@@ -8,8 +8,8 @@ data:
     #!/bin/bash
     set -euo pipefail
 
-    git config --global user.name "Saffron"
-    git config --global user.email "263493777+itsmiso-ai@users.noreply.github.com"
+    git config --global user.name "cortananexus-bot"
+    git config --global user.email "42883717+cortananexus-bot@users.noreply.github.com"
     git config --global init.defaultBranch main
     git config --global credential.helper store
     git config --global --add safe.directory '*'
@@ -19,9 +19,9 @@ data:
     umask 022
 
     mkdir -p "$${HOME}/projects"
-    if [[ ! -d "$${HOME}/projects/home-ops/.git" ]]; then
-      git clone --filter=blob:none https://github.com/joryirving/home-ops.git "$${HOME}/projects/home-ops" \
-        || echo "WARN: home-ops clone failed; clone it from a session instead"
+    if [[ ! -d "$${HOME}/projects/talos-homelab/.git" ]]; then
+      git clone --filter=blob:none https://github.com/dstewen/talos-homelab.git "$${HOME}/projects/talos-homelab" \
+        || echo "WARN: talos-homelab clone failed; clone it from a session instead"
     fi
 
     cd "$${HOME}/projects"
@@ -34,7 +34,7 @@ data:
       "compaction": { "auto": true, "prune": true, "preserve_recent_tokens": 20000, "reserved": 16384 },
       "tool_output": { "max_lines": 800, "max_bytes": 16384 },
       "plugin": [
-        ["@eleboucher/opencode-memini@0.7.32", { "base_url": "http://memini.llm:8080", "namespace": "opencode", "auto_update": false }]
+        ["@eleboucher/opencode-memini@0.7.32", { "base_url": "http://memini.ai:8080", "namespace": "opencode", "auto_update": false }]
       ],
       "enabled_providers": ["litellm-anthropic", "litellm", "opencode"],
       "agent": {
@@ -102,7 +102,7 @@ data:
           "npm": "@ai-sdk/openai-compatible",
           "name": "LiteLLM OpenAI",
           "options": {
-            "baseURL": "http://litellm.llm:4000/v1",
+            "baseURL": "http://litellm.ai:4000/v1",
             "apiKey": "{env:LITELLM_API_KEY}",
             "timeout": 1800000
           },
@@ -135,7 +135,7 @@ data:
           "npm": "@ai-sdk/anthropic",
           "name": "LiteLLM Anthropic",
           "options": {
-            "baseURL": "http://litellm.llm:4000/v1",
+            "baseURL": "http://litellm.ai:4000/v1",
             "authToken": "{env:LITELLM_API_KEY}",
             "timeout": 1800000
           },
@@ -149,16 +149,8 @@ data:
       "mcp": {
         "toolhive": {
           "type": "remote",
-          "url": "http://vmcp-mcp-gateway-internal.llm:4483/mcp",
+          "url": "http://vmcp-mcp-gateway-internal.ai:4483/mcp",
           "enabled": true
-        },
-        "context7": {
-          "type": "remote",
-          "url": "https://mcp.context7.com/mcp",
-          "enabled": true,
-          "headers": {
-            "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
-          }
         }
       }
     }
