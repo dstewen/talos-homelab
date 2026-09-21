@@ -9,7 +9,6 @@ spec:
     kind: OCIRepository
     name: *app
   interval: 15m
-  dependsOn: []
   values:
     defaultPodOptions:
       automountServiceAccountToken: false
@@ -31,7 +30,7 @@ spec:
             env:
               HOME: &homepath /home/opencode
               OPENCODE_CONFIG: /etc/opencode/opencode.json
-              TZ: America/Edmonton
+              TZ: Australia/Melbourne
             envFrom:
               - secretRef:
                   name: opencode
@@ -67,7 +66,7 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["opencode.jory.dev"]
+        hostnames: ["opencode.davidstewen.com"]
         parentRefs:
           - name: envoy-external
             namespace: network
