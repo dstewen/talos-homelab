@@ -10,13 +10,13 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/valkey
+    - ../../../../components/dragonfly
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
     - name: cloudnative-pg-cluster18
       namespace: database
-    - name: dragonfly
+    - name: dragonfly-operator
       namespace: database
     - name: litellm-operator
       namespace: ai
