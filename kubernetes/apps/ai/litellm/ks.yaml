@@ -16,7 +16,7 @@ spec:
       namespace: external-secrets
     - name: cloudnative-pg-cluster18
       namespace: database
-    - name: valkey
+    - name: dragonfly
       namespace: database
     - name: litellm-operator
       namespace: ai
