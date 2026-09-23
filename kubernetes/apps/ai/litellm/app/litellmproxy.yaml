@@ -101,6 +101,8 @@ spec:
     # authentik_application.litellm.
     - name: PROXY_LOGOUT_URL
       value: https://id.davidstewen.com/application/o/litellm/end-session/
+    - name: PROXY_BASE_URL
+      value: https://litellm.davidstewen.com
   resources:
     requests:
       cpu: 100m
