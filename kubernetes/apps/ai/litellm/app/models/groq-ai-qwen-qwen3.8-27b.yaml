@@ -3,7 +3,7 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: qwen/qwen3.8-27b
+  name: qwen-qwen3.8-27b
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
   modelName: qwen/qwen3.8-27b
