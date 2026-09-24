@@ -28,6 +28,17 @@ spec:
     drop_params: true
     merge_reasoning_content_in_choices: true
     set_verbose: false
+#    # OIDC and Model List configuration
+#    # Note: We use the 'model_list' to define the cloud models
+#    model_list:
+#      - model_name: gemini-1.5-pro
+#        litellm_params:
+#          model: gemini/gemini-1.5-pro
+#          api_key: os.environ/GEMINI_API_KEY
+#      - model_name: gemini-3.5-flash-lite
+#        litellm_params:
+#          model: gemini/gemini-3.5-flash-lite
+#          api_key: os.environ/GEMINI_API_KEY
   env:
     - name: LITELLM_LOG
       value: INFO
@@ -47,6 +58,11 @@ spec:
         secretKeyRef:
           name: litellm-secret
           key: DATABASE_URL
+    - name: GEMINI_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: litellm-secret
+          key: GEMINI_API_KEY
     - name: GENERIC_CLIENT_ID
       valueFrom:
         secretKeyRef:
