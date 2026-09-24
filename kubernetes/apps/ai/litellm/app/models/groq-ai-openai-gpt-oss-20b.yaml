@@ -3,7 +3,7 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: openai/gpt-oss-20b
+  name: openai-gpt-oss-20b
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
   modelName: openai/gpt-oss-20b
