@@ -146,3 +146,7 @@ spec:
     parentRefs:
       - name: envoy-external
         namespace: network
+  apiAccess:
+    masterKeyRef:
+      name: litellm-secret
+      key: LITELLM_MASTER_KEY
