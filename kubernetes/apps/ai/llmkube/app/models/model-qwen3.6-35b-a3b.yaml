@@ -33,7 +33,7 @@ metadata:
 spec:
   modelRef: qwen3.6-35b-a3b
   replicas: 1
-  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:7410c53737faeb0bdc4a561bae1fd824c443346b4fb8d5f0d8a8039e4bf84014
+  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:74db3c72adf2a78e1e05e09cabf6628c796841459097173318468b4f5f65c41a
   resources:
     cpu: "2"
     memory: "25Gi"
