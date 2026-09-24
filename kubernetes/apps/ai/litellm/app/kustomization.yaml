@@ -7,3 +7,4 @@ resources:
   - ./litellmproxy.yaml
   - ./servicemonitor.yaml
   - ./models/
+  - ./virtualkeys/
