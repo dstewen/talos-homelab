@@ -3,13 +3,13 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: whisper-large-v3-turbo
+  name: groq-whisper-large-v3-turbo
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
-  modelName: whisper-large-v3-turbo
+  modelName: groq/whisper-large-v3-turbo
 
   params:
-    model: whisper-large-v3-turbo
+    model: groq/whisper-large-v3-turbo
     # We reference the secret key via environment variable mapping in the proxy
     apiKeyRef:
       name: litellm-secret

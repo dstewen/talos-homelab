@@ -3,13 +3,13 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: qwen-qwen3.8-27b
+  name: groq-qwen-qwen3.8-27b
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
-  modelName: qwen/qwen3.8-27b
+  modelName: groq/qwen/qwen3.8-27b
 
   params:
-    model: qwen/qwen3.8-27b
+    model: groq/qwen/qwen3.8-27b
     # We reference the secret key via environment variable mapping in the proxy
     apiKeyRef:
       name: litellm-secret
