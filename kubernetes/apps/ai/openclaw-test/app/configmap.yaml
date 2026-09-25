@@ -1655,7 +1655,6 @@ data:
           "discord",
           "elevenlabs",
           "google",
-          "groq",
           "memory-core",
           "memory-wiki",
           "ollama",
