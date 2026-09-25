@@ -145,29 +145,52 @@ spec:
 #              DOCKER_HOST: "tcp://localhost:2376"
 #              DOCKER_CERT_PATH: /certs/client
 #              DOCKER_TLS_VERIFY: "1"
-              GOPATH: /home/node/go
-              HOME: &homepath /home/node
-              HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
-              HOMEBREW_PREFIX: /home/node/.local/homebrew
-              HOMEBREW_REPOSITORY: /home/node/.local/homebrew
-              NODE_OPTIONS: "--max-old-space-size=4096"
-              OPENAI_API_BASE_URL: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
-              OPENAI_API_KEY: "not-needed"
-              OPENCLAW_GATEWAY_PORT: &port 18789
-              OPENCLAW_LOG_LEVEL: info
-              PATH: /home/node/.local/bin:/home/node/.local/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-              PIP_BREAK_SYSTEM_PACKAGES: "1"
+              - name: GOPATH
+                value: /home/node/go
+              - name: GOPATH
+                value: /home/node/go
+              - name: HOME
+                value: &homepath /home/node
+              - name: HOMEBREW_CELLAR
+                value: /home/node/.local/homebrew/Cellar
+              - name: HOMEBREW_PREFIX
+                value: /home/node/.local/homebrew
+              - name: HOMEBREW_REPOSITORY
+                value: /home/node/.local/homebrew
+              - name: NODE_OPTIONS
+                value: "--max-old-space-size=4096"
+              - name: OPENAI_API_BASE_URL
+                value: "http://local-ai-intel.ai.svc.cluster.local:8080/v1"
+              - name: OPENAI_API_KEY
+                value: "not-needed"
+              - name: OPENCLAW_GATEWAY_PORT
+                value: &port 18789
+              - name: OPENCLAW_LOG_LEVEL
+                value: info
+              - name: PATH
+                value: /home/node/.local/bin:/home/node/.local/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+              - name: PIP_BREAK_SYSTEM_PACKAGES
+                value: "1"
               # Enable SearXNG plugin
-              SEARXNG_BASE_URL: http://searxng.selfhosted.svc.cluster.local:8080
-              SEARXNG_FORMAT: json
-              TERM: xterm-256color
-              TZ: "${TIMEZONE}"
-              LITELLM_API_KEY: "${LITELLM_API_KEY}"
+              - name: SEARXNG_BASE_URL
+                value: http://searxng.selfhosted.svc.cluster.local:8080
+              - name: SEARXNG_FORMAT
+                value: json
+              - name: TERM
+                value: xterm-256color
+              - name: TZ
+                value: "${TIMEZONE}"
+              - name: LITELLM_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: litellm-secret
+                    key: LITELLM_API_KEY
             envFrom:
               - secretRef:
                   name: openclaw-test-secret
               - secretRef:
                   name: cluster-secrets
+
             resources:
               requests:
                 cpu: 200m
