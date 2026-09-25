@@ -28,7 +28,7 @@ spec:
       port: os.environ/REDIS_PORT
     drop_params: true
     merge_reasoning_content_in_choices: true
-    set_verbose: false
+    set_verbose: true
 #    # OIDC and Model List configuration
 #    # Note: We use the 'model_list' to define the cloud models
 #    model_list:
