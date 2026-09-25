@@ -38,3 +38,5 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+      - name: openclaw-test-secret
+        kind: Secret
