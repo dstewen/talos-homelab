@@ -137,6 +137,7 @@ spec:
                 node dist/index.js plugins install "clawhub:@openclaw/searxng-plugin" --force --accept-capabilities
                 node dist/index.js plugins install "clawhub:@openclaw/groq-provider" --force --accept-capabilities
                 node dist/index.js plugins install "clawhub:@openclaw/mistral-provider" --force --accept-capabilities
+                node dist/index.js plugins install "clawhub:@openclaw/litellm-provider" --force --accept-capabilities
                 # Start gateway
                 exec node dist/index.js gateway --bind lan
             env:
@@ -161,6 +162,7 @@ spec:
               SEARXNG_FORMAT: json
               TERM: xterm-256color
               TZ: "${TIMEZONE}"
+              LITELLM_API_KEY: "${LITELLM_API_KEY}"
             envFrom:
               - secretRef:
                   name: openclaw-test-secret
