@@ -9,13 +9,6 @@ spec:
   image: ghcr.io/berriai/litellm:v1.102.1@sha256:87f34979b9f8cb274fac90ca8a4fdda07d8480de22755562a26adeb95ce20d02
   replicas: 1
   applyMode: api
-  # Search Tool Configuration (Using the correct extraConfig pattern)
-  extraConfig:
-    search_tools:
-      - search_tool_name: searxng-search
-        litellm_params:
-          search_provider: searxng
-          api_base: "http://searxng.selfhosted.svc.cluster.local:8080"
   generalSettings:
     health_check_endpoint: /v1/health
   routerSettings:
