@@ -3,13 +3,13 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: openai-gpt-oss-20b
+  name: groq-openai-gpt-oss-20b
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
-  modelName: openai/gpt-oss-20b
+  modelName: groq/openai/gpt-oss-20b
 
   params:
-    model: openai/gpt-oss-20b
+    model: groq/openai/gpt-oss-20b
     # We reference the secret key via environment variable mapping in the proxy
     apiKeyRef:
       name: litellm-secret
