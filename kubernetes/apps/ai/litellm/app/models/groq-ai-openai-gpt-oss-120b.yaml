@@ -6,7 +6,7 @@ metadata:
   name: groq-openai-gpt-oss-120b
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
-  modelName: groq/openai/gpt-oss-120b
+  modelName: openai-gpt-oss-120b
 
   info:
     maxTokens: 131072        # Total Context Window
