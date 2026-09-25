@@ -182,7 +182,7 @@ spec:
               - name: LITELLM_API_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: litellm-secret
+                    name: openclaw-test-secret
                     key: LITELLM_API_KEY
             envFrom:
               - secretRef:
