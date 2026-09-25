@@ -10,7 +10,7 @@ resources:
   - google-ai-gemini-3.6-flash.yaml
   - google-ai-gemini-3.7-flash.yaml
   - google-ai-gemini-3.8-flash.yaml
-  - google-ai-gemma-4-26b-a4b-it.yaml
+#  - google-ai-gemma-4-26b-a4b-it.yaml
   - google-ai-gemma-4-31b.yaml
   - groq-ai-openai-gpt-oss-20b.yaml
   - groq-ai-openai-gpt-oss-120b.yaml
