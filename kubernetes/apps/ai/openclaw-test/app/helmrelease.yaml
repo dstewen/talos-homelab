@@ -162,6 +162,7 @@ spec:
               SEARXNG_FORMAT: json
               TERM: xterm-256color
               TZ: "${TIMEZONE}"
+              LITELLM_API_KEY: "${LITELLM_API_KEY}"
             envFrom:
               - secretRef:
                   name: openclaw-test-secret
