@@ -40,16 +40,6 @@ data:
           "model": {
             "primary": "google/gemini-3.1-flash-lite-preview",
             "fallbacks": [
-              "groq/llama-3.3-70b-versatile",
-              "groq/llama-3.1-8b-instant",
-              "groq/openai/gpt-oss-120b",
-              "groq/openai/gpt-oss-20b",
-              "google/gemini-3-flash",
-              "google/gemini-2.5-flash",
-              "google/gemini-2.5-flash-lite",
-              "google/gemma-4-26b-a4b-it:free",
-              "google/gemma-3-27b-it:free",
-              "google/gemma-3-12b-it:free",
               "ollama-rig/gemma4:12b-it-qat",
               "ollama-rig/gemma4:e4b",
               "ollama-rig/gpt-oss:20b",
@@ -73,7 +63,7 @@ data:
           },
           "heartbeat": {
             "every": "15217s",
-            "model": "groq/openai/gpt-oss-20b",
+            "model": "ollama-rig/gemma4:e4b",
             "isolatedSession": true,
             "lightContext": true
           },
@@ -94,10 +84,8 @@ data:
             "workspace": "/home/node/.openclaw/workspace",
             "agentDir": "/home/node/.openclaw/agents/main/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.6-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:26b-a4b-it-qat",
-                "groq/llama-3.3-70b-versatile",
                 "ollama/gemma4:12b-it-qat"
               ]
             },
@@ -126,10 +114,9 @@ data:
             "workspace": "/home/node/.openclaw/workspace-planner",
             "agentDir": "/home/node/.openclaw/agents/planner/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.6-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:26b-a4b-it-qat",
-                "groq/llama-3.3-70b-versatile"
+                "ollama/gemma4:12b-it-qat"
               ]
             },
             "identity": {
@@ -158,10 +145,9 @@ data:
             "workspace": "/home/node/.openclaw/workspace-ideator",
             "agentDir": "/home/node/.openclaw/agents/ideator/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.6-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:e4b",
-                "groq/llama-3.3-70b-versatile"
+                "ollama-rig/gemma4:e4b"
               ]
             },
             "identity": {
@@ -184,10 +170,9 @@ data:
             "workspace": "/home/node/.openclaw/workspace-critic",
             "agentDir": "/home/node/.openclaw/agents/critic/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.6-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:e4b",
-                "groq/llama-3.3-70b-versatile"
+                "ollama-rig/gemma4:e4b"
               ]
             },
             "identity": {
@@ -210,10 +195,9 @@ data:
             "workspace": "/home/node/.openclaw/workspace-surveyor",
             "agentDir": "/home/node/.openclaw/agents/surveyor/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.6-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:e4b",
-                "groq/llama-3.3-70b-versatile"
+                "ollama-rig/gemma4:e4b"
               ]
             },
             "identity": {
@@ -248,9 +232,6 @@ data:
                 "ollama-rig/qwen3-coder-next:q4_K_M",
                 "localai/gpt-oss:20b",
                 "localai/gemma3:4b",
-                "groq/llama-3.3-70b-versatile",
-                "groq/openai/gpt-oss-120b",
-                "groq/openai/gpt-oss-20b",
                 "ollama/deepcoder:1.5b",
                 "ollama/deepseek-coder-v2:16b",
                 "ollama/gemma4:e4b-it-q4_K_M",
@@ -283,7 +264,7 @@ data:
             "workspace": "/home/node/.openclaw/workspace-writer",
             "agentDir": "/home/node/.openclaw/agents/writer/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.6-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
                 "ollama-rig/gemma4:e4b"
               ]
@@ -308,10 +289,9 @@ data:
             "workspace": "/home/node/.openclaw/workspace-reviewer",
             "agentDir": "/home/node/.openclaw/agents/reviewer/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.8-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:e4b",
-                "groq/qwen/qwen3.6-27b"
+                "ollama-rig/gemma4:e4b"
               ]
             },
             "identity": {
@@ -334,10 +314,9 @@ data:
             "workspace": "/home/node/.openclaw/workspace-scout",
             "agentDir": "/home/node/.openclaw/agents/scout/agent",
             "model": {
-              "primary": "groq/qwen/qwen3.8-27b",
+              "primary": "ollama-rig/gemma4:26b-a4b-it-qat",
               "fallbacks": [
-                "ollama-rig/gemma4:e4b",
-                "groq/qwen/qwen3.6-27b"
+                "ollama-rig/gemma4:e4b"
               ]
             },
             "identity": {
@@ -1396,55 +1375,6 @@ data:
                 "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
                 "contextWindow": 262144,
                 "maxTokens": 16384
-              }
-            ]
-          },
-          "google": {
-            "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
-            "apiKey": "$${GOOGLE_API_KEY}",
-            "api": "google-generative-ai",
-            "models": [
-              {
-                "id": "gemini-3-flash",
-                "name": "Gemini 3 Flash (Google AI)",
-                "reasoning": false,
-                "input": ["text"],
-                "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-              },
-              {
-                "id": "gemini-2.5-flash-lite",
-                "name": "Gemini 2.5 Flash Lite (Google AI)",
-                "reasoning": false,
-                "input": ["text"],
-                "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-              },
-              {
-                "id": "gemini-3.1-flash-lite-preview",
-                "name": "Gemini 3.1 Flash Lite Preview (Google AI)",
-                "reasoning": false,
-                "input": ["text"],
-                "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-              },
-              {
-                "id": "gemini-3.5-flash",
-                "name": "Gemini 3.5 Flash",
-                "reasoning": false,
-                "input": ["text"],
-                "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-              },
-              {
-                "id": "gemma-4-26b-a4b-it",
-                "name": "Gemma 4 26B A4B IT (Google AI)",
-                "reasoning": false,
-                "input": ["text", "image"],
-                "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-              },
-              {
-                "id": "gemma-4-31b-it",
-                "name": "Gemma 4 31B IT (Google AI)",
-                "reasoning": false,
-                "input": ["text"],
-                "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
               }
             ]
           }
