@@ -180,10 +180,7 @@ spec:
               - name: TZ
                 value: "${TIMEZONE}"
               - name: LITELLM_API_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: openclaw-test-secret
-                    key: LITELLM_API_KEY
+                value: "${LITELLM_API_KEY}"
             envFrom:
               - secretRef:
                   name: openclaw-test-secret
