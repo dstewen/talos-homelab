@@ -146,8 +146,6 @@ spec:
 #              DOCKER_TLS_VERIFY: "1"
               - name: GOPATH
                 value: /home/node/go
-              - name: GOPATH
-                value: /home/node/go
               - name: HOME
                 value: &homepath /home/node
               - name: HOMEBREW_CELLAR
