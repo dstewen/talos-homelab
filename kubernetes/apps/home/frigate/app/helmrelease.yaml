@@ -99,30 +99,6 @@ spec:
           webrtc-udp:
             port: 8555
             protocol: UDP
-#    ingress:
-#      app:
-#        className: internal
-#        annotations:
-#          gethomepage.dev/enabled: "true"
-#          gethomepage.dev/group: Services
-#          gethomepage.dev/name: Frigate
-#          gethomepage.dev/icon: mdi-cctv
-#          gethomepage.dev/widget.type: frigate
-#          gethomepage.dev/widget.url: https://video.${SECRET_DOMAIN}
-##          gethomepage.dev/siteMonitor: https://video.${SECRET_DOMAIN}
-#          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-##          nginx.ingress.kubernetes.io/auth-method: GET
-##          nginx.ingress.kubernetes.io/auth-url: "http://authelia.auth.svc.cluster.local/api/verify"
-##          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_EXTERNAL_DOMAIN}/?rm=$request_method"
-##          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
-##          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
-#        hosts:
-#          - host: "video.${SECRET_DOMAIN}"
-#            paths:
-#              - path: /
-#                service:
-#                  identifier: app
-#                  port: http
 
     route:
       app:

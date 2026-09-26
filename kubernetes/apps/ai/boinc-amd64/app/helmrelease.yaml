@@ -104,19 +104,6 @@ spec:
               - identifier: app
                 port: *port
 
-#    ingress:
-#      app:
-#        annotations:
-#          external-dns.alpha.kubernetes.io/target: internal.davidstewen.com
-#        className: internal
-#        hosts:
-#          - host: boinc.davidstewen.com
-#            paths:
-#              - path: /
-#                service:
-#                  identifier: app
-#                  port: http
-
     persistence:
       config:
         existingClaim: boinc-amd64-config
