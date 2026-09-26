@@ -1,0 +1,49 @@
+hostname: blade6
+ipAddress: 10.200.15.36
+controlPlane: false
+installDisk: "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_220628800731"
+talosImageURL: factory.talos.dev/installer/de1619e16531ddff67ccb4ce636a5e3ba5197eb4fc0e8421f095ec50ce9d26a6
+machineSpec:
+  secureboot: false
+networkInterfaces:
+  - interface: bond0
+    bond:
+      mode: active-backup
+      deviceSelectors:
+        - hardwareAddr: "e4:5f:01:ec:16:a5"
+    dhcp: false
+    addresses:
+      - "10.200.15.36/24"
+    routes:
+      - network: "0.0.0.0/0"
+        gateway: "10.200.15.1"
+        metric: 1
+    mtu: 1500
+    vlans:
+      - vlanId: 20
+        dhcp: false
+        mtu: 1500
+      - vlanId: 30
+        dhcp: false
+        mtu: 1500
+      - vlanId: 100
+        dhcp: false
+        mtu: 1500
+      - vlanId: 110
+        dhcp: false
+        mtu: 1500
+extensionServices:
+  - name: nut-client
+    configFiles:
+      - content: |-
+          MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+          SHUTDOWNCMD "/sbin/poweroff"
+        mountPath: /usr/local/etc/nut/upsmon.conf
+  - name: lldpd
+    configFiles:
+      - mountPath: /usr/local/etc/lldpd/lldpd.conf
+        content: |
+          configure lldp portidsubtype ifname
+          unconfigure lldp management-addresses-advertisements
+          unconfigure lldp capabilities-advertisements
+          configure system description "Talos Worker Node blade6"
