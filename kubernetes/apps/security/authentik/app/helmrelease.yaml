@@ -73,28 +73,6 @@ spec:
           memory: 2Gi
       ingress:
         enabled: false
-#      ingress:
-#        enabled: true
-#        ingressClassName: internal
-#        annotations:
-#          hajimari.io/enable: "true"
-#          hajimari.io/icon: simple-icons:webauthn
-#          hajimari.io/group: Security
-#          hajimari.io/appName: Authentik
-#          hajimari.io/url: "https://id.${SECRET_DOMAIN}"
-#          gethomepage.dev/enabled: "true"
-#          gethomepage.dev/icon: authentik.png
-#          gethomepage.dev/name: Authentik
-#          gethomepage.dev/group: Infrastructure
-#          gethomepage.dev/description: OIDC User Management
-##          gethomepage.dev/widget.type: authentik
-##          gethomepage.dev/widget.url: http://authentik-server.security.svc.cluster.local:9000
-##          gethomepage.dev/widget.key: "{{AUTHENTIK_HOMEPAGE_TOKEN}}"
-#          gethomepage.dev/pod-selector: app.kubernetes.io/name=authentik
-#          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
-#        hosts:
-#          - "id.${SECRET_DOMAIN}"
-#        https: false
 
     worker:
       affinity:

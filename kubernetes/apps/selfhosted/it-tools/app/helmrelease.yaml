@@ -76,31 +76,6 @@ spec:
           http:
             port: &port 8080
 
-#    ingress:
-#      app:
-#        className: "internal"
-#        annotations:
-#          external-dns.alpha.kubernetes.io/target: internal.davidstewen.com
-#          gethomepage.dev/enabled: "true"
-#          gethomepage.dev/icon: it-tools.png
-#          gethomepage.dev/name: IT Tools
-#          gethomepage.dev/group: Selfhosted
-#          gethomepage.dev/href: https://it-tools.${SECRET_DOMAIN}
-#          hajimari.io/enable: "true"
-#          hajimari.io/icon: mdi:it-tools
-#          hajimari.io/group: Selfhosted
-#          hajimari.io/url: https://it-tools.${SECRET_DOMAIN}
-#        hosts:
-#          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-#            paths:
-#              - path: /
-#                service:
-#                  identifier: app
-#                  port: http
-#        tls:
-#          - hosts:
-#              - *host
-
     route:
       app:
         annotations:

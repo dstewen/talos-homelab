@@ -6,6 +6,7 @@ metadata:
   namespace: database
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.davidstewen.com
+    external-dns.kubernetes.io/hostname: postgres.davidstewen.com
     lbipam.cilium.io/ips: ${SVC_POSTGRES16_ADDR}
 spec:
   type: LoadBalancer
