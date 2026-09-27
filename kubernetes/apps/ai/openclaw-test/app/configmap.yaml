@@ -38,8 +38,9 @@ data:
             }
           },
           "model": {
-            "primary": "google/gemini-3.1-flash-lite-preview",
+            "primary": "google/gemini-3.1-flash-lite",
             "fallbacks": [
+              "ollama-rig/gemma4:26b-a4b-it-qat",
               "ollama-rig/gemma4:12b-it-qat",
               "ollama-rig/gemma4:e4b",
               "ollama-rig/gpt-oss:20b",
@@ -1650,11 +1651,14 @@ data:
       "plugins": {
         "enabled": true,
         "allow": [
+          "1password",
           "browser",
           "diagnostics-otel",
           "discord",
           "elevenlabs",
+          "github",
           "google",
+          "litellm",
           "memory-core",
           "memory-wiki",
           "ollama",
