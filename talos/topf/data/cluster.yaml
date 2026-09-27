@@ -1,0 +1,13 @@
+# cluster_data.yaml
+cluster_name: "kubernetes"
+endpoint: "https://10.200.15.254:6443"
+additional_api_server_cert_sans:
+  - "127.0.0.1"
+  - "10.200.15.254"
+additional_machine_cert_sans:
+  - "127.0.0.1"
+  - "10.200.15.254"
+cluster_pod_nets: ["10.42.0.0/16"]
+cluster_svc_nets: ["10.43.0.0/16"]
+cni_config:
+  name: "none"
