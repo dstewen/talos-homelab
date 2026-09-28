@@ -1,0 +1,16 @@
+# topf.yaml - Configuration for your local homelab cluster
+# This file tells the topf tool where to find everything.
+
+# The primary template logic
+template: templates/cluster_manifest.yaml.tpl
+
+# Point to the data definitions using absolute paths
+data:
+  cluster_info: data/cluster.yaml
+  nodes: data/nodes.yaml
+
+# Point to the secrets (make sure secrets.yaml exists here!)
+secrets: data/secrets.yaml
+
+# Define the output path for the final rendered manifest
+output_path: output/final_manifest.yaml
