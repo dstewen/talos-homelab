@@ -3,13 +3,13 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: ollama-rig-gemma-4-26b-a4b-it
+  name: ollama-rig-ornith-35b
 spec:
   # This is the name your client apps (Agents/OpenClaw) will use in their API calls
-  modelName: ollama-rig-gemma-4-26b-a4b-it
+  modelName: ollama-rig-ornith-35b
 
   params:
-    model: gemma-4-26b-a4b-it
+    model: ornith-35b
     # We reference the secret key via environment variable mapping in the proxy
     apiKeyRef:
       name: litellm-secret
