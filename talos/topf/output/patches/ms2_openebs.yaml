@@ -1,0 +1,7 @@
+machine:
+  kubelet:
+    extraMounts:
+      - destination: /var/mnt/local-hostpath-2tb
+        type: bind
+        source: /var/mnt/local-hostpath-2tb
+        options: ["bind", "rshared", "rw"]

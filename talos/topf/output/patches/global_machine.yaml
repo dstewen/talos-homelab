@@ -1,0 +1,10 @@
+machine:
+  sysctls:
+    kernel.panic: 10
+    kernel.panic_on_oops: 1
+  kernel:
+    args:
+      - mitigations=off
+      - security=none
+      - intel_iommu=on
+      - iommu=pt
