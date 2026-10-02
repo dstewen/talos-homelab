@@ -13,8 +13,8 @@ tasks:
       NS:
         sh: echo "${NS:-$(kubectl config view --minify -o jsonpath='{..namespace}')}"
     preconditions:
-      - sh: kubectl get secret {{.APP}}-volsync-secret -n {{.NS}} &>/dev/null
-        msg: "secret '{{.APP}}-volsync-secret' not found in namespace '{{.NS}}'"
+      - sh: kubectl get secret {{.APP}}-volsync-minio -n {{.NS}} &>/dev/null
+        msg: "secret '{{.APP}}-volsync-minio' not found in namespace '{{.NS}}'"
     cmd: bash {{.ROOT_DIR}}/scripts/volsync-snapshots.sh {{.APP}} {{.NS}}
 
   backup:
@@ -29,8 +29,8 @@ tasks:
         sh: echo "${NS:-$(kubectl config view --minify -o jsonpath='{..namespace}')}"
       TRIGGER: 'backup-{{now | date "20060102-150405"}}'
     preconditions:
-      - sh: kubectl get secret {{.APP}}-volsync-secret -n {{.NS}} &>/dev/null
-        msg: "secret '{{.APP}}-volsync-secret' not found in namespace '{{.NS}}'"
+      - sh: kubectl get secret {{.APP}}-volsync-minio -n {{.NS}} &>/dev/null
+        msg: "secret '{{.APP}}-volsync-minio' not found in namespace '{{.NS}}'"
       - sh: kubectl get replicationsource {{.APP}} -n {{.NS}} &>/dev/null
         msg: "ReplicationSource '{{.APP}}' not found in namespace '{{.NS}}'"
     cmd: bash {{.ROOT_DIR}}/scripts/volsync-backup.sh {{.APP}} {{.NS}} {{.TRIGGER}}
