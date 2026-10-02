@@ -17,7 +17,7 @@ kubectl run volsync-snapshots-${APP} --restart=Never \
           \"name\": \"restic\",
           \"image\": \"restic/restic:latest\",
           \"args\": [\"snapshots\"],
-          \"envFrom\": [{\"secretRef\": {\"name\": \"${APP}-volsync-secret\"}}]
+          \"envFrom\": [{\"secretRef\": {\"name\": \"${APP}-volsync-minio\"}}]
         }]
       }
     }" &>/dev/null
