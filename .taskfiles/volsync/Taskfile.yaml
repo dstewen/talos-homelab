@@ -1,0 +1,75 @@
+---
+version: "3"
+
+tasks:
+  snapshots:
+    desc: |
+      List available volsync snapshots for an app.
+      Usage: task volsync:snapshots APP=<app> [NS=<ns>]
+    silent: true
+    requires:
+      vars: [APP]
+    vars:
+      NS:
+        sh: echo "${NS:-$(kubectl config view --minify -o jsonpath='{..namespace}')}"
+    preconditions:
+      - sh: kubectl get secret {{.APP}}-volsync-secret -n {{.NS}} &>/dev/null
+        msg: "secret '{{.APP}}-volsync-secret' not found in namespace '{{.NS}}'"
+    cmd: bash {{.ROOT_DIR}}/scripts/volsync-snapshots.sh {{.APP}} {{.NS}}
+
+  backup:
+    desc: |
+      Trigger a manual volsync backup for an app.
+      Usage: task volsync:backup APP=<app> [NS=<ns>]
+    silent: true
+    requires:
+      vars: [APP]
+    vars:
+      NS:
+        sh: echo "${NS:-$(kubectl config view --minify -o jsonpath='{..namespace}')}"
+      TRIGGER: 'backup-{{now | date "20060102-150405"}}'
+    preconditions:
+      - sh: kubectl get secret {{.APP}}-volsync-secret -n {{.NS}} &>/dev/null
+        msg: "secret '{{.APP}}-volsync-secret' not found in namespace '{{.NS}}'"
+      - sh: kubectl get replicationsource {{.APP}} -n {{.NS}} &>/dev/null
+        msg: "ReplicationSource '{{.APP}}' not found in namespace '{{.NS}}'"
+    cmd: bash {{.ROOT_DIR}}/scripts/volsync-backup.sh {{.APP}} {{.NS}} {{.TRIGGER}}
+
+  backup-all:
+    desc: |
+      Trigger a manual volsync backup for all apps.
+      Usage: task volsync:backup-all [NS=<ns>]
+    silent: true
+    vars:
+      NS: '{{.NS | default ""}}'
+    cmd: bash {{.ROOT_DIR}}/scripts/volsync-backup-all.sh {{.NS}}
+
+  unlock:
+    desc: |
+      Scan for volsync source pods stuck on a stale restic lock and remove it.
+      Root cause: an apiserver hiccup (or any pod eviction) kills the mover pod
+      mid "forget/prune" step, leaving the restic repo locked. Every subsequent
+      sync then fails immediately with "repo already locked" and retries forever.
+      Usage: task volsync:unlock [NS=<ns>]
+    silent: true
+    vars:
+      NS: '{{.NS | default ""}}'
+    cmd: bash {{.ROOT_DIR}}/scripts/volsync-unlock.sh {{.NS}}
+
+  restore:
+    desc: |
+      Trigger a volsync restore.
+      Usage: task volsync:restore APP=<app> [NS=<ns>] [TS=<RFC3339>]
+    silent: true
+    requires:
+      vars: [APP]
+    vars:
+      NS:
+        sh: echo "${NS:-$(kubectl config view --minify -o jsonpath='{..namespace}')}"
+      TRIGGER: 'restore-{{now | date "20060102-150405"}}'
+    preconditions:
+      - sh: kubectl get secret {{.APP}}-volsync-secret -n {{.NS}} &>/dev/null
+        msg: "secret '{{.APP}}-volsync-secret' not found in namespace '{{.NS}}'"
+      - sh: kubectl get replicationdestination {{.APP}}-dst -n {{.NS}} &>/dev/null
+        msg: "ReplicationDestination '{{.APP}}-dst' not found in namespace '{{.NS}}'"
+    cmd: bash {{.ROOT_DIR}}/scripts/volsync-restore.sh {{.APP}} {{.NS}} {{.TRIGGER}} {{.TS}}
