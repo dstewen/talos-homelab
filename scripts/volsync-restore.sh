@@ -25,22 +25,22 @@ if [ -n "${TS}" ]; then
 else
     PATCH="${PATCH}\"restoreAsOf\":null}}}"
 fi
-kubectl patch replicationdestination "${APP}-dst" -n "${NS}" --type merge -p "${PATCH}"
+kubectl patch replicationdestination "${APP}-bootstrap" -n "${NS}" --type merge -p "${PATCH}"
 
 echo -e "${CYAN}[4/5] Waiting for restore to complete...${NC}"
-until [ "$(kubectl get replicationdestination "${APP}-dst" -n "${NS}" \
+until [ "$(kubectl get replicationdestination "${APP}-bootstrap" -n "${NS}" \
     -o jsonpath='{.status.lastManualSync}' 2>/dev/null)" = "${TRIGGER}" ]; do
-    REASON=$(kubectl get replicationdestination "${APP}-dst" -n "${NS}" \
+    REASON=$(kubectl get replicationdestination "${APP}-bootstrap" -n "${NS}" \
         -o jsonpath='{.status.conditions[?(@.type=="Synchronizing")].reason}' 2>/dev/null)
     echo "  status: ${REASON:-Pending}"
     sleep 5
 done
 
-RESULT=$(kubectl get replicationdestination "${APP}-dst" -n "${NS}" -o jsonpath='{.status.latestMoverStatus.result}')
+RESULT=$(kubectl get replicationdestination "${APP}-bootstrap" -n "${NS}" -o jsonpath='{.status.latestMoverStatus.result}')
 echo "  result: ${RESULT}"
 if [ "${RESULT}" != "Successful" ]; then
     echo -e "${RED}ERROR: Restore failed. Mover logs:${NC}"
-    kubectl get replicationdestination "${APP}-dst" -n "${NS}" \
+    kubectl get replicationdestination "${APP}-bootstrap" -n "${NS}" \
         -o jsonpath='{.status.latestMoverStatus.logs}'
     exit 1
 fi
