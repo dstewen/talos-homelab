@@ -235,6 +235,14 @@ spec:
                 memory: 4Gi
 
     defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
       shareProcessNamespace: true
       securityContext:
         runAsUser: 1000
