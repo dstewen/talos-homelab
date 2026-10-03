@@ -220,7 +220,7 @@ nodes:
       - "@./patches/ms3/openebs-local.yaml"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/4e0b7c1dfa0dd293a192157121b04d92eef340b2442db29cbfa867b44e4563bb
+    talosImageURL: factory.talos.dev/installer/81c66f41d2f6a22c7ff3b139c9a34fd7db63af107f29ef8ba497b0ab2dfea5ff
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
