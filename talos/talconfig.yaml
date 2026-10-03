@@ -220,7 +220,7 @@ nodes:
       - "@./patches/ms3/openebs-local.yaml"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/743d942690991fb5b20d07e54b6d33c60b19d7918e14d61173d79e718ebc0b47
+    talosImageURL: factory.talos.dev/installer/4e0b7c1dfa0dd293a192157121b04d92eef340b2442db29cbfa867b44e4563bb
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -901,8 +901,11 @@ controlPlane:
           - siderolabs/gasket-driver    # Google Coral M.2
           - siderolabs/i915             # MS-01 CPU iGraphics
           - siderolabs/intel-ucode      # Intel ucode
+          - siderolabs/lldpd            # LLDP Daemon
           - siderolabs/mei
+          - siderolabs/nut-client       # NUT Client
           - siderolabs/thunderbolt      # Thunderbolt networking
+          - siderolabs/util-linux-tools # Various tools
           - siderolabs/xe               # Intel Xe Graphics
       extraKernelArgs:
         - -selinux # apparently needed for talos 1.10.x
