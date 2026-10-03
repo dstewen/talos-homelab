@@ -102,7 +102,6 @@ spec:
                 echo "Init container completed successfully"
             env:
               TERM: xterm-256color
-              LITELLM_API_KEY: "sk-dVujhw0SK5rF1FAyQG-dmQ"
             envFrom:
               - secretRef:
                   name: openclaw-test-secret
@@ -178,7 +177,7 @@ spec:
               - name: TZ
                 value: "${TIMEZONE}"
               - name: LITELLM_API_KEY
-                value: "${LITELLM_API_KEY}"
+                value: "sk-dVujhw0SK5rF1FAyQG-dmQ"
             envFrom:
               - secretRef:
                   name: openclaw-test-secret
