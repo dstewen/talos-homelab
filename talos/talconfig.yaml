@@ -301,7 +301,7 @@ nodes:
     installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH811211KF512D"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd
+    talosImageURL: factory.talos.dev/installer/a2645a18c249a86ac47646445709014f6e6f5086ee674f77277f79869fee2e7b
     controlPlane: false
     networkInterfaces:
         #bond0
@@ -373,7 +373,7 @@ nodes:
     installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH81000E09512D"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd
+    talosImageURL: factory.talos.dev/installer/a2645a18c249a86ac47646445709014f6e6f5086ee674f77277f79869fee2e7b
     controlPlane: false
     networkInterfaces:
         #bond0
