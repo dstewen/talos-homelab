@@ -16,7 +16,7 @@ spec:
 #      layers: -1
       resourceClaims:
         - name: gpu
-          resourceClaimTemplateName: llmkube-llama-gpu
+          resourceClaimTemplateName: llmkube-models-gpu
   resources:
     cpu: "500m"
     memory: 20Gi
