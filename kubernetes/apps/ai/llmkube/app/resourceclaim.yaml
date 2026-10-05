@@ -16,7 +16,7 @@
 apiVersion: resource.k8s.io/v1
 kind: ResourceClaimTemplate
 metadata:
-  name: llama-intel-gpu
+  name: llmkube-models-gpu
 spec:
   spec:
     devices:
