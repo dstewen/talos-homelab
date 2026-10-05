@@ -30,7 +30,7 @@ metadata:
 spec:
   modelRef: gemma-4-e4b-it
   replicas: 1
-  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:bd0e4158de3c3413f0655d6f25580e24480ba9a16f59ab8ae7e57c920d7e5163
+  image: ghcr.io/ggml-org/llama.cpp:server-intel@sha256:3353d968ed8987612b7859828d14d205413567baafed00a90d71d0c23e63d7ba
   podLabels:
     igpu-workload: "true"
   topologySpreadConstraints:
