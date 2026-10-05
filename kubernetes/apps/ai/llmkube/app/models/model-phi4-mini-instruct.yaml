@@ -35,12 +35,16 @@ spec:
   resources:
     cpu: "2"
     memory: "4Gi"
-  podSecurityContext:
+  securityContext:
     runAsUser: 1000
     runAsGroup: 1000
-    fsGroup: 102
-    supplementalGroups:
-      - 44
-      - 102
-    seccompProfile:
-      type: RuntimeDefault
+    privileged: true
+#  podSecurityContext:
+#    runAsUser: 1000
+#    runAsGroup: 1000
+#    fsGroup: 102
+#    supplementalGroups:
+#      - 44
+#      - 102
+#    seccompProfile:
+#      type: RuntimeDefault
