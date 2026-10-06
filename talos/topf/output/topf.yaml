@@ -1,0 +1,38 @@
+clusterName: kubernetes
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+endpoint: https://10.200.15.254:6443
+additionalApiServerCertSans:
+  - "127.0.0.1"
+  - "10.200.15.254"
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+cniConfig:
+  name: none
+
+nodes:
+  - name: ms1
+    import: nodes/ms1.yaml
+  - name: ms2
+    import: nodes/ms2.yaml
+  - name: ms3
+    import: nodes/ms3.yaml
+  - name: nuc1
+    import: nodes/nuc1.yaml
+  - name: nuc2
+    import: nodes/nuc2.yaml
+  - name: blade2
+    import: nodes/blade2.yaml
+  - name: blade4
+    import: nodes/blade4.yaml
+  - name: blade5
+    import: nodes/blade5.yaml
+  - name: blade6
+    import: nodes/blade6.yaml
+  - name: blade7
+    import: nodes/blade7.yaml
+  - name: blade8
+    import: nodes/blade8.yaml
+
+patches:
+  - import: patches/global_machine.yaml

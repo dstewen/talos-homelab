@@ -1,0 +1,57 @@
+hostname: nuc1
+ipAddress: 10.200.15.61
+controlPlane: false
+installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW512G8_BTHH811211KF512D"
+talosImageURL: factory.talos.dev/installer/977f0167d1d2c32ba77524ddf88f1cec5350a63fa5c7b4a2d39b8ba0150cc6fd
+machineSpec:
+  secureboot: false
+networkInterfaces:
+  - interface: bond0
+    bond:
+      mode: active-backup
+      deviceSelectors:
+        - hardwareAddr: "d4:5d:df:1a:27:fe"
+    dhcp: false
+    addresses:
+      - "10.200.15.61/24"
+    routes:
+      - network: "0.0.0.0/0"
+        gateway: "10.200.15.1"
+        metric: 1
+    mtu: 1500
+    vlans:
+      - vlanId: 20
+        dhcp: false
+        mtu: 1500
+      - vlanId: 30
+        dhcp: false
+        mtu: 1500
+      - vlanId: 100
+        dhcp: false
+        mtu: 1500
+      - vlanId: 110
+        dhcp: false
+        mtu: 1500
+schematic:
+  customization:
+    systemExtensions:
+      officialExtensions:
+        - siderolabs/i915
+    extraKernelArgs:
+      - i915.enable_guc=3
+      - i915.max_vfs=7
+extensionServices:
+  - name: nut-client
+    configFiles:
+      - content: |-
+          MONITOR ups@192.168.10.23 1 upsmon_local mypassword secondary
+          SHUTDOWNCMD "/sbin/poweroff"
+        mountPath: /usr/local/etc/nut/upsmon.conf
+  - name: lldpd
+    configFiles:
+      - mountPath: /usr/local/etc/lldpd/lldpd.conf
+        content: |
+          configure lldp portidsubtype ifname
+          unconfigure lldp management-addresses-advertisements
+          unconfigure lldp capabilities-advertisements
+          configure system description "Talos Worker Node NUC1"
